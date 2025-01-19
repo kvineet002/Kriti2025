@@ -2,7 +2,8 @@ import React from 'react'
 
 function DashBord() {
   return (
-    <div className=" ">
+    <div className="">
+      landing page
     </div>
   )
 }
