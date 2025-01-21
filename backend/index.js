@@ -5,7 +5,7 @@ require("dotenv").config();
 const bodyParser = require("body-parser");
 const app = express();
 const port = 3002;
-
+const conversationRoutes = require("./routes/conversationRoutes");
 
 connect(
   process.env.MONGODB_URI
@@ -15,8 +15,13 @@ connect(
 
 app.use(cors({origin:'*'}));
 app.use(bodyParser.json());
+app.get("/", (req, res) => {
+  res.send("<h1>Welcome to the KRITI 2025</h1>");
 
+}
+);
+// app.use("/api/conversations", conversationRoutes);
 
 app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+  console.log(`Server is running on http://localhost:${port}`);
 });
