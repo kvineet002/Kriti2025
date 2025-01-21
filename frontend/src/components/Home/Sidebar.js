@@ -118,7 +118,7 @@ function Sidebar() {
 
  
   return (
-    <div className=" z-10 w-full md:w-auto md:p-6 py-3 px-3 md:h-full md:px-5   border-r-[0.2px] border-white border-opacity-10 bg-black">
+    <div className="fixed z-10 w-full md:w-auto md:p-6 py-3 px-3 md:h-full md:px-5   border-r-[0.2px] border-white border-opacity-10 bg-black">
       {/* Header section */}
       <div className="flex flex-col">
         <div className="flex md:flex-col  flex-row-reverse items-center justify-between">

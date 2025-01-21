@@ -5,7 +5,7 @@ import ChatSection from '../../components/Home/ChatSection'
 const Home = () => {
   return (
     
-     <div className="flex h-screen w-full">
+     <div className="flex h-screen w-full border-r-[0.2px] border-white">
      {/* Nav should take 20% of the width and remain fixed */}
      <div className="md:w-[20%] ">
        <Sidebar />
