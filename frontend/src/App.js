@@ -15,8 +15,8 @@ function App() {
     <>
       <Routes>
         <Route path='/' element={<LandingPage/>}/>
-        <Route element={<ProtectedRoutes/>}>
           <Route path='/home' element={<Home/>}/>
+        <Route element={<ProtectedRoutes/>}>
         </Route>
       </Routes>
     </>
