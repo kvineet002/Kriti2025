@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useEffect } from "react";
 
 function Sidebar() {
   const [hovered, setHovered] = useState(false);
@@ -14,7 +16,21 @@ function Sidebar() {
       navigate(link) // Navigate after 300ms
     }, 200) // Delay for 300ms (adjust the delay as needed)
 }
+const [chatHistory, setChatHistory] = useState([]);
+useEffect(() => {
+  const getChatsHistory = async () => {
+    try {
+      const response = await axios.get("http://localhost:3003/api/chats/vineetalp@gmail.com");
+      
+      // console.log('api called')
+      setChatHistory(response.data.chats);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
+  getChatsHistory();
+}, []);
   const navData = [
     {
       name: "Home",
@@ -148,7 +164,45 @@ function Sidebar() {
             isOpen ? 'max-h-screen opacity-100 mt-7 px-3' : 'max-h-0 opacity-0'
           } md:block overflow-hidden md:max-h-full md:opacity-100`}
         >
-          {navData.map((item) => (
+          
+          {
+            chatHistory &&
+            chatHistory.map((chat) => (
+              <div  key={chat._id} className={`cursor-pointer flex gap-2 items-center notapcolor text-white text-xs font-extralight ${
+                location === chat.title.toLocaleLowerCase()
+                  ? 'text-opacity-100 bg-white bg-opacity-10'
+                  : 'text-opacity-40 hover:text-[#4CE6A6] transition-all'
+              } p-3 px-4 rounded-lg`}
+              onClick={(e) => {
+                setActiveTab(chat.title);
+                handleClick(e,`/chat/${chat._id}`)
+                if (isOpen) setIsOpen(false); // Close the menu after clicking a link
+              }}
+
+              onMouseEnter={() => setHovered(chat.title)}
+              onMouseLeave={() => setHovered(null)}
+            >
+              <div
+                className={`flex transition-transform transform ${
+                  hovered === chat.title && location !== chat.title
+                    ? 'scale-125'
+                    : ''
+                }`}
+              >
+                {React.cloneElement(navData[0].code, {
+                  fill:
+                    location === chat.title
+                      ? '#ffffff33' // No color change if location matches item.name
+                      : hovered === chat.title
+                      ? '#4CE6A6' // Hovered color
+                      : '#ffffff66', // Default color
+                })}
+              </div>
+              <div className="">{chat.title}</div>
+            </div>
+            ))
+          }
+          {/* {navData.map((item) => (
             <div
               key={item.name}
               className={`cursor-pointer flex gap-2 items-center notapcolor text-white text-xs font-extralight ${
@@ -182,7 +236,7 @@ function Sidebar() {
               </div>
               <div className="">{item.name}</div>
             </div>
-          ))}
+          ))} */}
         </div>
       </div>
     </div>

@@ -1,40 +1,118 @@
-const { createConversation, getConversation, deleteConversation } = require("../utils/sessionManager");
-const langchainService = require("../services/langchainService");
+const Chat = require("../models/chat");
+const UserChat = require("../models/userChat");
 
-// Start a new conversation
-const startConversation = (req, res) => {
-  const sessionId = createConversation();
-  res.json({ message: "New conversation started", sessionId });
-};
-
-// Continue a conversation
-const chat = async (req, res) => {
-  const { sessionId, input } = req.body;
-
-  if (!sessionId || !getConversation(sessionId)) {
-    return res.status(400).json({ error: "Invalid or expired session ID" });
-  }
+const newChat = async (req, res) => {
+  const { text, email } = req.body;
 
   try {
-    const conversationChain = getConversation(sessionId);
-    const response = await langchainService.runConversation(conversationChain, input);
-    res.json({ response });
-  } catch (error) {
-    console.error("Error processing chat:", error);
-    res.status(500).json({ error: "Failed to process your request" });
+    // CREATE A NEW CHAT
+    const newChat = new Chat({
+      email: email,
+      history: [{ role: "user", parts: [{ text }] }],
+    });
+
+    const savedChat = await newChat.save();
+
+    // CHECK IF THE USERCHATS EXISTS
+    const userChats = await UserChat.findOne({ email: email });
+
+    if (!userChats) {
+      // IF DOESN'T EXIST, CREATE A NEW ONE AND ADD THE CHAT IN THE CHATS ARRAY
+      const newUserChats = new UserChat({
+        email: email,
+        chats: [
+          {
+            _id: savedChat._id,
+            title: text.substring(0, 40),
+          },
+        ],
+      });
+
+      await newUserChats.save();
+    } else {
+      // IF EXISTS, PUSH THE CHAT TO THE EXISTING ARRAY
+      await UserChat.updateOne(
+        { email: email },
+        {
+          $push: {
+            chats: {
+              _id: savedChat._id,
+              title: text.substring(0, 40),
+            },
+          },
+        }
+      );
+    }
+
+    // SEND THE RESPONSE WITH THE CHAT ID
+    res.status(201).send(savedChat._id);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error creating chat!");
+  }
+};
+const getChatsHistory = async (req, res) => {
+  const { email } = req.params;
+
+  try {
+    const userChats = await UserChat.find({ email: email });
+
+    if (!userChats) {
+
+      res.status(404).send("No chats found!");
+    }
+    // console.log(userChats[0].chats);
+    res.status(200).send(userChats[0]);
+  }
+  catch (err) {
+    console.error(err);
+    res.status(500).send("Error getting chats!");
+  }
+}
+
+
+const getChat = async (req, res) => {
+  const { email } = req.query;
+  const { id } = req.params;
+
+  try {
+    const chat = await Chat.findOne({ _id: id,email:email });
+   
+    res.status(200).send(chat);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error fetching chat!");
   }
 };
 
-// End a conversation
-const endConversation = (req, res) => {
-  const { sessionId } = req.body;
+const updateChat= async (req, res) => {
+  const {email} = req.query;
 
-  if (!sessionId || !getConversation(sessionId)) {
-    return res.status(400).json({ error: "Invalid or expired session ID" });
+  const { question, answer } = req.body;
+
+  const newItems = [
+    ...(question
+      ? [{ role: "user", parts: [{ text: question }] }]
+      : []),
+    { role: "model", parts: [{ text: answer }] },
+  ];
+
+  try {
+    const updatedChat = await Chat.updateOne(
+      { _id: req.params.id, email: email },
+      {
+        $push: {
+          history: {
+            $each: newItems,
+          },
+        },
+      }
+    );
+    res.status(200).send(updatedChat);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Error adding conversation!");
   }
+}
 
-  deleteConversation(sessionId);
-  res.json({ message: "Conversation ended successfully" });
-};
-
-module.exports = { startConversation, chat, endConversation };
+module.exports = { newChat, getChatsHistory, getChat, updateChat };

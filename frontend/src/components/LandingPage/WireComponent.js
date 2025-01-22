@@ -10,7 +10,7 @@ const WireComponent = () => {
         </div>
         <div className='flex flex-col mx-10  md:-mt-28 gap-2 md:mx-44 
      '>
-            <div className='bg-[#1a1a1a] text-white border border-1 border-[#444444] rounded-[48px] p-1 flex ml-2 w-48 gap-4 items-center '>
+            <div className=' bg-black bg-opacity-50 text-white border border-1 border-[#444444] rounded-[48px] p-1 flex ml-2 w-48 gap-4 items-center '>
                 <div className='w-10 h-10 bg-gradient-to-b from-[#474747] to-[#1d1d1d] rounded-full '/>
                 <div className='text-lg font-bold'> Integrations</div>
             </div>
