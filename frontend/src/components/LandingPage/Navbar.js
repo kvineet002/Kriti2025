@@ -3,7 +3,7 @@ import {motion} from 'framer-motion'
 const Navbar = () => {
     const [isHovered, setIsHovered] = useState(false);
 return (
-    <div className='bg-black flex gap-10 items-center justify-start px-8 py-6'>
+    <div className='bg-black bg-opacity-50 flex gap-10 items-center justify-start px-8 py-6 w-full z-50'>
 
             <div className='text-white text-3xl font-bold px-16'>Engine</div>
 
