@@ -44,30 +44,31 @@ const Faq = () => {
         }
     }
   return (
-    <div className='flex flex-col lg:flex-row gap-6 w-full justify-between lg:px-40 px-28'>
-        <div className='w-full lg:w-[30%]'>
+    <div className='flex flex-col lg:flex-row gap-6 w-full justify-between lg:px-40 px-2'>
+        <div className='w-full lg:w-[30%] flex flex-col items-start'>
         <div className='bg-[black] bg-opacity-50 text-white border border-1 border-[#444444] rounded-[48px] p-2 flex mr-auto gap-4 items-center w-32'>
                 <div className='w-10 h-10 bg-gradient-to-b from-[#474747] to-[#1d1d1d] rounded-full '/>
                 <div className='text-lg font-bold'>FAQ</div>
             </div>
-        <div className='text-4xl my-6 font-semibold text-wrap'>Frequently Asked Questions</div>
+        <div className=' text-white md:text-4xl translate-x-2 md:translate-x-0 text-xl md:my-6 font-semibold text-wrap mt-3'>Frequently Asked Questions</div>
         </div>
 
-        <div className='w-full lg:w-[70%] p-4 flex flex-col gap-6'>
+        <div className='w-full lg:w-[70%] flex flex-col gap-6'>
             {questions.map((question, index)=>(
-                <div key={index} className='border-b border-b-[#444444] flex flex-col gap-2'>
-                    <div className='flex justify-between items-center cursor-pointer p-4 ' onClick={()=>(
+                <div key={index} className='border-b border-b-[#444444] flex flex-col '>
+                    <div className='flex justify-between items-center cursor-pointer p-2 ' onClick={()=>(
                         handleClick(question.id)
                     )}>
-                        <div className='text-lg font-semibold'>{question.question}</div>
-                        <div>{activeQuestion.indexOf(question.id) !== -1 ? '-' : '+'}</div>
+                        <div className='text-sm md:text-lg text-white font-semibold'>{question.question}</div>
+                        <div className=' text-white'>{activeQuestion.indexOf(question.id) !== -1 ? '-' : '+'}</div>
                     </div>
                         {activeQuestion.indexOf(question.id) !== -1 && (
                             <motion.div
                                 initial={{opacity: 0}}
+
                                 animate={{opacity: 1}}
-                                transition={{duration: 0.5}}
-                                className='p-4 text-sm font-thin'
+                                transition={{duration: 1}}
+                                className='px-2 pb-4 text-sm font-thin text-white'
                             >
                                 {question.answer}
                             </motion.div>

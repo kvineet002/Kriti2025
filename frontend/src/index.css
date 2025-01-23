@@ -15,3 +15,9 @@ body{
     --tw-bg-opacity: 1;
     background-color: rgb(0 0 0 / var(--tw-bg-opacity)) /* #000000 */;
 }
+
+.myborder{
+    --tw-border-opacity: 0.2;
+    border-color: rgb(255 255 255 / var(--tw-border-opacity));
+    border-width: 1px;
+}

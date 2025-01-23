@@ -15,7 +15,7 @@ function FirstChatSection() {
     
         try {
           setLoading(true);
-          const response = await axios.post("http://localhost:3003/api/chats", {
+          const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/chats`, {
             email:email,
             text: message,
           });
@@ -33,15 +33,15 @@ function FirstChatSection() {
       };
 
     return (
-        <form onSubmit={handleSendMessage} className="flex mt-52 flex-col items-center space-y-4 p-4 bg-gray-100 rounded-lg shadow-md">
+        <form onSubmit={handleSendMessage} className="flex px-6 w-[60%] justify-center gap-3 items-center  p-5 myborder  bg-opacity-5 bg-white rounded-lg shadow-md">
             <input
                 type="text"
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 placeholder="Type your message"
-                className="w-full p-2 border border-gray-300 rounded-md"
+                className="w-full p-2 px-4 border myborder outline-none placeholder:text-white  text-white bg-black rounded-md"
             />
-            <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">
+            <button type="submit" className="px-4 py-2  text-black rounded-md  bg-white hover:bg-opacity-90">
                 Send
             </button>
         </form>

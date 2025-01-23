@@ -16,12 +16,12 @@ return (
             </div>
 
             <motion.div
-        className="ml-auto border-2 h-10 text-lg flex px-6 items-center justify-center rounded-[48px] cursor-pointer border-[#222222] gap-2"
+        className="ml-auto  h-10 text-lg flex px-6 items-center justify-center rounded-[48px] cursor-pointer myborder   gap-2"
         onHoverStart={() => setIsHovered(true)}
         onHoverEnd={() => setIsHovered(false)}
         whileHover={{ opacity: 0.8 }}
       >
-        <div>Get Started</div>
+        <div className=' text-white'>Get Started</div>
         <motion.img
           src="right-arrow.svg"
           initial={{ x: 0 }}

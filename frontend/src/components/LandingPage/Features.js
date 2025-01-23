@@ -9,16 +9,16 @@ const Features = () => {
             </div>
             <div className='flex flex-col mx-auto lg:-mt-28 gap-2 w-[80%] lg:w-[full]'>
 
-                <div className='bg-[black] bg-opacity-50 text-white border border-1 border-[#444444] rounded-[48px] p-2 pr-4 flex mr-auto gap-4 items-center '>
+                <div className='bg-[black] bg-opacity-50 text-white border border-1 myborder rounded-[48px] p-2 pr-4 flex mr-auto gap-3 items-center '>
                     <div className='w-10 h-10 bg-gradient-to-b from-[#474747] to-[#1d1d1d] rounded-full '/>
-                    <div className='text-lg font-bold'>Features</div>
+                    <div className='text-lg '>Features</div>
                 </div>
 
-                <div className='flex flex-wrap justify-between'>
+                <div className='flex flex-wrap justify-between text-white'>
                     <div className='text-4xl p-4'>
                         Our AI Capabilities
                     </div>
-                    <div className='text-sm text-wrap  md:w-[30rem] p-4 '>
+                    <div className='text-sm text-wrap  md:w-[30rem] p-4 text-white '>
                         Discover the cutting-edge capabilities of our AI solutions designed to transform your business operations.
                     </div>
                 </div>

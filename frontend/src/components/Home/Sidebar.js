@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useEffect } from "react";
 
@@ -7,7 +7,7 @@ function Sidebar() {
   const [hovered, setHovered] = useState(false);
   const [activeTab, setActiveTab] = useState("/home");
   const [isOpen, setIsOpen] = useState(false);
-  const location = window.location.pathname.substring(1);
+  const location = useLocation().pathname.split("/").pop();
   const navigate =useNavigate();
   const handleClick = (e,link) => {
     e.preventDefault() // Prevent immediate navigation
@@ -17,10 +17,12 @@ function Sidebar() {
     }, 200) // Delay for 300ms (adjust the delay as needed)
 }
 const [chatHistory, setChatHistory] = useState([]);
+console.log(process.env.REACT_APP_API_URL)
+const email="vineetalp@gmail.com"
 useEffect(() => {
   const getChatsHistory = async () => {
     try {
-      const response = await axios.get("http://localhost:3003/api/chats/vineetalp@gmail.com");
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/chats/${email}`);
       
       // console.log('api called')
       setChatHistory(response.data.chats);
@@ -134,17 +136,17 @@ useEffect(() => {
 
  
   return (
-    <div className="z-10 w-full md:w-auto md:p-6 py-3 px-3 md:h-full md:px-5   border-r-[0.2px] border-white border-opacity-10 bg-black">
+    <div className="z-10 w-full md:w-auto md:p-6 py-3 px-3 md:h-full md:px-5  overflow-scroll no-scrollbar  border-r-[0.2px] border-white border-opacity-10 bg-black">
       {/* Header section */}
       <div className="flex flex-col">
         <div className="flex md:flex-col  flex-row-reverse items-center justify-between">
-          <div className="flex md:gap-6 gap-3 md:flex-col flex-row justify-center items-center">
-            <div  className="text-white notapcolor text-sm bg-opacity-[0.09] bg-white p-2 px-10 justify-center items-center flex rounded-lg">
-                <span>New Chat</span>
-            </div>
-            {/* <div className="gap-1 bg-[#4be2a328] px-3 w-full text-[#4CE6A6] text-xs md:text-sm py-[6px] flex items-center justify-center rounded-lg md:rounded-[10px]">
-              <span className="blink-dot">●</span> Available for Work
+          <div className="flex md:gap-6 gap-3 w-[90%] md:flex-col flex-row justify-center items-center">
+            {/* <div className="gap-1 bg-[#4be2a328] px-6 text-[#4CE6A6] text-xs md:text-sm py-[6px] flex items-center justify-center rounded-lg md:rounded-[10px]">
+              <span className="blink-dot">●</span> Online
             </div> */}
+            <Link to={'/chat'}  className="text-white bg-opacity-[0.09] w-full notapcolor text-sm  bg-white p-2 px-10 justify-center items-center flex rounded-lg">
+                <span>New Chat</span>
+            </Link>
           </div>
           {/* Hamburger Button for Small Screens */}
           <button
@@ -161,18 +163,18 @@ useEffect(() => {
         {/* Navigation Links */}
         <div
           className={`flex flex-col md:my-3 md:mt-10 gap-2 transition-all  duration-[800ms] ease-in-out ${
-            isOpen ? 'max-h-screen opacity-100 mt-7 px-3' : 'max-h-0 opacity-0'
-          } md:block overflow-hidden md:max-h-full md:opacity-100`}
+            isOpen ? 'max-h-screen opacity-100 mt-7 px-3' : 'max-h-0  opacity-0'
+          } md:block overflow-hidden md:max-h-full  md:opacity-100`}
         >
           
           {
             chatHistory &&
-            chatHistory.map((chat) => (
-              <div  key={chat._id} className={`cursor-pointer flex gap-2 items-center notapcolor text-white text-xs font-extralight ${
-                location === chat.title.toLocaleLowerCase()
+            chatHistory.slice().reverse().map((chat) => (
+              <div  key={chat._id} className={`cursor-pointer flex  mb-2  items-center notapcolor  text-white ${
+                location === chat._id
                   ? 'text-opacity-100 bg-white bg-opacity-10'
-                  : 'text-opacity-40 hover:text-[#4CE6A6] transition-all'
-              } p-3 px-4 rounded-lg`}
+                  : 'text-opacity-40 hover:bg-opacity-10 hover:bg-white transition-all'
+              } p-2 px-4 rounded-lg`}
               onClick={(e) => {
                 setActiveTab(chat.title);
                 handleClick(e,`/chat/${chat._id}`)
@@ -182,61 +184,12 @@ useEffect(() => {
               onMouseEnter={() => setHovered(chat.title)}
               onMouseLeave={() => setHovered(null)}
             >
-              <div
-                className={`flex transition-transform transform ${
-                  hovered === chat.title && location !== chat.title
-                    ? 'scale-125'
-                    : ''
-                }`}
-              >
-                {React.cloneElement(navData[0].code, {
-                  fill:
-                    location === chat.title
-                      ? '#ffffff33' // No color change if location matches item.name
-                      : hovered === chat.title
-                      ? '#4CE6A6' // Hovered color
-                      : '#ffffff66', // Default color
-                })}
-              </div>
-              <div className="">{chat.title}</div>
+             
+              <div className=" text-sm  font-light ">{chat.title}</div>
             </div>
             ))
           }
-          {/* {navData.map((item) => (
-            <div
-              key={item.name}
-              className={`cursor-pointer flex gap-2 items-center notapcolor text-white text-xs font-extralight ${
-                location === item.name.toLocaleLowerCase()
-                  ? 'text-opacity-100 bg-white bg-opacity-10'
-                  : 'text-opacity-40 hover:text-[#4CE6A6] transition-all'
-              } p-3 px-4 rounded-lg`}
-              onClick={(e) => {
-                setActiveTab(item.name);
-                handleClick(e,`/${item.name.toLowerCase()}`)
-                if (isOpen) setIsOpen(false); // Close the menu after clicking a link
-              }}
-              onMouseEnter={() => setHovered(item.name)}
-              onMouseLeave={() => setHovered(null)}
-            >
-              <div
-                className={`flex transition-transform transform ${
-                  hovered === item.name && location !== item.name
-                    ? 'scale-125'
-                    : ''
-                }`}
-              >
-                {React.cloneElement(item.code, {
-                  fill:
-                    location === item.name
-                      ? '#ffffff33' // No color change if location matches item.name
-                      : hovered === item.name
-                      ? '#4CE6A6' // Hovered color
-                      : '#ffffff66', // Default color
-                })}
-              </div>
-              <div className="">{item.name}</div>
-            </div>
-          ))} */}
+        
         </div>
       </div>
     </div>

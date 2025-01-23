@@ -13,7 +13,11 @@ const FirstChat = () => {
      </div>
      
      {/* The Hero content should take up the remaining 80% and be scrollable */}
-     <div className="md:w-[80%]  ">
+     <div className="md:w-[80%]  flex gap-5 flex-col items-center justify-center ">
+        <div className=' text-white text-3xl font-bold '>
+            What do you want to create today?
+        </div>
+
        <FirstChatSection />
      </div>
    

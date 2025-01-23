@@ -4,7 +4,7 @@ import { useLocation } from "react-router-dom";
 import axios from "axios";
 
 function ChatSection() {
-  const [leftWidth, setLeftWidth] = useState(10); // Initial width of the left section
+  const [leftWidth, setLeftWidth] = useState(10);
   const [isDragging, setIsDragging] = useState(false);
   const containerRef = useRef(null);
 
@@ -72,7 +72,7 @@ function ChatSection() {
       };
 
       await axios.put(
-        `http://localhost:3003/api/chats/update/${chatId}`,
+        `${process.env.REACT_APP_API_URL}/api/chats/update/${chatId}`,
         dataToUpdate,
         {
           params: { email: email },
@@ -85,23 +85,79 @@ function ChatSection() {
     }
   };
 
+
+  const hasFetched = useRef(false);
   useEffect(() => {
-    const fetchChats = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:3003/api/chats/all/${chatId}`,
+
+  const fetchChats = async () => {
+    if (hasFetched.current) return; // Prevent multiple runs
+    hasFetched.current = true;
+
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/api/chats/all/${chatId}`,
+        {
+          params: { email: email },
+        }
+      );
+      console.log("Chat fetched:", response);
+      setChats(response.data.history || []); // Ensure history exists
+
+      if (response.data.history.length === 1) {
+        const text = response.data.history[0].parts[0].text;
+        const chatInstance = model.startChat({
+          history: chats.map(({ role, parts }) => ({
+            role,
+            parts: parts.map((part) => ({ text: part.text })),
+          })),
+          generationConfig: {
+            // Add any model-specific config if needed
+          },
+        });
+
+        const result = await chatInstance.sendMessageStream([text]);
+        let accumulatedText = "";
+
+        const newModelMessage = { role: "model", parts: [{ text: "" }] };
+        setChats((prevChats) => [...prevChats, newModelMessage]);
+
+        for await (const chunk of result.stream) {
+          const chunkText = chunk.text();
+          accumulatedText += chunkText;
+
+          setChats((prevChats) =>
+            prevChats.map((chat, index) =>
+              index === prevChats.length - 1
+                ? {
+                    ...chat,
+                    parts: [{ text: accumulatedText }],
+                  }
+                : chat
+            )
+          );
+
+        }
+        const dataToUpdate = {
+          answer: accumulatedText,
+        };
+  
+        await axios.put(
+          `${process.env.REACT_APP_API_URL}/api/chats/update/${chatId}`,
+          dataToUpdate,
           {
             params: { email: email },
           }
         );
-        console.log("Chat fetched:", response);
-        setChats(response.data.history || []); // Ensure history exists
-      } catch (error) {
-        console.error("Error fetching chats:", error);
       }
-    };
-    fetchChats();
-  }, [chatId, email]);
+    } catch (error) {
+      console.error("Error fetching chats:", error);
+    }
+  };
+
+  fetchChats();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+}, [chatId]);
+
 
   const handleMouseDown = () => {
     setIsDragging(true);
@@ -160,7 +216,7 @@ function ChatSection() {
                     message.role === "model" ? "" : "bg-gray-500"
                   }`}
                 >
-                  <p className="text-sm text-gray-700">{message.parts[0].text}</p>
+                  <div className="text-sm text-gray-700">{message.parts[0].text}</div>
                 </div>
               ))
             ) : (
