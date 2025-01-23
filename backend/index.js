@@ -13,7 +13,7 @@ connect(
   console.log("Connected to the database");
 });
 
-app.use(cors({origin:["http://localhost:3001","https://kriti2025-pi.vercel.app"]}));
+app.use(cors({origin:["http://localhost:3000","https://kriti2025-pi.vercel.app"]}));
 app.use(bodyParser.json());
 app.get("/", (req, res) => {
   res.send("<h1>Welcome to the KRITI 2025</h1>");
