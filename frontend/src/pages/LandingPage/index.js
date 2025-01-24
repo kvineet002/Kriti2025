@@ -1,10 +1,10 @@
 import React from 'react';
 import Navbar from '../../components/LandingPage/Navbar.js';
-import WireComponent from '../../components/LandingPage/WireComponent.js';
 import HeroComponent from '../../components/LandingPage/HeroComponent.js';
 import Testimonials from '../../components/LandingPage/Testimonials.js';
 import Features from '../../components/LandingPage/Features.js';
 import Faq from '../../components/LandingPage/Faq.js';
+import Integrations from '../../components/LandingPage/Integrations.js';
 
 function LandingPage() {
   return (
@@ -13,7 +13,7 @@ function LandingPage() {
       <HeroComponent/>
       <div className='flex flex-col w-full gap-16 my-12'>
         <Features/>
-        <WireComponent/>
+        <Integrations/>
         <Testimonials/>
         <Faq/>
       </div>

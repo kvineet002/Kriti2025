@@ -1,5 +1,6 @@
 import {useState} from 'react'
 import { motion } from 'framer-motion';
+import Heading from './subcomp/Heading';
 
 const questions = [{
     id: 1,
@@ -43,17 +44,15 @@ const Faq = () => {
             setActiveQuestion([...activeQuestion, id])
         }
     }
+
   return (
-    <div className='flex flex-col lg:flex-row gap-6 w-full justify-between lg:px-40 px-2'>
-        <div className='w-full lg:w-[30%] flex flex-col items-start'>
-        <div className='bg-[black] bg-opacity-50 text-white border border-1 border-[#444444] rounded-[48px] p-2 flex mr-auto gap-4 items-center w-32'>
-                <div className='w-10 h-10 bg-gradient-to-b from-[#474747] to-[#1d1d1d] rounded-full '/>
-                <div className='text-lg font-bold'>FAQ</div>
-            </div>
+    <div className='flex flex-col lg:flex-row gap-6 w-full justify-between lg:px-40 sm:px-20 px-10'>
+        <div className='w-full lg:w-[30%] flex flex-col items-start mx-auto'>
+         <Heading heading={"FAQ"}/>
         <div className=' text-white md:text-4xl translate-x-2 md:translate-x-0 text-xl md:my-6 font-semibold text-wrap mt-3'>Frequently Asked Questions</div>
         </div>
 
-        <div className='w-full lg:w-[70%] flex flex-col gap-6'>
+        <div className=' lg:w-[70%] flex flex-col gap-6'>
             {questions.map((question, index)=>(
                 <div key={index} className='border-b border-b-[#444444] flex flex-col '>
                     <div className='flex justify-between items-center cursor-pointer p-2 ' onClick={()=>(
@@ -64,10 +63,7 @@ const Faq = () => {
                     </div>
                         {activeQuestion.indexOf(question.id) !== -1 && (
                             <motion.div
-                                initial={{opacity: 0}}
-
-                                animate={{opacity: 1}}
-                                transition={{duration: 1}}
+                                
                                 className='px-2 pb-4 text-sm font-thin text-white'
                             >
                                 {question.answer}
