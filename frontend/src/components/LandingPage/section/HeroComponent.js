@@ -29,7 +29,7 @@ const Tiles = () => {
   }, []);
 
   return (
-    <div className="w-[1500px] h-full absolute -z-50 overflow-hidden">
+    <div className="w-[1500px]  absolute gradient-overlay -z-50 overflow-hidden">
       <div
         className={`grid grid-cols-${COLUMNS} gap-0`}
         style={{
@@ -51,7 +51,7 @@ const Tiles = () => {
 
 const HeroComponent = () => {
   return (
-    <div className="w-full h-full top-0 flex flex-col items-center justify-center overflow-x-hidden bg-[#383838] bg-gradient-radial from-[#383838] via-[#000000] to-black bg-opacity-10">
+    <div className="w-full h-full top-0 flex flex-col items-center justify-center overflow-x-hidden  gradient-overlay ">
       <Tiles />
       <div className="flex flex-col gap-5 items-center justify-center mb-10 poppins">
         <div className="w-[30%] h-8 border bg-black bg-opacity-60 border-[#2A2A2A] rounded-2xl"></div>

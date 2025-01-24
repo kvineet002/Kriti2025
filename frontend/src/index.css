@@ -28,3 +28,7 @@ body{
     border-color: rgb(255 255 255 / var(--tw-border-opacity));
     border-width: 1px;
 }
+.gradient-overlay {
+  background: linear-gradient(to bottom, transparent, black);
+  background-size: 200% 100%; /* Ensure it covers the element */
+}
