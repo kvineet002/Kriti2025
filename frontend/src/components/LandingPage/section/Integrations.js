@@ -10,7 +10,7 @@ const Integrations = () => {
   return (
     <div className=' bg-black flex flex-col text-white'>
         <Name name={"Integrations"}/>
-        <div className='flex flex-col mx-auto lg:-mt-40 gap-2 w-[80%] lg:w-[full]
+        <div className='flex flex-col mx-auto lg:-mt-48 gap-2 w-[80%] lg:w-[full]
       sm:-mt-12'>
             <Heading heading={"Integrations"}/>
             <Desc tag1={"Connect Effortlessly"} tag2={"Our AI solutions are designed to integrate smoothly with your current technology stack."}/>
