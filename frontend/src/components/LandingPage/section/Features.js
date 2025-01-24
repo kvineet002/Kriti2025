@@ -5,10 +5,10 @@ import Desc from '../subcomp/Desc'
 
 const Features = () => {
   return (
-    <div className=' bg-black flex flex-col'>
+    <div className=' bg-black flex  px-5 md:px-24 flex-col'>
 
             <Name name={"Features"}/>
-            <div className='flex flex-col mx-auto lg:-mt-48 gap-2 w-[80%] lg:w-[full] sm:-mt-12'>
+            <div className='flex flex-col  lg:-mt-48 gap-2 lg:w-[full] sm:-mt-12'>
                 <Heading heading={"Features"}/>
                 <Desc tag1={"Our AI Capabilities"} tag2={"Discover the cutting-edge capabilities of our AI solutions designed to transform your business operations."}/>
 

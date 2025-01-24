@@ -8,16 +8,16 @@ const tools = [{name:'figma.com', src:'figma.svg', text: "Unlock the potential o
 const Integrations = () => {
 
   return (
-    <div className=' bg-black flex flex-col text-white'>
+    <div className=' bg-black flex px-5 md:px-24 flex-col text-white'>
         <Name name={"Integrations"}/>
-        <div className='flex flex-col mx-auto lg:-mt-48 gap-2 w-[80%] lg:w-[full]
+        <div className='flex flex-col mx-auto lg:-mt-48 gap-2 lg:w-[full]
       sm:-mt-12'>
             <Heading heading={"Integrations"}/>
             <Desc tag1={"Connect Effortlessly"} tag2={"Our AI solutions are designed to integrate smoothly with your current technology stack."}/>
 
-
-            <img src="wire-component.svg" className='w-[75%] mx-auto' />
-            <div className='flex flex-col lg:flex-row justify-around items-center gap-4 lg:gap-2 w-full'>
+        <div className=' w-full bg-cover'>
+            <img src="wire-component.svg" className=' w-[900px] mx-auto' />
+          </div>  <div className='flex flex-col lg:flex-row justify-around items-center gap-4 lg:gap-2 w-full'>
                 {tools.map((item,index)=>(
                     <div className='border border-[#222222] p-4 lg:h-60 rounded-lg w-[90%] lg:w-96' key={index}>
                         <div className='border border-[#222222] h-full rounded-lg bg-gradient-to-br from-[#181818] via-[#080808] to-[#181818] flex flex-col justify-around items-start gap-3 py-3'>
