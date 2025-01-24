@@ -5,8 +5,7 @@ import Desc from '../subcomp/Desc'
 
 const Features = () => {
   return (
-    <div className=' bg-black flex flex-col'>
-
+    <div className='bg-black flex flex-col'>
             <Name name={"Features"}/>
             <div className='flex flex-col mx-auto lg:-mt-48 gap-2 w-[80%] lg:w-[full] sm:-mt-12'>
                 <Heading heading={"Features"}/>

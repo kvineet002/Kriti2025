@@ -2,14 +2,26 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
 const Tiles = () => {
-  const TILE_COUNT = 220; 
-  const COLUMNS = 22;
-  const [glowing, setGlowing] = useState(Array(TILE_COUNT).fill(0));
+  const [columns, setColumns] = useState(0);
+  const [rows, setRows] = useState(0);
+  const [tilesCount, setTilesCount] = useState(rows*columns);
+  const [glowing, setGlowing] = useState(Array(tilesCount).fill(0));
 
+  const createGrid = () => {
+    const tileSize = 70; 
+    const cols = Math.floor(window.innerWidth / tileSize);
+    const rows = Math.floor(window.innerHeight / tileSize);
+
+    setColumns(cols);
+    setRows(rows);
+    setTilesCount(rows * cols);
+  };
+  
+  
   const updateGlowing = () => {
     setGlowing((prev) => {
       const newGlowing = [...prev];
-      const randomIndex = Math.floor(Math.random() * TILE_COUNT);
+      const randomIndex = Math.floor(Math.random() * tilesCount);
       newGlowing[randomIndex] = 1;
       setTimeout(() => {
         setGlowing((prev) => {
@@ -24,35 +36,40 @@ const Tiles = () => {
   };
 
   useEffect(() => {
+    createGrid();
+    window.addEventListener("resize", createGrid);
+
+    return () => window.removeEventListener("resize", createGrid);
+  }, []);
+
+  useEffect(() => {
     const interval = setInterval(updateGlowing, 500);
     return () => clearInterval(interval); 
   }, []);
 
   return (
-    <div className="w-[1500px]  absolute gradient-overlay -z-50 overflow-hidden">
-      <div
-        className={`grid grid-cols-${COLUMNS} gap-0`}
-        style={{
-          gridTemplateColumns: `repeat(${COLUMNS}, minmax(0, 1fr))`,
-        }}
-      >
-        {Array.from({ length: TILE_COUNT }).map((_, index) => (
-          <motion.div
-            key={index}
-            className={`aspect-square border border-white border-opacity-10 transition-smooth duration-1000 ${
-              glowing[index] ? "bg-white bg-opacity-20" : "bg-transparent"
-            }`}
-          ></motion.div>
-        ))}
-      </div>
+    <div
+      className="w-full h-full grid absolute -z-50 top-0"
+      style={{
+        gridTemplateColumns: `repeat(${columns}, 1fr)`,
+        gridTemplateRows: `repeat(${rows}, 1fr)`,
+      }}
+    >
+      {Array.from({ length: tilesCount }).map((_, index) => (
+        <div
+          key={index}
+          className={`border border-white border-opacity-10 transition-smooth duration-1000 ${glowing[index] ? "bg-white bg-opacity-20" : "bg-transparent"}`}
+          />
+      ))}
     </div>
   );
 };
 
 const HeroComponent = () => {
   return (
-    <div className="w-full h-full top-0 flex flex-col items-center justify-center overflow-x-hidden  gradient-overlay ">
+    <div className="w-full h-full gradient-overlay flex flex-col items-center justify-center overflow-x-hidden pt-44 pb-28">
       <Tiles />
+
       <div className="flex flex-col gap-5 items-center justify-center mb-10 poppins">
         <div className="w-[30%] h-8 border bg-black bg-opacity-60 border-[#2A2A2A] rounded-2xl"></div>
         <motion.h1
