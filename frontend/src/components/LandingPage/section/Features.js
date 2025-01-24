@@ -1,7 +1,7 @@
 import React from 'react'
-import Heading from './subcomp/Heading'
-import Name from './subcomp/Name'
-import Desc from './subcomp/Desc'
+import Heading from '../subcomp/Heading'
+import Name from '../subcomp/Name'
+import Desc from '../subcomp/Desc'
 
 const Features = () => {
   return (

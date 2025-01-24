@@ -1,8 +1,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import Heading from './subcomp/Heading';
-import Name from './subcomp/Name';
-import Desc from './subcomp/Desc';
+import Heading from '../subcomp/Heading';
+import Name from '../subcomp/Name';
+import Desc from '../subcomp/Desc';
 
 const tweets = [
     {name: 'John Doe', tweet: 'This is a tweet about how great this company is. I am so happy with the service I received.', position: 'Founder & CEO', profileLink: 'https://twitter.com/johndoe'},

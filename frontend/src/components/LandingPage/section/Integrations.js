@@ -1,7 +1,7 @@
 import React from 'react'
-import Heading from './subcomp/Heading';
-import Name from './subcomp/Name';
-import Desc from './subcomp/Desc';
+import Heading from '../subcomp/Heading';
+import Name from '../subcomp/Name';
+import Desc from '../subcomp/Desc';
 
 const tools = [{name:'figma.com', src:'figma.svg', text: "Unlock the potential of automation, data synchronization, and improved experiences."}, {name:'sketch.com', src:'sketch.svg', text: "Unlock the potential of automation, data synchronization, and improved experiences."}, {name:'adobe.com', src:'adobe.svg', text: "Unlock the potential of automation, data synchronization, and improved experiences."}]
 

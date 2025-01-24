@@ -1,10 +1,11 @@
 import React from 'react';
-import Navbar from '../../components/LandingPage/Navbar.js';
-import HeroComponent from '../../components/LandingPage/HeroComponent.js';
-import Testimonials from '../../components/LandingPage/Testimonials.js';
-import Features from '../../components/LandingPage/Features.js';
-import Faq from '../../components/LandingPage/Faq.js';
-import Integrations from '../../components/LandingPage/Integrations.js';
+import Navbar from '../../components/LandingPage/section/Navbar.js';
+import HeroComponent from '../../components/LandingPage/section/HeroComponent.js';
+import Testimonials from '../../components/LandingPage/section/Testimonials.js';
+import Features from '../../components/LandingPage/section/Features.js';
+import Faq from '../../components/LandingPage/section/Faq.js';
+import Integrations from '../../components/LandingPage/section/Integrations.js';
+import Footer from '../../components/LandingPage/section/Footer.js';
 
 function LandingPage() {
   return (
@@ -16,6 +17,7 @@ function LandingPage() {
         <Integrations/>
         <Testimonials/>
         <Faq/>
+        <Footer/>
       </div>
       
     </div>

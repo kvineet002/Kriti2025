@@ -1,6 +1,6 @@
 import {useState} from 'react'
 import { motion } from 'framer-motion';
-import Heading from './subcomp/Heading';
+import Heading from '../subcomp/Heading';
 
 const questions = [{
     id: 1,
