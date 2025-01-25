@@ -17,7 +17,6 @@ const Tiles = () => {
     setTilesCount(rows * cols);
   };
   
-  
   const updateGlowing = () => {
     setGlowing((prev) => {
       const newGlowing = [...prev];
