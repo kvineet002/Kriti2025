@@ -47,19 +47,19 @@ const Tiles = () => {
   }, []);
 
   useEffect(() => {
-    const interval = setInterval(updateGlowing, 800);
+    const interval = setInterval(updateGlowing, 1500);
     return () => clearInterval(interval); 
   }, [tilesCount]);
 
   return (
     <div className="w-full top-0  absolute  -z-50 overflow-hidden">
       <div
-        className={`grid grid-cols-${COLUMNS} gap-0`}
+        className={`grid grid-cols-${columns} gap-0`}
         style={{
-          gridTemplateColumns: `repeat(${COLUMNS}, minmax(0, 1fr))`,
+          gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))`,
         }}
       >
-        {Array.from({ length: TILE_COUNT }).map((_, index) => (
+        {Array.from({ length: tilesCount }).map((_, index) => (
           <motion.div
             key={index}
             className={`aspect-square border border-white border-opacity-10 transition-smooth duration-1000 ${
@@ -76,7 +76,7 @@ const HeroComponent = () => {
   return (
     <div className="w-full h-full top-0 flex flex-col bg-cover items-center justify-center overflow-x-hidden  gradient-overlay ">
       <Tiles />
-      <div className="flex flex-col gap-5 items-center justify-center mb-10 poppins">
+      <div className="flex flex-col gap-5 items-center justify-center mb-10 poppins py-36 pb-48">
         <div className="w-[30%] h-8 border bg-black bg-opacity-60 border-[#2A2A2A] rounded-2xl"></div>
         <motion.h1
           className="text-4xl lg:text-6xl text-white text-wrap font-bold text-center w-[70%]"
