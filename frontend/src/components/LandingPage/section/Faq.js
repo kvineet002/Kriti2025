@@ -46,7 +46,7 @@ const Faq = () => {
     }
 
   return (
-    <div className='flex flex-col lg:flex-row gap-6 w-full justify-between lg:px-40 sm:px-20 px-10'>
+    <div className='flex flex-col lg:flex-row gap-6 w-full justify-between md:px-24 px-5'>
         <div className='w-full lg:w-[30%] flex flex-col items-start mx-auto'>
          <Heading heading={"FAQ"}/>
         <div className=' text-white md:text-4xl translate-x-2 md:translate-x-0 text-xl md:my-6 font-semibold text-wrap mt-3'>Frequently Asked Questions</div>

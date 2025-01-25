@@ -20,7 +20,12 @@ const Tiles = () => {
   const updateGlowing = () => {
     setGlowing((prev) => {
       const newGlowing = [...prev];
-      const randomIndex = Math.floor(Math.random() * tilesCount);
+      let randomIndex = Math.floor(Math.random() * columns*8);
+      
+      let col = randomIndex % columns;
+      if(col  > columns/3 && col < 2*columns/3){
+          randomIndex = randomIndex - col;
+      }
       newGlowing[randomIndex] = 1;
       setTimeout(() => {
         setGlowing((prev) => {
@@ -42,9 +47,9 @@ const Tiles = () => {
   }, []);
 
   useEffect(() => {
-    const interval = setInterval(updateGlowing, 500);
+    const interval = setInterval(updateGlowing, 800);
     return () => clearInterval(interval); 
-  }, []);
+  }, [tilesCount]);
 
   return (
     <div
@@ -68,9 +73,6 @@ const HeroComponent = () => {
   return (
     <div className="w-full h-full gradient-overlay flex flex-col items-center justify-center overflow-x-hidden pt-44 pb-32">
       <Tiles />
-      <img src="Line.svg" className="absolute hidden top-[] w-[1.5px] left-[144px]"/>
-      <img src="Line.svg" className="absolute"/>
-      <img src="Line.svg" className="absolute"/>
       <div className="flex flex-col gap-5 items-center justify-center mb-10 poppins">
         <div className="w-[30%] h-8 border bg-black bg-opacity-60 border-[#2A2A2A] rounded-2xl"></div>
         <motion.h1
