@@ -20,7 +20,7 @@ const Tiles = () => {
   const updateGlowing = () => {
     setGlowing((prev) => {
       const newGlowing = [...prev];
-      let randomIndex = Math.floor(Math.random() * columns*8);
+      let randomIndex = Math.floor(Math.random() * columns*8) + columns;
       
       let col = randomIndex % columns;
       if(col  > columns/3 && col < 2*columns/3){
@@ -74,7 +74,7 @@ const Tiles = () => {
 
 const HeroComponent = () => {
   return (
-    <div className="w-full h-full top-0 flex flex-col bg-cover items-center justify-center overflow-x-hidden  gradient-overlay ">
+    <div className="w-full h-full top-0 flex flex-col bg-cover items-center justify-center overflow-x-hidden gradient-overlay">
       <Tiles />
       <div className="flex flex-col gap-5 items-center justify-center mb-10 poppins py-36 pb-48">
         <div className="w-[30%] h-8 border bg-black bg-opacity-60 border-[#2A2A2A] rounded-2xl"></div>
