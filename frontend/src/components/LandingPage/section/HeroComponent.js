@@ -2,14 +2,25 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
 const Tiles = () => {
-  const TILE_COUNT = 220; 
-  const COLUMNS = 22;
-  const [glowing, setGlowing] = useState(Array(TILE_COUNT).fill(0));
+  const [columns, setColumns] = useState(0);
+  const [rows, setRows] = useState(0);
+  const [tilesCount, setTilesCount] = useState(rows*columns);
+  const [glowing, setGlowing] = useState(Array(tilesCount).fill(0));
 
+  const createGrid = () => {
+    const tileSize = 70; 
+    const cols = Math.floor(window.innerWidth / tileSize);
+    const rows = Math.floor(window.innerHeight / tileSize);
+
+    setColumns(cols);
+    setRows(rows);
+    setTilesCount(rows * cols);
+  };
+  
   const updateGlowing = () => {
     setGlowing((prev) => {
       const newGlowing = [...prev];
-      const randomIndex = Math.floor(Math.random() * TILE_COUNT);
+      const randomIndex = Math.floor(Math.random() * tilesCount);
       newGlowing[randomIndex] = 1;
       setTimeout(() => {
         setGlowing((prev) => {
@@ -22,6 +33,13 @@ const Tiles = () => {
       return newGlowing;
     });
   };
+
+  useEffect(() => {
+    createGrid();
+    window.addEventListener("resize", createGrid);
+
+    return () => window.removeEventListener("resize", createGrid);
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(updateGlowing, 500);
@@ -53,6 +71,9 @@ const HeroComponent = () => {
   return (
     <div className="w-full h-full top-0 flex flex-col bg-cover items-center justify-center overflow-x-hidden  gradient-overlay ">
       <Tiles />
+      <img src="Line.svg" className="absolute hidden top-[] w-[1.5px] left-[144px]"/>
+      <img src="Line.svg" className="absolute"/>
+      <img src="Line.svg" className="absolute"/>
       <div className="flex flex-col gap-5 items-center justify-center mb-10 poppins">
         <div className="w-[30%] h-8 border bg-black bg-opacity-60 border-[#2A2A2A] rounded-2xl"></div>
         <motion.h1
@@ -69,8 +90,8 @@ const HeroComponent = () => {
           <div className="p-2">
             <input
               type="text"
-              className="w-full p-4 bg-transparent text-opacity-50 outline-none"
-              placeholder="Ask something...."
+              className="w-full p-4 bg-transparent opacity-50 outline-none"
+              placeholder="Ask engine a question...."
             />
           </div>
         </div>
