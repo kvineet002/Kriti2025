@@ -66,9 +66,11 @@ const Tiles = () => {
 
 const HeroComponent = () => {
   return (
-    <div className="w-full h-full gradient-overlay flex flex-col items-center justify-center overflow-x-hidden pt-44 pb-28">
+    <div className="w-full h-full gradient-overlay flex flex-col items-center justify-center overflow-x-hidden pt-44 pb-32">
       <Tiles />
-
+      <img src="Line.svg" className="absolute hidden top-[] w-[1.5px] left-[144px]"/>
+      <img src="Line.svg" className="absolute"/>
+      <img src="Line.svg" className="absolute"/>
       <div className="flex flex-col gap-5 items-center justify-center mb-10 poppins">
         <div className="w-[30%] h-8 border bg-black bg-opacity-60 border-[#2A2A2A] rounded-2xl"></div>
         <motion.h1
@@ -85,8 +87,8 @@ const HeroComponent = () => {
           <div className="p-2">
             <input
               type="text"
-              className="w-full p-4 bg-transparent text-opacity-50 outline-none"
-              placeholder="Ask something...."
+              className="w-full p-4 bg-transparent opacity-50 outline-none"
+              placeholder="Ask engine a question...."
             />
           </div>
         </div>

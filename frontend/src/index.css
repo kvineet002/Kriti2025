@@ -30,5 +30,5 @@ body{
 }
 .gradient-overlay {
   background: linear-gradient(to bottom, transparent, black);
-  background-size: 200% 100%; /* Ensure it covers the element */
+  background-size: 100% 150%; /* Ensure it covers the element */
 }
