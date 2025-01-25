@@ -52,26 +52,29 @@ const Tiles = () => {
   }, [tilesCount]);
 
   return (
-    <div
-      className="w-full h-full grid absolute -z-50 top-0"
-      style={{
-        gridTemplateColumns: `repeat(${columns}, 1fr)`,
-        gridTemplateRows: `repeat(${rows}, 1fr)`,
-      }}
-    >
-      {Array.from({ length: tilesCount }).map((_, index) => (
-        <div
-          key={index}
-          className={`border border-white border-opacity-10 transition-smooth duration-1000 ${glowing[index] ? "bg-white bg-opacity-20" : "bg-transparent"}`}
-          />
-      ))}
+    <div className="w-full top-0  absolute  -z-50 overflow-hidden">
+      <div
+        className={`grid grid-cols-${COLUMNS} gap-0`}
+        style={{
+          gridTemplateColumns: `repeat(${COLUMNS}, minmax(0, 1fr))`,
+        }}
+      >
+        {Array.from({ length: TILE_COUNT }).map((_, index) => (
+          <motion.div
+            key={index}
+            className={`aspect-square border border-white border-opacity-10 transition-smooth duration-1000 ${
+              glowing[index] ? "bg-white bg-opacity-20" : "bg-transparent"
+            }`}
+          ></motion.div>
+        ))}
+      </div>
     </div>
   );
 };
 
 const HeroComponent = () => {
   return (
-    <div className="w-full h-full gradient-overlay flex flex-col items-center justify-center overflow-x-hidden pt-44 pb-32">
+    <div className="w-full h-full top-0 flex flex-col bg-cover items-center justify-center overflow-x-hidden  gradient-overlay ">
       <Tiles />
       <div className="flex flex-col gap-5 items-center justify-center mb-10 poppins">
         <div className="w-[30%] h-8 border bg-black bg-opacity-60 border-[#2A2A2A] rounded-2xl"></div>
