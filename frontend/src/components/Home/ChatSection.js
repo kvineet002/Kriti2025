@@ -196,7 +196,7 @@ function ChatSection() {
   return (
     <div
       ref={containerRef}
-      className="h-screen bg-gray-800 flex select-none rounded-3xl"
+      className="h-screen  flex select-none rounded-3xl"
       style={{ overflow: "hidden" }}
     >
       {/* Left Section */}
@@ -205,18 +205,18 @@ function ChatSection() {
      
       <div className="flex-1 flex flex-col">
         {/* Chat Display */}
-        <div className="flex-1 p-4 overflow-y-auto no-scrollbar bg-gray-200 rounded-lg shadow-md">
+        <div className="flex-1 p-4 overflow-y-auto no-scrollbar rounded-lg shadow-md">
           <h2 className="text-lg font-bold mb-2">Chat History</h2>
           <div className="space-y-2">
             {chats.length > 0 ? (
               chats.map((message, index) => (
                 <div
                   key={index}
-                  className={`p-2 bg-white rounded-md shadow-sm border ${
+                  className={`p-2  rounded-md shadow-sm border ${
                     message.role === "model" ? "" : "bg-gray-500"
                   }`}
                 >
-                  <div className="text-sm text-gray-700">{message.parts[0].text}</div>
+                  <div className="text-sm text-white">{message.parts[0].text}</div>
                 </div>
               ))
             ) : (
@@ -227,7 +227,7 @@ function ChatSection() {
         </div>
 
         {/* Input Section */}
-        <div className="flex items-center justify-between p-4 bg-white border-t">
+        <div className="flex items-center justify-between p-4  border-t">
           <input
             type="text"
             value={inputText}
@@ -252,12 +252,12 @@ function ChatSection() {
 
       {/* Divider */}
       <div
-        className="bg-gray-600 cursor-col-resize w-2"
+        className="bg-gray-600 cursor-col-resize w-1"
         onMouseDown={handleMouseDown}
         style={{ cursor: "col-resize" }}
       ></div>
        {/* Right Section */}
-        <div className="bg-gray-700 text-white h-full p-4" style={{ width: `${leftWidth}px` }}>
+        <div className=" text-white h-full p-4" style={{ width: `${leftWidth}px` }}>
         <h2 className="text-lg font-bold">Right Section</h2>
         <p>Content for the Right section.</p>
       </div>
