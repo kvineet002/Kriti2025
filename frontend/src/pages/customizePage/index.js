@@ -1,4 +1,4 @@
-import React, { useState, useRef} from "react";
+import React, { useState, useRef, useEffect} from "react";
 
 const sampleHtml = `<!DOCTYPE html>
 <html lang="en">
@@ -155,7 +155,7 @@ const sampleHtml = `<!DOCTYPE html>
     </nav>
   </header>
 
-  <section class="hero">
+  <section class="hero" style="color: black;">
     <h1>Welcome to Foodies' Paradise</h1>
     <p>Where your cravings meet perfection.</p>
     <button onclick="scrollToMenu()">Explore Menu</button>
@@ -201,35 +201,82 @@ const sampleHtml = `<!DOCTYPE html>
 
 const CustomizePage = () => {
   const [html, setHtml] = useState(sampleHtml);
+  const [hoveredComponent, setHoveredComponent] = useState(null);
+  const [filteredStyles, setFilteredStyles] = useState({});
   const iframeRef = useRef(null);
 
-  const handleMouseEnter = () => {
+  const relevantStyles = [
+    "background-color",
+    "color",
+    "font-size",
+    "margin",
+    "padding",
+    "border",
+    "border-radius",
+    "border-width",
+    "height",
+    "width",
+  ];
+
+  const injectHoverListener = () => {
     const iframe = iframeRef.current;
-    if (iframe && iframe.contentWindow) {
-      iframe.contentWindow.postMessage({ type: "HOVER" }, "*");
+    if (iframe && iframe.contentDocument) {
+      const iframeDocument = iframe.contentDocument;
+
+      iframeDocument.body.addEventListener("mouseover", (e) => {
+        const componentType = e.target.tagName;
+        setHoveredComponent(componentType);
+
+        const computedStyles = window.getComputedStyle(e.target);
+        const filtered = {};
+
+        relevantStyles.forEach((style) => {
+          filtered[style] = computedStyles.getPropertyValue(style) || "none";
+        });
+
+        setFilteredStyles(filtered);
+      });
     }
   };
 
-  const handleMouseLeave = () => {
+  useEffect(() => {
     const iframe = iframeRef.current;
-    if (iframe && iframe.contentWindow) {
-      iframe.contentWindow.postMessage({ type: "UNHOVER" }, "*");
+    if (iframe) {
+      iframe.onload = injectHoverListener;
     }
-  };
-
+  }, []);
   const handleHtmlChange = (e) => {
     setHtml(e.target.value);
   };
 
   return (
-    <div className="flex flex-col md:flex-row justify-center items-center gap-4 text-white p-6 w-full h-screen">
-      <textarea
-        className="border-2 h-1/2 md:h-full overflow-y-scroll no-scrollbar w-full md:w-1/2 p-2 bg-[#1e1e1e]"
-        value={html}
-        onChange={handleHtmlChange}
-      />
-      <div className="h-1/2 md:h-full w-full md:w-1/2 border-2"  onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-          <iframe
+    <div className="flex flex-wrap justify-center items-center gap-4 text-white p-6 w-full h-screen">
+      <div className="flex gap-4 p-2 flex-1 md:h-full">
+        <textarea
+          className="border-2 overflow-y-scroll no-scrollbar p-2 bg-[#1e1e1e] h-76 md:h-full w-1/2"
+          value={html}
+          onChange={handleHtmlChange}
+        />
+        <div className="border-2 h-76 w-1/2 flex flex-col gap-3 p-3 items-center md:h-full justify-center">
+          <h1>Customization Tab</h1>
+          <div className="bg-white text-black w-full p-2">
+            <h2 className="font-bold">Hovered Component:</h2>
+            <p className="lowercase">Component Type: {hoveredComponent}</p>
+
+            <h3 className="font-bold mt-2">Relevant Styles:</h3>
+            <div className="overflow-y-scroll h-48 bg-slate-200 p-2">
+              {Object.entries(filteredStyles).map(([key, value]) => (
+                <p key={key}>
+                  <strong>{key}:</strong> {value}
+                </p>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div className="h-1/2 md:h-full w-full md:w-1/2 border-2">
+        <iframe
           title="HTML Preview"
           sandbox="allow-scripts allow-same-origin"
           className="w-full h-full"
@@ -237,7 +284,6 @@ const CustomizePage = () => {
           ref={iframeRef}
         />
       </div>
-      
     </div>
   );
 };
