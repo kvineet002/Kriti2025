@@ -17,7 +17,6 @@ function Sidebar() {
     }, 200) // Delay for 300ms (adjust the delay as needed)
 }
 const [chatHistory, setChatHistory] = useState([]);
-console.log(process.env.REACT_APP_API_URL)
 const email="vineetalp@gmail.com"
 useEffect(() => {
   const getChatsHistory = async () => {
