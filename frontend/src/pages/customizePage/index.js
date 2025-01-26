@@ -1,271 +1,245 @@
-import React, { useState, useEffect } from "react";
-import { Controlled as CodeMirror } from "react-codemirror2";
-import "codemirror/lib/codemirror.css";
-import "codemirror/theme/material.css";
-import "codemirror/mode/htmlmixed/htmlmixed";
-import "codemirror/mode/css/css";
-import "codemirror/mode/javascript/javascript";
-import { ChromePicker } from "react-color";
-import Select from "react-select";
+import React, { useState, useRef} from "react";
 
-const App = () => {
-  const [html, setHtml] = useState("");
-  const [css, setCss] = useState("");
-  const [js, setJs] = useState("");
-  const [srcDoc, setSrcDoc] = useState("");
-  const [components, setComponents] = useState([]);
-  const [selectedComponent, setSelectedComponent] = useState(null);
-  const [color, setColor] = useState("#ffffff");
-  const [font, setFont] = useState("Arial");
-
-  const fontOptions = [
-    { value: "Arial", label: "Arial" },
-    { value: "Times New Roman", label: "Times New Roman" },
-    { value: "Courier New", label: "Courier New" },
-    { value: "Verdana", label: "Verdana" },
-    { value: "Georgia", label: "Georgia" },
-  ];
-
-  // Parse HTML and extract components
-  useEffect(() => {
-    if (html) {
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(html, "text/html");
-      const elements = Array.from(doc.body.children);
-
-      // Generate component list with consistent IDs
-      const componentList = elements.map((el) => {
-        const id =
-          el.id ||
-          el.tagName.toLowerCase() +
-            "-" +
-            Math.random().toString(36).substring(7);
-        if (!el.id) el.id = id; // Assign ID to the element if it doesn't have one
-        return {
-          id,
-          tag: el.tagName.toLowerCase(),
-          styles: {},
-        };
-      });
-
-      setComponents(componentList);
+const sampleHtml = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Foodies' Paradise</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
     }
-  }, [html]);
 
-  // Update live preview whenever HTML, CSS, or JS changes
-  useEffect(() => {
-    updatePreview();
-  }, [html, css, js]);
+    body {
+      background-color: #f8f8f8;
+      color: #333;
+      line-height: 1.6;
+    }
 
-  // Update live preview
-  const updatePreview = () => {
-    const combinedCode = `
-      <!DOCTYPE html>
-      <html>
-        <head>
-          <style>
-            ${css}
-            ${generateDynamicCSS()}
-          </style>
-        </head>
-        <body>
-          ${html}
-          ${js ? `<script>${js}</script>` : ""}
-        </body>
-      </html>
-    `;
-    setSrcDoc(combinedCode);
-  };
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      background-color: #ff5722;
+      color: #fff;
+    }
 
-  // Generate dynamic CSS for components
-  const generateDynamicCSS = () => {
-    return components
-      .map((comp) => {
-        const styles = Object.entries(comp.styles)
-          .map(([key, value]) => `${key}: ${value};`)
-          .join(" ");
-        return `#${comp.id} { ${styles} }`;
-      })
-      .join("\n");
-  };
+    .navbar a {
+      color: #fff;
+      text-decoration: none;
+      margin: 0 15px;
+    }
 
-  // Handle file upload
-  const handleFileUpload = (event, setter) => {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => setter(e.target.result);
-      reader.readAsText(file);
+    .hero {
+      text-align: center;
+      padding: 100px 20px;
+      background: url('https://via.placeholder.com/1920x1080') no-repeat center center/cover;
+      color: white;
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+    }
+
+    .hero button {
+      padding: 10px 20px;
+      background-color: #ff5722;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    .hero button:hover {
+      background-color: #e64a19;
+    }
+
+    .menu {
+      padding: 50px 20px;
+      text-align: center;
+    }
+
+    .menu h2 {
+      margin-bottom: 30px;
+      font-size: 2rem;
+    }
+
+    .menu-categories {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .menu-item {
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 20px;
+      width: 250px;
+      transition: transform 0.3s;
+    }
+
+    .menu-item:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .menu-item img {
+      width: 100%;
+      border-radius: 5px;
+      margin-bottom: 15px;
+    }
+
+    .contact {
+      background-color: #333;
+      color: white;
+      text-align: center;
+      padding: 50px 20px;
+    }
+
+    .contact h2 {
+      margin-bottom: 20px;
+    }
+
+    .contact form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .contact input, .contact textarea, .contact button {
+      margin: 10px 0;
+      padding: 10px;
+      width: 300px;
+      border: none;
+      border-radius: 5px;
+    }
+
+    .contact button {
+      background-color: #ff5722;
+      color: white;
+      cursor: pointer;
+    }
+
+    .contact button:hover {
+      background-color: #e64a19;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background-color: #ff5722;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <header class="navbar">
+    <h1>Foodies' Paradise</h1>
+    <nav>
+      <a href="#">Home</a>
+      <a href="#menu">Menu</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1>Welcome to Foodies' Paradise</h1>
+    <p>Where your cravings meet perfection.</p>
+    <button onclick="scrollToMenu()">Explore Menu</button>
+  </section>
+
+  <section class="menu" id="menu">
+    <h2>Our Menu</h2>
+    <div class="menu-categories">
+      <div class="menu-item">
+        <img src="https://via.placeholder.com/250" alt="Pizza">
+        <h3>Pizza</h3>
+        <p>Delicious cheesy pizzas with fresh toppings.</p>
+      </div>
+      <div class="menu-item">
+        <img src="https://via.placeholder.com/250" alt="Burgers">
+        <h3>Burgers</h3>
+        <p>Juicy burgers served with crispy fries.</p>
+      </div>
+      <div class="menu-item">
+        <img src="https://via.placeholder.com/250" alt="Desserts">
+        <h3>Desserts</h3>
+        <p>Sweet treats to satisfy your cravings.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <h2>Contact Us</h2>
+    <form>
+      <input type="text" placeholder="Your Name" required>
+      <input type="email" placeholder="Your Email" required>
+      <textarea placeholder="Your Message" rows="5" required></textarea>
+      <button type="submit">Send</button>
+    </form>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Foodies' Paradise. All rights reserved.</p>
+  </footer>
+</body>
+</html>
+`;
+
+const CustomizePage = () => {
+  const [html, setHtml] = useState(sampleHtml);
+  const iframeRef = useRef(null);
+
+  const handleMouseEnter = () => {
+    const iframe = iframeRef.current;
+    if (iframe && iframe.contentWindow) {
+      iframe.contentWindow.postMessage({ type: "HOVER" }, "*");
     }
   };
 
-  // Handle color change
-  const handleColorChange = (color) => {
-    setColor(color.hex);
-    if (selectedComponent) {
-      const updatedComponents = components.map((comp) =>
-        comp.id === selectedComponent.id
-          ? { ...comp, styles: { ...comp.styles, color: color.hex } }
-          : comp
-      );
-      setComponents(updatedComponents);
+  const handleMouseLeave = () => {
+    const iframe = iframeRef.current;
+    if (iframe && iframe.contentWindow) {
+      iframe.contentWindow.postMessage({ type: "UNHOVER" }, "*");
     }
   };
 
-  // Handle font change
-  const handleFontChange = (selectedOption) => {
-    setFont(selectedOption.value);
-    if (selectedComponent) {
-      const updatedComponents = components.map((comp) =>
-        comp.id === selectedComponent.id
-          ? {
-              ...comp,
-              styles: { ...comp.styles, fontFamily: selectedOption.value },
-            }
-          : comp
-      );
-      setComponents(updatedComponents);
-    }
-  };
-
-  // Handle download
-  const handleDownload = (content, fileName, fileType) => {
-    const blob = new Blob([content], { type: fileType });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = fileName;
-    link.click();
-    URL.revokeObjectURL(url);
+  const handleHtmlChange = (e) => {
+    setHtml(e.target.value);
   };
 
   return (
-    <div style={{ display: "flex", height: "100vh", color: "white" }}>
-      {/* File Upload Section */}
-      <div
-        style={{ width: "20%", padding: "10px", borderRight: "1px solid #ccc" }}
-      >
-        <h3>Upload Files</h3>
-        <div>
-          <label>HTML File:</label>
-          <input type="file" onChange={(e) => handleFileUpload(e, setHtml)} />
-        </div>
-        <div>
-          <label>CSS File:</label>
-          <input type="file" onChange={(e) => handleFileUpload(e, setCss)} />
-        </div>
-        <div>
-          <label>JS File (optional):</label>
-          <input type="file" onChange={(e) => handleFileUpload(e, setJs)} />
-        </div>
-      </div>
-
-      {/* Code Editors Section */}
-      <div
-        style={{ width: "30%", padding: "10px", borderRight: "1px solid #ccc" }}
-      >
-        <h3>HTML</h3>
-        <CodeMirror
-          value={html}
-          options={{
-            mode: "htmlmixed",
-            theme: "material",
-            lineNumbers: true,
-          }}
-          onBeforeChange={(editor, data, value) => setHtml(value)}
-        />
-        <h3>CSS</h3>
-        <CodeMirror
-          value={css}
-          options={{
-            mode: "css",
-            theme: "material",
-            lineNumbers: true,
-          }}
-          onBeforeChange={(editor, data, value) => setCss(value)}
-        />
-        <h3>JavaScript</h3>
-        <CodeMirror
-          value={js}
-          options={{
-            mode: "javascript",
-            theme: "material",
-            lineNumbers: true,
-          }}
-          onBeforeChange={(editor, data, value) => setJs(value)}
+    <div className="flex flex-col md:flex-row justify-center items-center gap-4 text-white p-6 w-full h-screen">
+      <textarea
+        className="border-2 h-1/2 md:h-full overflow-y-scroll no-scrollbar w-full md:w-1/2 p-2 bg-[#1e1e1e]"
+        value={html}
+        onChange={handleHtmlChange}
+      />
+      <div className="h-1/2 md:h-full w-full md:w-1/2 border-2"  onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+          <iframe
+          title="HTML Preview"
+          sandbox="allow-scripts allow-same-origin"
+          className="w-full h-full"
+          srcDoc={html}
+          ref={iframeRef}
         />
       </div>
-
-      {/* Customization Section */}
-      <div
-        style={{ width: "20%", padding: "10px", borderRight: "1px solid #ccc" }}
-      >
-        <h3>Customize Components</h3>
-        <div>
-          <label>Select Component:</label>
-          <select
-            onChange={(e) =>
-              setSelectedComponent(
-                components.find((comp) => comp.id === e.target.value)
-              )
-            }
-          >
-            <option value="">Select a component</option>
-            {components.map((comp) => (
-              <option key={comp.id} value={comp.id}>
-                {comp.tag} ({comp.id})
-              </option>
-            ))}
-          </select>
-        </div>
-        {selectedComponent && (
-          <>
-            <div style={{ marginTop: "10px" }}>
-              <label>Color:</label>
-              <ChromePicker
-                color={color}
-                onChangeComplete={handleColorChange}
-              />
-            </div>
-            <div style={{ marginTop: "10px" }}>
-              <label>Font:</label>
-              <Select
-                options={fontOptions}
-                value={fontOptions.find((opt) => opt.value === font)}
-                onChange={handleFontChange}
-              />
-            </div>
-          </>
-        )}
-      </div>
-
-      {/* Live Preview Section */}
-      <div style={{ width: "30%", padding: "10px" }}>
-        <h3>Live Preview</h3>
-        <iframe
-          srcDoc={srcDoc}
-          title="preview"
-          sandbox="allow-scripts"
-          style={{ width: "100%", height: "80%", border: "1px solid #ccc" }}
-        />
-        <div style={{ marginTop: "10px" }}>
-          <button
-            onClick={() => handleDownload(html, "index.html", "text/html")}
-          >
-            Download HTML
-          </button>
-          <button onClick={() => handleDownload(css, "styles.css", "text/css")}>
-            Download CSS
-          </button>
-          <button
-            onClick={() => handleDownload(js, "script.js", "text/javascript")}
-          >
-            Download JS
-          </button>
-        </div>
-      </div>
+      
     </div>
   );
 };
 
-export default App;
+export default CustomizePage;
