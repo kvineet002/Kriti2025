@@ -8,7 +8,7 @@ const Features = () => {
     <div className='bg-black flex flex-col md:px-24 px-5'>
             <Name name={"Features"}/>
             <div className='flex flex-col lg:-mt-48 gap-2 sm:-mt-12'>
-                <Heading heading={"Features"}/>
+                <Heading heading={"Features"} img={"bx-chip.svg"}/>
                 <Desc tag1={"Our AI Capabilities"} tag2={"Discover the cutting-edge capabilities of our AI solutions designed to transform your business operations."}/>
 
                 <div className='mx-auto w-full flex justify-around gap-3'>

@@ -10,13 +10,13 @@ const Integrations = () => {
   return (
     <div className=' bg-black flex px-5 md:px-24 flex-col text-white'>
         <Name name={"Integrations"}/>
-        <div className='flex flex-col mx-auto lg:-mt-48 gap-2 w-[80%] lg:w-[full]
+        <div className='flex flex-col lg:-mt-48 gap-2 
       sm:-mt-12 overflow-hidden'>
-            <Heading heading={"Integrations"}/>
+            <Heading heading={"Integrations"} />
             <Desc tag1={"Connect Effortlessly"} tag2={"Our AI solutions are designed to integrate smoothly with your current technology stack."}/>
 
 
-            <img src="wire-component.svg" className='w-[75%] mx-auto py-6 md:p-0 scale-[2.5] md:scale-110 ovrfrow-clip' />
+            <img src="wire-component.svg" className='w-[75%] mx-auto py-6 md:p-0 scale-[2.5] md:scale-100 ovrfrow-clip' />
             <div className='flex flex-col lg:flex-row justify-around items-center gap-4 lg:gap-2 w-full'>
                 {tools.map((item,index)=>(
                     <div className='border border-[#222222] p-4 lg:h-60 rounded-lg w-[90%] lg:w-96' key={index}>
