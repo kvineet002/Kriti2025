@@ -38,12 +38,9 @@ const Faq = () => {
     const [activeQuestion, setActiveQuestion] = useState([]);
     
     const handleClick = (id) => {
-        if(activeQuestion.indexOf(id) !== -1){
-            setActiveQuestion(activeQuestion.filter(question => question !== id))
-        } else {
-            setActiveQuestion([...activeQuestion, id])
-        }
-    }
+        setActiveQuestion(activeQuestion === id ? null : id); // Toggle open/close
+    };
+    
 
   return (
     <div className='flex flex-col lg:flex-row gap-6 w-full justify-between md:px-24 px-5'>
@@ -53,24 +50,36 @@ const Faq = () => {
         </div>
 
         <div className=' lg:w-[70%] flex flex-col gap-6'>
-            {questions.map((question, index)=>(
-                <div key={index} className='border-b border-b-[#444444] flex flex-col '>
-                    <div className='flex justify-between items-center cursor-pointer p-2 ' onClick={()=>(
-                        handleClick(question.id)
-                    )}>
-                        <div className='text-sm md:text-lg text-white font-semibold'>{question.question}</div>
-                        <div className=' text-white'>{activeQuestion.indexOf(question.id) !== -1 ? '-' : '+'}</div>
-                    </div>
-                        {activeQuestion.indexOf(question.id) !== -1 && (
-                            <motion.div
-                                
-                                className='px-2 pb-4 text-sm font-thin text-white'
-                            >
-                                {question.answer}
-                            </motion.div>
-                        )}
-                </div>
-            ))}
+        {questions.map((question, index) => (
+    <div key={index} className="border-b border-b-[#444444] flex flex-col">
+        <div
+            className="flex justify-between items-center cursor-pointer p-2"
+            onClick={() => handleClick(question.id)}
+        >
+            <div className="text-sm md:text-lg text-white font-semibold">
+                {question.question}
+            </div>
+            <div className="text-white">
+                {activeQuestion === question.id ? "-" : "+"}
+            </div>
+        </div>
+        {activeQuestion === question.id && (
+            <motion.div
+                key={question.id}
+                className="px-2 pb-4 text-sm font-thin text-white"
+                initial={{ opacity: 0, maxHeight: 0 }}
+                animate={{ opacity: 1, maxHeight: 1000 }}  // Set a maxHeight that is larger than the content
+                exit={{ opacity: 0, maxHeight: 0 }}
+                style={{ overflow: 'hidden' }}
+            >
+                {question.answer}
+            </motion.div>
+        )}
+    </div>
+))}
+
+
+
         </div>
         
     </div>
