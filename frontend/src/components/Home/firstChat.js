@@ -59,7 +59,7 @@ function FirstChatSection() {
   return (
     <form
       onSubmit={message.length === 0 ? (e) => e.preventDefault() : handleSend}
-      className="h-32 border flex  flex-col items-end text-white myborder p-2 px-4  w-[70%] rounded-xl bg-[#0F0F0F] mt-6 pointer-events-auto"
+      className="h-32 border flex  flex-col items-end text-white myborder p-2 px-4  md:w-[70%] w-[90%] rounded-xl bg-[#0F0F0F] mt-6 pointer-events-auto"
     >
       <input
         type="text"
