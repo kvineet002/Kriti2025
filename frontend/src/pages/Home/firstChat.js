@@ -1,29 +1,23 @@
-import Sidebar from '../../components/Home/Sidebar'
-import ChatSection from '../../components/Home/ChatSection'
-import FirstChatSection from '../../components/Home/firstChat'
-import { useState } from 'react'
+import Sidebar from "../../components/Home/Sidebar";
+import FirstChatSection from "../../components/Home/firstChat";
 
 const FirstChat = () => {
- 
-
   return (
-     <div className="flex h-screen w-full border-r-[0.2px] border-white">
-     {/* Nav should take 20% of the width and remain fixed */}
-     <div className="hidden md:flex md:w-[20%] ">
-       <Sidebar />
-     </div>
-     
-     {/* The Hero content should take up the remaining 80% and be scrollable */}
-     <div className="w-full md:w-[80%]  flex gap-5 flex-col items-center justify-center ">
-        <div className=' text-white text-3xl font-bold '>
-            What do you want to create today?
+    <div className="flex md:flex-row h-screen w-full border-r-[0.2px] border-white">
+      {/* Sidebar */}
+      <div className="w-full h-full z-10 md:w-[20%] absolute md:relative">
+        <Sidebar />
+      </div>
+
+      {/* Content Section */}
+      <div className="w-full md:w-[80%] flex flex-col items-center justify-center h-full gap-5">
+        <div className="text-white text-3xl font-bold text-center">
+          What do you want to create today?
         </div>
+        <FirstChatSection />
+      </div>
+    </div>
+  );
+};
 
-       <FirstChatSection />
-     </div>
-   
-   </div>
-  )
-}
-
-export default FirstChat
+export default FirstChat;
