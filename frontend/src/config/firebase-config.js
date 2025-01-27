@@ -1,15 +1,24 @@
-import {getApp, getApps, initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-import { getAuth,  OAuthProvider,GoogleAuthProvider,signInWithPopup } from "firebase/auth";
-import { firebaseApi } from "../../constants";
+import { initializeApp } from "firebase/app";
+import {getAuth, OAuthProvider,GoogleAuthProvider,GithubAuthProvider} from "firebase/auth"
+const firebaseConfig = {
+  apiKey: "AIzaSyDECq8D3Va4P0rmBVJJYwmJDyz1UdcVQq8",
+  authDomain: "auth0-17635.firebaseapp.com",
+  projectId: "auth0-17635",
+  storageBucket: "auth0-17635.appspot.com",
+  messagingSenderId: "449133453534",
+  appId: "1:449133453534:web:89c1fccc7a32a69c3d224f"
+};
 
-const firebaseConfig = firebaseApi;
-
-const app = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-const auth = getAuth(app);
-const GoogleProvider = new GoogleAuthProvider();
-const OutlookProvider = new OAuthProvider("microsoft.com");
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const auth=getAuth(app);
 
 
-export {auth, GoogleProvider, OutlookProvider, signInWithPopup};
+
+const microsoftProvider=new OAuthProvider('microsoft.com');
+
+const googleProvider=new GoogleAuthProvider();
+
+const githubProvider=new GithubAuthProvider();
+
+export {auth,microsoftProvider,firebaseConfig,googleProvider,githubProvider};

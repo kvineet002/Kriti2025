@@ -10,6 +10,7 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.7.9",
     "dotenv": "^16.4.7",
+    "firebase": "^11.2.0",
     "framer-motion": "^12.0.0",
     "Kriti-2025": "file:",
     "react": "^18.2.0",

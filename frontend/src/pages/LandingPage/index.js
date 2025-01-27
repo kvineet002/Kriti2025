@@ -12,7 +12,7 @@ function LandingPage() {
     <div className="flex flex-col gap-6 w-full">
       {/* <Navbar/> */}
       <HeroComponent/>
-      <div className='flex flex-col w-full gap-16 my-12'>
+      <div className='flex flex-col w-full gap-16 mt-12'>
         <Features/>
         <Integrations/>
         <Testimonials/>
