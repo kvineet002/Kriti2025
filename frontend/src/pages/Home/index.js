@@ -12,7 +12,7 @@ const Home = () => {
      </div>
      
      {/* The Hero content should take up the remaining 80% and be scrollable */}
-     <div className="md:w-[80%] no-scrollbar overflow-scroll  ">
+     <div className="md:w-[80%]  no-scrollbar overflow-scroll  ">
        <ChatSection />
      </div>
    

@@ -80,7 +80,8 @@ const HeroComponent = () => {
     const singlePrompt = promptList[Math.floor(Math.random() * promptList.length)];
     setInitialQuestion(singlePrompt);
   };
-  const handleSend = () => {
+  const handleSend = (e) => {
+    e.preventDefault();
     console.log("send");
   };
 
@@ -91,25 +92,15 @@ const HeroComponent = () => {
         <img src="/line.svg" alt="line" className="w-[1px] -translate-x-[146px] hidden md:flex translate-y-6 absolute top-0 " />
         <img src="/line.svg" alt="line" className="w-[2px] -translate-x-[218px] right-0 top-0 hidden md:flex translate-y-16 absolute   " />
       <div className="flex flex-col gap-5 items-center justify-center mb-10 poppins pt-36 ">
-        {/* <div className="md:w-[30%] w-[80%] text-[line]  font-semibold h-8 border bg-black  flex items-center backdrop-blur-[3px] bg-opacity-50 justify-center myborder text-white -translate-y-[0.60rem] md:-translate-y-[0.85rem] rounded-2xl"
-                   style={{
-                    background: "linear-gradient(to right,#4E3262, #875C3B)",
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                  }}
-          >
-        Revolutionizing Website Creation
-        </div> */}
         <h1
-          className="text-4xl lg:text-6xl text-white text-wrap font-bold text-center  md:w-[70%] w-[95%]"
+          className="text-3xl lg:text-6xl text-white text-wrap font-bold text-center  md:w-[70%] w-[95%]"
         >
           Prompt. Generate. Launch. Instant websites.
         </h1>
-        <p className="text-center text-white font-thin md:text-base  text-sm md:w-[50%] w-[80%]">
+        <p className="text-center text-white font-extralight md:font-thin md:text-base  text-sm md:w-[50%] w-[80%]">
           Design, layout, and functionality—all generated from your prompt.
         </p>
-        <div className="h-32 border flex  flex-col items-end text-white border-[#414141] p-2 px-4 w-[90%] md:w-[50%] rounded-xl bg-[#0F0F0F] mt-6 pointer-events-auto">
-         
+        <form onSubmit={initialQuestion.length === 0 ? (e) => e.preventDefault() : handleSend} className="h-32 border flex  flex-col items-end text-white myborder p-2 px-4 w-[90%] md:w-[50%] rounded-xl bg-[#0F0F0F] mt-6 pointer-events-auto">
             <input
               type="text"
               value={initialQuestion}
@@ -119,9 +110,9 @@ const HeroComponent = () => {
             />
             <div className=" flex items-center justify-center gap-2 ">
               <div onClick={generatePrompt} className=" select-none border-dashed border-2 myborder rounded-xl hover:bg-opacity-5  p-[7px] px-4 cursor-pointer font-light items-center justify-center text-sm flex gap-2 bg-white bg-opacity-10"><img  src="/sparkle.svg" className=" " /> Generate a Prompt </div>
-            <div onClick={handleSend} className={`text-black bg-white p-[7px] px-4 rounded-md ${initialQuestion.length === 0 ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'}`} onClick={initialQuestion.length === 0 ? null : () => { /* your send function here */ }}> Send</div>
+            <div onClick={initialQuestion.length === 0 ? null : handleSend} className={`text-black bg-white p-[7px] px-4 rounded-md ${initialQuestion.length === 0 ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'}`}> Send</div>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   );
