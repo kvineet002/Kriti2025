@@ -3,10 +3,24 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useEffect } from "react";
 
+const Navbar = () => {
+  return (
+    <div className="top-0 p-2 border-b-2 border-white border-opacity-10 flex justify-between items-center">
+      
+    </div>
+  );
+};
+
 function Sidebar() {
   const [hovered, setHovered] = useState(false);
   const [activeTab, setActiveTab] = useState("/home");
   const [isOpen, setIsOpen] = useState(false);
+  const [isNavOpened, setIsNavOpened] = useState(false);
+
+  const toggleNav = () => {
+    setIsNavOpened(!isNavOpened);
+  };
+
   const location = useLocation().pathname.split("/").pop();
   const navigate = useNavigate();
   const handleClick = (e, link) => {
@@ -36,7 +50,8 @@ function Sidebar() {
   }, []);
 
   return (
-    <div className="w-full flex flex-col h-full border-r-[0.2px] border-white border-opacity-10 bg-black">
+    <div>
+      <div className={`${isNavOpened && "hidden"} w-full flex flex-col h-full border-r-[0.2px] border-white border-opacity-10 bg-black`}>
       {/* Header section */}
       <div className=" flex items-center justify-center p-4  py-7 border-b-white border-b-2 border-opacity-10">
         <div className="flex md:gap-6 gap-3 w-[90%] md:flex-col flex-row justify-center items-center">
@@ -91,7 +106,9 @@ function Sidebar() {
           <span>Log out</span>
         </Link>
       </div>
+      </div>
     </div>
+    
   );
 }
 
