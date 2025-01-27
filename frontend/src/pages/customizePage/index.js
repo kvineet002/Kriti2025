@@ -1,203 +1,6 @@
 import React, { useState, useRef, useEffect} from "react";
 
-const sampleHtml = `<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Foodies' Paradise</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Arial', sans-serif;
-    }
-
-    body {
-      background-color: #f8f8f8;
-      color: #333;
-      line-height: 1.6;
-    }
-
-    .navbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 20px;
-      background-color: #ff5722;
-      color: #fff;
-    }
-
-    .navbar a {
-      color: #fff;
-      text-decoration: none;
-      margin: 0 15px;
-    }
-
-    .hero {
-      text-align: center;
-      padding: 100px 20px;
-      background: url('https://via.placeholder.com/1920x1080') no-repeat center center/cover;
-      color: white;
-    }
-
-    .hero h1 {
-      font-size: 3rem;
-      margin-bottom: 20px;
-    }
-
-    .hero p {
-      font-size: 1.2rem;
-      margin-bottom: 30px;
-    }
-
-    .hero button {
-      padding: 10px 20px;
-      background-color: #ff5722;
-      color: white;
-      border: none;
-      cursor: pointer;
-      font-size: 1rem;
-    }
-
-    .hero button:hover {
-      background-color: #e64a19;
-    }
-
-    .menu {
-      padding: 50px 20px;
-      text-align: center;
-    }
-
-    .menu h2 {
-      margin-bottom: 30px;
-      font-size: 2rem;
-    }
-
-    .menu-categories {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      flex-wrap: wrap;
-    }
-
-    .menu-item {
-      background-color: #fff;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      padding: 20px;
-      width: 250px;
-      transition: transform 0.3s;
-    }
-
-    .menu-item:hover {
-      transform: scale(1.05);
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    }
-
-    .menu-item img {
-      width: 100%;
-      border-radius: 5px;
-      margin-bottom: 15px;
-    }
-
-    .contact {
-      background-color: #333;
-      color: white;
-      text-align: center;
-      padding: 50px 20px;
-    }
-
-    .contact h2 {
-      margin-bottom: 20px;
-    }
-
-    .contact form {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .contact input, .contact textarea, .contact button {
-      margin: 10px 0;
-      padding: 10px;
-      width: 300px;
-      border: none;
-      border-radius: 5px;
-    }
-
-    .contact button {
-      background-color: #ff5722;
-      color: white;
-      cursor: pointer;
-    }
-
-    .contact button:hover {
-      background-color: #e64a19;
-    }
-
-    footer {
-      text-align: center;
-      padding: 20px;
-      background-color: #ff5722;
-      color: white;
-    }
-  </style>
-</head>
-<body>
-  <header class="navbar">
-    <h1>Foodies' Paradise</h1>
-    <nav>
-      <a href="#">Home</a>
-      <a href="#menu">Menu</a>
-      <a href="#contact">Contact</a>
-    </nav>
-  </header>
-
-  <section class="hero" style="color: black;">
-    <h1>Welcome to Foodies' Paradise</h1>
-    <p>Where your cravings meet perfection.</p>
-    <button onclick="scrollToMenu()">Explore Menu</button>
-  </section>
-
-  <section class="menu" id="menu">
-    <h2>Our Menu</h2>
-    <div class="menu-categories">
-      <div class="menu-item">
-        <img src="https://via.placeholder.com/250" alt="Pizza">
-        <h3>Pizza</h3>
-        <p>Delicious cheesy pizzas with fresh toppings.</p>
-      </div>
-      <div class="menu-item">
-        <img src="https://via.placeholder.com/250" alt="Burgers">
-        <h3>Burgers</h3>
-        <p>Juicy burgers served with crispy fries.</p>
-      </div>
-      <div class="menu-item">
-        <img src="https://via.placeholder.com/250" alt="Desserts">
-        <h3>Desserts</h3>
-        <p>Sweet treats to satisfy your cravings.</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="contact" id="contact">
-    <h2>Contact Us</h2>
-    <form>
-      <input type="text" placeholder="Your Name" required>
-      <input type="email" placeholder="Your Email" required>
-      <textarea placeholder="Your Message" rows="5" required></textarea>
-      <button type="submit">Send</button>
-    </form>
-  </section>
-
-  <footer>
-    <p>&copy; 2025 Foodies' Paradise. All rights reserved.</p>
-  </footer>
-</body>
-</html>
-`;
+const sampleHtml = ` <!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>Delicious Delights</title> <style> body { font-family: 'Arial', sans-serif; margin: 0; padding: 0; background-color: #f8f8f8; color: #333; line-height: 1.6; overflow-x: hidden; } header { background-color: #3498db; color: white; padding: 1em 0; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.2); transition: background-color 0.3s ease; position: sticky; top: 0; z-index: 100; } header:hover { background-color: #2980b9; } #nav-container { display: flex; justify-content: center; margin-top: 10px; } #nav-bar { display: flex; padding: 0; } .nav-item { padding: 10px 20px; margin: 0 10px; border-radius: 5px; background-color: #2980b9; transition: background-color 0.3s ease; text-decoration: none; color: white; list-style: none; } .nav-item:hover { background-color: #1e6692; transform: translateY(-2px); } .nav-item:active { background-color: #144262; transform: translateY(1px); } main { padding: 20px; text-align: center; margin-top: 20px; } #main-heading { color: #3498db; margin-bottom: 20px; font-size: 2.5em; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1); } main > p { max-width: 700px; margin: 0 auto 30px; color: #555; font-size: 1.1em; } .section { padding: 30px 20px; background-color: white; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border-radius: 8px; } .section h2 { color: #3498db; border-bottom: 2px solid #eee; padding-bottom: 10px; } .section ul { list-style-type: none; padding: 0; text-align: left; } .section li { padding: 8px 0; border-bottom: 1px solid #eee; color: #555; } .section li:last-child { border-bottom: none; } #contact { background-color: #ecf0f1; padding: 20px; text-align: center; border-top: 1px solid #ddd; } #contact h2 { color: #3498db; margin-bottom: 15px; } #contact form { display: flex; flex-direction: column; max-width: 400px; margin: 0 auto; } #contact input, #contact textarea { margin: 10px 0; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 1em; } #contact button { padding: 10px 15px; background-color: #27ae60; color: white; border: none; border-radius: 4px; cursor: pointer; transition: background-color 0.3s ease; } #contact button:hover { background-color: #219150; } footer { background-color: #34495e; color: white; text-align: center; padding: 1em 0; position: relative; bottom: 0; width: 100%; margin-top: 40px; transition: background-color 0.3s ease; } footer:hover { background-color: #2c3e50; } @media (max-width: 768px) { #nav-container { width: 100%; } #nav-bar{ flex-direction: column; padding: 0; } .nav-item{ margin: 5px 0; text-align: center; width: 100%; } main { padding: 15px; } #main-heading { font-size: 2em; } main > p { font-size: 1em; } .section { padding: 20px 15px; } } </style> </head> <body> <header id="main-header"> <h1>Delicious Delights</h1> <nav id="nav-container"> <ul id="nav-bar"> <li> <a href="#home" class="nav-item">Home</a></li> <li> <a href="#menu" class="nav-item">Menu</a></li> <li> <a href="#about" class="nav-item">About Us</a></li> <li> <a href="#contact" class="nav-item">Contact</a></li> </ul> </nav> </header> <main id="main-content"> <h2 id="main-heading">Welcome to Our Culinary World</h2> <p> Discover a symphony of flavors at Delicious Delights. We are passionate about creating memorable dining experiences with fresh, locally sourced ingredients. Our menu is a celebration of diverse cuisines, crafted to tantalize your taste buds and leave you craving for more. </p> <section id="home" class="section"> <h2>Home</h2> <p>Welcome to our virtual kitchen! Explore our website to discover our delightful menu, learn about our culinary passion, and contact us for reservations or inquiries.</p> </section> <section id="menu" class="section"> <h2>Our Menu</h2> <ul> <li>Appetizer: Bruschetta Trio</li> <li>Main Course: Grilled Salmon with Asparagus</li> <li>Dessert: Chocolate Lava Cake</li> <li>Beverages: Freshly Squeezed Lemonade</li> <li>Specialty: Seasonal Risotto</li> </ul> </section> <section id="about" class="section"> <h2>About Us</h2> <p> We are a team of food enthusiasts dedicated to bringing you the best culinary creations. Our chefs have years of experience and a commitment to quality. We believe in the power of food to bring people together and create lasting memories. </p> </section> </main> <section id="contact"> <h2>Contact Us</h2> <p>Have any questions or want to make a reservation? Fill out the form below!</p> <form id="contact-form"> <input type="text" placeholder="Your Name" required> <input type="email" placeholder="Your Email" required> <textarea placeholder="Your Message" rows="4" required></textarea> <button type="submit">Send Message</button> </form> </section> <footer id="main-footer"> <p>&copy; 2023 Delicious Delights. All Rights Reserved.</p> </footer> </body> </html> `;
 
 const rgbToHex = (rgb) => {
   const rgbValues = rgb.match(/\d+/g); 
@@ -209,27 +12,28 @@ const rgbToHex = (rgb) => {
     .join("")}`;
 };
 
-const updateElementStyles = (htmlString, tagName, newStyles) => {
-  // Parse the HTML string into a DOM structure
+const updateElementStyles = (htmlString, elementId, newStyles) => {
   const parser = new DOMParser();
   const doc = parser.parseFromString(htmlString, "text/html");
 
-  // Find the first matching element by tag name
-  const element = doc.getElementsByTagName(tagName)[0];
-  if (element) {
+  // Find the element by its unique ID
+  const elementToUpdate = doc.getElementById(elementId);
+
+  if (elementToUpdate) {
     // Apply new styles as inline styles
     Object.entries(newStyles).forEach(([key, value]) => {
-      element.style[key] = value;
+      elementToUpdate.style[key] = value;
     });
   }
 
-  // Serialize the DOM structure back to a string
   return doc.documentElement.outerHTML;
 };
+
 
 const CustomizePage = () => {
   const [html, setHtml] = useState(sampleHtml);
   const [hoveredComponent, setHoveredComponent] = useState(null);
+  const [hoveredElementId, setHoveredElementId] = useState(null);
   const [filteredStyles, setFilteredStyles] = useState({});
   const iframeRef = useRef(null);
 
@@ -252,8 +56,9 @@ const CustomizePage = () => {
       const iframeDocument = iframe.contentDocument;
 
       iframeDocument.body.addEventListener("mouseover", (e) => {
-        const componentType = e.target.tagName;
-        setHoveredComponent(componentType);
+        const elementId = e.target.id; // Assume the element has a unique ID
+        setHoveredComponent(e.target.tagName);
+        setHoveredElementId(elementId);
 
         const computedStyles = window.getComputedStyle(e.target);
         const filtered = {};
@@ -275,13 +80,14 @@ const CustomizePage = () => {
   }, []);
 
   const handleStyleChange = (key, value) => {
-    // Update the filtered styles
     const updatedStyles = { ...filteredStyles, [key]: value };
     setFilteredStyles(updatedStyles);
 
-    // Update the HTML with the new styles
-    const updatedHtml = updateElementStyles(html, hoveredComponent, updatedStyles);
-    setHtml(updatedHtml);
+    if (hoveredElementId) {
+      // Update the HTML string with the new styles for the exact hovered element
+      const updatedHtml = updateElementStyles(html, hoveredElementId, updatedStyles);
+      setHtml(updatedHtml);
+    }
   };
 
   const handleHtmlChange = (e) => {
@@ -300,7 +106,8 @@ const CustomizePage = () => {
           <h1>Customization Tab</h1>
           <div className="bg-white text-black w-full p-2">
             <h2 className="font-bold">Hovered Component:</h2>
-            <p className="lowercase">Component Type: {hoveredComponent}</p>
+            <p>Component Type: {hoveredComponent}</p>
+            <p>Element ID: {hoveredElementId}</p>
 
             <h3 className="font-bold mt-2">Relevant Styles:</h3>
             <div className="overflow-y-scroll h-48 bg-slate-200 p-2">
@@ -341,3 +148,4 @@ const CustomizePage = () => {
 };
 
 export default CustomizePage;
+
