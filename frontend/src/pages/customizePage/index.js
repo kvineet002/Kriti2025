@@ -199,6 +199,34 @@ const sampleHtml = `<!DOCTYPE html>
 </html>
 `;
 
+const rgbToHex = (rgb) => {
+  const rgbValues = rgb.match(/\d+/g); 
+  if (!rgbValues) return "#000000"; 
+
+  return `#${rgbValues
+    .slice(0, 3) 
+    .map((val) => parseInt(val, 10).toString(16).padStart(2, "0"))
+    .join("")}`;
+};
+
+const updateElementStyles = (htmlString, tagName, newStyles) => {
+  // Parse the HTML string into a DOM structure
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(htmlString, "text/html");
+
+  // Find the first matching element by tag name
+  const element = doc.getElementsByTagName(tagName)[0];
+  if (element) {
+    // Apply new styles as inline styles
+    Object.entries(newStyles).forEach(([key, value]) => {
+      element.style[key] = value;
+    });
+  }
+
+  // Serialize the DOM structure back to a string
+  return doc.documentElement.outerHTML;
+};
+
 const CustomizePage = () => {
   const [html, setHtml] = useState(sampleHtml);
   const [hoveredComponent, setHoveredComponent] = useState(null);
@@ -245,6 +273,17 @@ const CustomizePage = () => {
       iframe.onload = injectHoverListener;
     }
   }, []);
+
+  const handleStyleChange = (key, value) => {
+    // Update the filtered styles
+    const updatedStyles = { ...filteredStyles, [key]: value };
+    setFilteredStyles(updatedStyles);
+
+    // Update the HTML with the new styles
+    const updatedHtml = updateElementStyles(html, hoveredComponent, updatedStyles);
+    setHtml(updatedHtml);
+  };
+
   const handleHtmlChange = (e) => {
     setHtml(e.target.value);
   };
@@ -266,15 +305,28 @@ const CustomizePage = () => {
             <h3 className="font-bold mt-2">Relevant Styles:</h3>
             <div className="overflow-y-scroll h-48 bg-slate-200 p-2">
               {Object.entries(filteredStyles).map(([key, value]) => (
-                <p key={key}>
-                  <strong>{key}:</strong> {value}
-                </p>
+                <div key={key} className="flex items-center gap-2">
+                  <strong>{key}:</strong>
+                  {key.includes("color") ? (
+                    <input
+                      type="color"
+                      value={rgbToHex(value)}
+                      onChange={(e) => handleStyleChange(key, e.target.value)}
+                    />
+                  ) : (
+                    <input
+                      type="text"
+                      value={value}
+                      onChange={(e) => handleStyleChange(key, e.target.value)}
+                    />
+                  )}
+                </div>
               ))}
             </div>
           </div>
         </div>
       </div>
-      
+
       <div className="h-1/2 md:h-full w-full md:w-1/2 border-2">
         <iframe
           title="HTML Preview"
