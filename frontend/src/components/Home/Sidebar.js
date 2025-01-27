@@ -1,76 +1,43 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 
-// Navbar Component
-const Navbar = ({ toggleSidebar, isSidebarOpen}) => {
-  return (
-    <div className={`top-0 md:hidden p-4 px-6 flex justify-between items-center w-full`}>
-      <img
-        src="/burger.svg"
-        alt="Toggle Navigation"
-        className= "w-4 cursor-pointer" 
-        onClick={toggleSidebar}
-      />
-      <Link to={"/chat"} className="notapcolor">
-        <div className="text-white p-2 px-5 bg-white bg-opacity-[0.09] rounded-lg text-sm">
-          New Chat
-        </div>
-      </Link>
-    </div>
-  );
-};
-
-// Sidebar Component
-const Sidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
+function Sidebar() {
+  const [hovered, setHovered] = useState(null); // State for hover effect
+  const [activeTab, setActiveTab] = useState("/home");
   const [chatHistory, setChatHistory] = useState([]);
+  const [isOpen, setIsOpen] = useState(false); // Track if sidebar is open
   const email = "vineetalp@gmail.com";
   const location = useLocation().pathname.split("/").pop();
   const navigate = useNavigate();
-  const modalRef = useRef();
-
-  useEffect(() => {
-    function handleClickOutside(event) {
-        if (modalRef.current && !modalRef.current.contains(event.target)) {
-            setIsSidebarOpen(false);
-        }
-    }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () =>
-        document.removeEventListener("mousedown", handleClickOutside);
-}, [modalRef]);
-
-  const handleClick = (e, link) => {
-    e.preventDefault();
-    setTimeout(() => {
-      navigate(link);
-    }, 200);
-  };
 
   useEffect(() => {
     const getChatsHistory = async () => {
       try {
         const response = await axios.get(
-          `${process.env.REACT_APP_API_URL}/api/chats/${email}`
+          `${process.env.REACT_APP_API_URL}/api/chats/${email}` // Fixed string interpolation
         );
         setChatHistory(response.data.chats);
       } catch (err) {
-        console.error("Failed to fetch chat history:", err);
+        console.log(err);
       }
     };
 
     getChatsHistory();
   }, []);
 
+  const handleClick = (e, link) => {
+    e.preventDefault(); // Prevent immediate navigation
+    setHovered(true); // Trigger hover effect
+    setTimeout(() => {
+      navigate(link); // Navigate after 200ms
+    }, 200); // Delay for 200ms (adjust as needed)
+  };
+
   return (
-    <div
-      className={`${
-        isSidebarOpen ? "absolute" : "hidden"
-      } z-50 flex flex-col h-full border-r-[0.2px] border-white border-opacity-10 w-[60%] md:w-full top-0`}
-      ref={modalRef}
-    >
-      {/* Sidebar Header */}
-      <div className="hidden md:flex items-center justify-center p-4 py-7 border-b-white border-b-2 border-opacity-10">
+    <div className="w-full flex flex-col h-full border-r-[0.2px] border-white border-opacity-10 bg-black">
+      {/* Header section */}
+      <div className="flex items-center justify-center p-4 py-7 border-b-white border-b-2 border-opacity-10">
         <div className="flex md:gap-6 gap-3 w-[90%] md:flex-col flex-row justify-center items-center">
           <Link
             to={"/chat"}
@@ -81,8 +48,10 @@ const Sidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
         </div>
       </div>
 
-      {/* Chat History */}
-      <div className="flex flex-col gap-2 transition-all p-2 overflow-y-auto no-scrollbar duration-[800ms] ease-in-out h-full bg-black">
+      {/* Chat History Section */}
+      <div
+        className={`flex flex-col gap-2 transition-all p-2 overflow-y-auto no-scrollbar h-full duration-[800ms] ease-in-out`}
+      >
         {chatHistory &&
           chatHistory
             .slice()
@@ -96,21 +65,25 @@ const Sidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
                     : "text-opacity-40 hover:bg-opacity-10 hover:bg-white transition-all"
                 } p-2 px-4 rounded-lg`}
                 onClick={(e) => {
-                  handleClick(e, `/chat/${chat._id}`);
+                  setActiveTab(chat.title);
+                  handleClick(e, `/chat/${chat._id}`); // Fixed the navigation path
+                  if (isOpen) setIsOpen(false); // Close the menu after clicking a link
                 }}
+                onMouseEnter={() => setHovered(chat.title)} // Set hovered state on mouse enter
+                onMouseLeave={() => setHovered(null)} // Reset hovered state on mouse leave
               >
                 <div className="text-sm font-light">{chat.title}</div>
               </div>
             ))}
       </div>
 
-      {/* Sidebar Footer */}
-      <div className="flex flex-col gap-4 items-center p-4 py-6 border-t-white border-opacity-10 bg-black">
+      {/* Footer Section */}
+      <div className="flex flex-col gap-4 items-center p-4 py-6 border-t-white border-t-2 border-opacity-10">
         <div className="flex justify-center items-center gap-3">
           <img
             src="https://api.multiavatar.com/Binx Bond.svg"
-            alt="User Avatar"
             className="w-8 h-8 rounded-full bg-gray-300"
+            alt="User Avatar"
           />
           <span className="text-white text-sm">Vineet Kumar</span>
         </div>
@@ -123,23 +96,6 @@ const Sidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
       </div>
     </div>
   );
-};
+}
 
-// Main Component
-const Index = () => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  
-  const toggleSidebar = () => {
-    setIsSidebarOpen((prev) => !prev);
-  };
-
-  
-  return (
-    <div className="w-full h-full relative top-0">
-      <Navbar toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen}/>
-      <Sidebar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen}/>
-    </div>
-  );
-};
-
-export default Index;
+export default Sidebar;

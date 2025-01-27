@@ -3,9 +3,9 @@ import FirstChatSection from "../../components/Home/firstChat";
 
 const FirstChat = () => {
   return (
-    <div className="flex md:flex-row h-screen w-full border-r-[0.2px] border-white">
+    <div className="flex flex-col md:flex-row h-screen w-full border-r-[0.2px] border-white">
       {/* Sidebar */}
-      <div className="w-full h-full z-10 md:w-[20%] absolute md:relative">
+      <div className="md:w-[20%] ">
         <Sidebar />
       </div>
 
