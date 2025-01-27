@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { promptList } from "../../../constants/promptList";
 
 const Tiles = () => {
   const [columns, setColumns] = useState(0);
@@ -70,29 +71,55 @@ const Tiles = () => {
   );
 };
 
+
 const HeroComponent = () => {
+  const [initialQuestion,setInitialQuestion]=useState("");
+ 
+
+  function generatePrompt()  {
+    const singlePrompt = promptList[Math.floor(Math.random() * promptList.length)];
+    setInitialQuestion(singlePrompt);
+  };
+  const handleSend = () => {
+    console.log("send");
+  };
+
   return (
     <div className="w-full h-full top-0 flex flex-col bg-cover items-center justify-center gradient-overlay overflow-hidden relative">
       <Tiles />
-      <div className="flex flex-col gap-5 items-center justify-center mb-10 poppins pt-36">
-        <div className="w-[30%] h-8 border bg-black bg-opacity-60 border-[#2A2A2A] rounded-2xl"></div>
-        <motion.h1
-          className="text-4xl lg:text-6xl text-white text-wrap font-bold text-center w-[70%]"
-          initial={{ opacity: 0, y: 100 }}
-          animate={{ opacity: 1, y: 0 }}
+        <img src="/line.svg" alt="line" className="w-[2px] translate-x-[144px] hidden md:flex translate-y-36 absolute inset-0 " />
+        <img src="/line.svg" alt="line" className="w-[1px] -translate-x-[146px] hidden md:flex translate-y-6 absolute top-0 " />
+        <img src="/line.svg" alt="line" className="w-[2px] -translate-x-[218px] right-0 top-0 hidden md:flex translate-y-16 absolute   " />
+      <div className="flex flex-col gap-5 items-center justify-center mb-10 poppins pt-36 ">
+        {/* <div className="md:w-[30%] w-[80%] text-[line]  font-semibold h-8 border bg-black  flex items-center backdrop-blur-[3px] bg-opacity-50 justify-center myborder text-white -translate-y-[0.60rem] md:-translate-y-[0.85rem] rounded-2xl"
+                   style={{
+                    background: "linear-gradient(to right,#4E3262, #875C3B)",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                  }}
+          >
+        Revolutionizing Website Creation
+        </div> */}
+        <h1
+          className="text-4xl lg:text-6xl text-white text-wrap font-bold text-center  md:w-[70%] w-[95%]"
         >
           Prompt. Generate. Launch. Instant websites.
-        </motion.h1>
-        <p className="w-1/2 text-center text-white font-thin text-base">
+        </h1>
+        <p className="text-center text-white font-thin md:text-base  text-sm md:w-[50%] w-[80%]">
           Design, layout, and functionality—all generated from your prompt.
         </p>
-        <div className="h-32 border text-white border-[#414141] w-[80%] lg:w-[40%] rounded-xl bg-[#0F0F0F] mt-6 pointer-events-auto">
-          <div className="p-2">
+        <div className="h-32 border flex  flex-col items-end text-white border-[#414141] p-2 px-4 w-[90%] md:w-[50%] rounded-xl bg-[#0F0F0F] mt-6 pointer-events-auto">
+         
             <input
               type="text"
-              className="w-full p-4 bg-transparent opacity-50 outline-none"
+              value={initialQuestion}
+              onChange={(e) => setInitialQuestion(e.target.value)}
+              className="w-full p-4 px-0  bg-transparent opacity-50 outline-none"
               placeholder="Ask engine a question...."
             />
+            <div className=" flex items-center justify-center gap-2 ">
+              <div onClick={generatePrompt} className=" select-none border-dashed border-2 myborder rounded-xl hover:bg-opacity-5  p-[7px] px-4 cursor-pointer font-light items-center justify-center text-sm flex gap-2 bg-white bg-opacity-10"><img  src="/sparkle.svg" className=" " /> Generate a Prompt </div>
+            <div onClick={handleSend} className={`text-black bg-white p-[7px] px-4 rounded-md ${initialQuestion.length === 0 ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'}`} onClick={initialQuestion.length === 0 ? null : () => { /* your send function here */ }}> Send</div>
           </div>
         </div>
       </div>
