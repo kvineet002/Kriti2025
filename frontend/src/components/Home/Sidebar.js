@@ -50,7 +50,7 @@ function Sidebar() {
 
       {/* Chat History Section */}
       <div
-        className={`flex flex-col gap-2 transition-all p-2 overflow-y-auto no-scrollbar h-full duration-[800ms] ease-in-out`}
+        className={`flex flex-col gap-2 transition-all p-2 px-4 overflow-y-auto no-scrollbar h-full duration-[800ms] ease-in-out`}
       >
         {chatHistory &&
           chatHistory
@@ -78,14 +78,14 @@ function Sidebar() {
       </div>
 
       {/* Footer Section */}
-      <div className="flex flex-col gap-4 items-center p-4 py-6 border-t-white border-t-2 border-opacity-10">
+      <div className="flex flex-col gap-4 items-center p-4 py-6 border-t-white  border-opacity-10">
         <div className="flex justify-center items-center gap-3">
           <img
             src="https://api.multiavatar.com/Binx Bond.svg"
             className="w-8 h-8 rounded-full bg-gray-300"
             alt="User Avatar"
           />
-          <span className="text-white text-sm">Vineet Kumar</span>
+          <span className="text-white  overflow-hidden text-sm">Vineet Kumar</span>
         </div>
         <Link
           to={"/chat"}
