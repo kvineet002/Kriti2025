@@ -51,7 +51,7 @@ function Sidebar() {
         <div className="flex md:gap-6 gap-3 w-[90%] md:flex-col flex-row justify-center items-center">
           <Link
             to={"/chat"}
-            className="text-white bg-opacity-[0.09] w-full notapcolor text-sm bg-white p-2 px-10 justify-center items-center flex rounded-lg"
+            className="text-white bg-opacity-[0.09] w-full notapcolor text-sm bg-white hover:bg-opacity-[0.13]  p-2 px-10 justify-center items-center flex rounded-lg"
           >
             <span>New Chat</span>
           </Link>
