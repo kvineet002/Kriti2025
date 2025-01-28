@@ -26,9 +26,11 @@ const Home = () => {
           className="w-5 h-4 cursor-pointer"
           alt="menu"
         />
-        <div className="flex items-center justify-center gap-3">
-        <div className="   text-white flex bg-black">
-        <img onClick={()=>setMoreOptions(!moreOptions)} className=" w-4 h-4" src="/more.png"/>
+        <div className="flex items-center justify-center gap-4">
+        <div className="   text-white flex justify-center items-center bg-black">
+        <div onClick={()=>setMoreOptions(!moreOptions)} className=" flex -translate-y-[40%] w-4 h-4" >
+        •••
+          </div>
 
         </div>
         <Link
@@ -64,8 +66,9 @@ const Home = () => {
       {/* Content Section */}
        <div className="w-full md:w-[80%] h-[85vh] md:h-[95vh] flex flex-col  ">
         <div className="  items-center  py-4 hidden md:flex border-b-[1px] border-opacity-10 border-b-white justify-end px-10 text-white  bg-black">
-          <img onClick={()=>setMoreOptions(!moreOptions)} className=" cursor-pointer w-4" src="/more.png"/>
-        </div>
+        <div onClick={()=>setMoreOptions(!moreOptions)} className=" flex -translate-y-[30%] w-4 h-4  cursor-pointer" >
+        •••
+          </div> </div>
         <div className=" overflow-y-scroll no-scrollbar h-full">
         <ChatSection /></div>
       </div>
