@@ -151,17 +151,11 @@ function ChatSection() {
                 >
                   <div className="text-sm">
 
-                    {message.role === "model" ? <iframe
-        height="500"
-        style={{ width: "100%" }}
-        scrolling="no"
-        title="Embedded CodePen"
-        src="https://codepen.io/username/pen/abc123?height=500&theme-id=dark"
-        frameBorder="no"
-        loading="lazy"
-        allowTransparency="true"
-        allowFullScreen={true}
-      ></iframe>:message.parts[0].text}
+                    {message.role === "model" ?<iframe
+                      srcDoc={message.parts[0].text.substring(7, message.parts[0].text.length - 1)}
+                      title="chat-response"
+                      className={`w-full h-screen `}
+                    ></iframe>:message.parts[0].text}
                   </div>
                 </div>
               ))
