@@ -2,9 +2,11 @@ import { Link } from "react-router-dom";
 import Sidebar from "../../components/Home/Sidebar";
 import { useState } from "react";
 import ChatSection from "../../components/Home/ChatSection";
+import MoreOptions from "../../components/Home/MoreOptions";
 
 const Home = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [moreOptions, setMoreOptions] = useState(false);
 
   const handleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
@@ -20,13 +22,14 @@ const Home = () => {
       <div className="text-white flex md:hidden justify-between items-center px-5 py-4">
         <img
           onClick={handleSidebar}
-          src="/burger.svg"
-          className="w-5 h-5 cursor-pointer"
+          src="/burger.png"
+          className="w-5 h-4 cursor-pointer"
           alt="menu"
         />
-        <div className="flex items- justify-center gap-3">
+        <div className="flex items-center justify-center gap-3">
         <div className="   text-white flex bg-black">
-          . . .
+        <img onClick={()=>setMoreOptions(!moreOptions)} className=" w-4 h-4" src="/more.png"/>
+
         </div>
         <Link
           to={"/chat"}
@@ -36,6 +39,7 @@ const Home = () => {
         </Link>
         </div>
       </div>
+      {moreOptions && ( <MoreOptions onClose={()=>setMoreOptions(false)}/>)}
 
       {/* Sidebar */}
       <div
@@ -58,9 +62,9 @@ const Home = () => {
       )}
 
       {/* Content Section */}
-       <div className="w-full md:w-[80%] h-[87vh] md:h-[95vh] flex flex-col   ">
-        <div className="  items-center py-3 hidden md:flex border-b-[1px] border-opacity-10 border-b-white justify-end px-10 text-white  bg-black">
-          ...
+       <div className="w-full md:w-[80%] h-[85vh] md:h-[95vh] flex flex-col  ">
+        <div className="  items-center  py-4 hidden md:flex border-b-[1px] border-opacity-10 border-b-white justify-end px-10 text-white  bg-black">
+          <img onClick={()=>setMoreOptions(!moreOptions)} className=" cursor-pointer w-4" src="/more.png"/>
         </div>
         <div className=" overflow-y-scroll no-scrollbar h-full">
         <ChatSection /></div>

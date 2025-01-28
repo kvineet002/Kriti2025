@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
+import Loader from "./loading";
 
 function Sidebar() {
   const [hovered, setHovered] = useState(null); // State for hover effect
-  const [activeTab, setActiveTab] = useState("/home");
+  const [loading, setLoading] = useState(false);
   const [chatHistory, setChatHistory] = useState([]);
   const [isOpen, setIsOpen] = useState(false); // Track if sidebar is open
   const email = "vineetalp@gmail.com";
@@ -13,13 +14,18 @@ function Sidebar() {
 
   useEffect(() => {
     const getChatsHistory = async () => {
+      setLoading(true);
       try {
         const response = await axios.get(
           `${process.env.REACT_APP_API_URL}/api/chats/${email}` // Fixed string interpolation
         );
         setChatHistory(response.data.chats);
+        setLoading(false);
       } catch (err) {
         console.log(err);
+      }
+      finally {
+        setLoading(false);
       }
     };
 
@@ -53,8 +59,8 @@ function Sidebar() {
       </div>
 
       {/* Chat History Section */}
-      <div
-        className={`flex flex-col gap-2 transition-all p-2 px-4 overflow-y-auto no-scrollbar h-full duration-[800ms] ease-in-out`}
+      {loading?(<div className=" h-full flex items-center justify-center"><Loader/></div>):(<div
+        className={`flex flex-col gap-2 p-2 px-4 overflow-y-auto no-scrollbar h-full `}
       >
         {chatHistory &&
           chatHistory
@@ -69,7 +75,6 @@ function Sidebar() {
                     : "text-opacity-40 hover:bg-opacity-10 hover:bg-white transition-all"
                 } p-2 px-4 rounded-lg`}
                 onClick={(e) => {
-                  setActiveTab(chat.title);
                   handleClick(e, `/chat/${chat._id}`); // Fixed the navigation path
                   if (isOpen) setIsOpen(false); // Close the menu after clicking a link
                 }}
@@ -79,8 +84,8 @@ function Sidebar() {
                 <div className="text-sm font-light">{chat.title}</div>
               </div>
             ))}
-      </div>
-
+      </div>)
+}
       {/* Footer Section */}
       <div className="flex flex-col gap-4 items-center p-4 py-6 border-t-white  border-opacity-10">
         <div className="flex justify-center items-center gap-3">

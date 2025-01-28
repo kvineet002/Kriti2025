@@ -2,6 +2,7 @@ import model from "../../config/gemini.js";
 import React, { useState, useEffect, useRef } from "react";
 import { redirect, useLocation } from "react-router-dom";
 import axios from "axios";
+import Loader from "./loading.js";
 
 function ChatSection() {
   const containerRef = useRef(null);
@@ -253,9 +254,9 @@ function ChatSection() {
                 </div>
               ))
             ) : (
-              <p className="text-sm text-gray-500">
-                No chat history available.
-              </p>
+              <div className=" flex items-center justify-center"> 
+               <Loader/>
+              </div>
             )}
           </div>
           <div ref={chatEndRef}></div>

@@ -15,13 +15,13 @@ const FirstChat = () => {
   };
 
   return (
-    <div className="flex flex-col md:flex-row h-screen w-full relative">
+    <div className="flex flex-col md:flex-row h-screen w-full relative edge-prevent">
       {/* Hamburger Menu */}
       <div className="text-white flex md:hidden justify-between items-center px-5 py-4">
         <img
           onClick={handleSidebar}
-          src="/burger.svg"
-          className="w-5 h-5 cursor-pointer"
+          src="/burger.png"
+          className="w-5 h-4  cursor-pointer"
           alt="menu"
         />
         <Link
@@ -54,7 +54,7 @@ const FirstChat = () => {
 
       {/* Content Section */}
       <div
-        className="w-full md:w-[80%] flex flex-col items-center justify-center h-full gap-5"
+        className="w-full md:w-[80%] flex flex-col items-center justify-center h-[80vh] md:h-full gap-5"
       >
         <div className="text-white text-3xl font-bold text-center">
           What do you want to create today?
