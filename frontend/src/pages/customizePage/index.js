@@ -1,13 +1,188 @@
-import React, { useState, useRef, useEffect} from "react";
+import React, { useState, useRef, useEffect } from "react";
 
-const sampleHtml = ` <!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>Delicious Delights</title> <style> body { font-family: 'Arial', sans-serif; margin: 0; padding: 0; background-color: #f8f8f8; color: #333; line-height: 1.6; overflow-x: hidden; } header { background-color: #3498db; color: white; padding: 1em 0; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.2); transition: background-color 0.3s ease; position: sticky; top: 0; z-index: 100; } header:hover { background-color: #2980b9; } #nav-container { display: flex; justify-content: center; margin-top: 10px; } #nav-bar { display: flex; padding: 0; } .nav-item { padding: 10px 20px; margin: 0 10px; border-radius: 5px; background-color: #2980b9; transition: background-color 0.3s ease; text-decoration: none; color: white; list-style: none; } .nav-item:hover { background-color: #1e6692; transform: translateY(-2px); } .nav-item:active { background-color: #144262; transform: translateY(1px); } main { padding: 20px; text-align: center; margin-top: 20px; } #main-heading { color: #3498db; margin-bottom: 20px; font-size: 2.5em; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1); } main > p { max-width: 700px; margin: 0 auto 30px; color: #555; font-size: 1.1em; } .section { padding: 30px 20px; background-color: white; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border-radius: 8px; } .section h2 { color: #3498db; border-bottom: 2px solid #eee; padding-bottom: 10px; } .section ul { list-style-type: none; padding: 0; text-align: left; } .section li { padding: 8px 0; border-bottom: 1px solid #eee; color: #555; } .section li:last-child { border-bottom: none; } #contact { background-color: #ecf0f1; padding: 20px; text-align: center; border-top: 1px solid #ddd; } #contact h2 { color: #3498db; margin-bottom: 15px; } #contact form { display: flex; flex-direction: column; max-width: 400px; margin: 0 auto; } #contact input, #contact textarea { margin: 10px 0; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 1em; } #contact button { padding: 10px 15px; background-color: #27ae60; color: white; border: none; border-radius: 4px; cursor: pointer; transition: background-color 0.3s ease; } #contact button:hover { background-color: #219150; } footer { background-color: #34495e; color: white; text-align: center; padding: 1em 0; position: relative; bottom: 0; width: 100%; margin-top: 40px; transition: background-color 0.3s ease; } footer:hover { background-color: #2c3e50; } @media (max-width: 768px) { #nav-container { width: 100%; } #nav-bar{ flex-direction: column; padding: 0; } .nav-item{ margin: 5px 0; text-align: center; width: 100%; } main { padding: 15px; } #main-heading { font-size: 2em; } main > p { font-size: 1em; } .section { padding: 20px 15px; } } </style> </head> <body> <header id="main-header"> <h1>Delicious Delights</h1> <nav id="nav-container"> <ul id="nav-bar"> <li> <a href="#home" class="nav-item">Home</a></li> <li> <a href="#menu" class="nav-item">Menu</a></li> <li> <a href="#about" class="nav-item">About Us</a></li> <li> <a href="#contact" class="nav-item">Contact</a></li> </ul> </nav> </header> <main id="main-content"> <h2 id="main-heading">Welcome to Our Culinary World</h2> <p> Discover a symphony of flavors at Delicious Delights. We are passionate about creating memorable dining experiences with fresh, locally sourced ingredients. Our menu is a celebration of diverse cuisines, crafted to tantalize your taste buds and leave you craving for more. </p> <section id="home" class="section"> <h2>Home</h2> <p>Welcome to our virtual kitchen! Explore our website to discover our delightful menu, learn about our culinary passion, and contact us for reservations or inquiries.</p> </section> <section id="menu" class="section"> <h2>Our Menu</h2> <ul> <li>Appetizer: Bruschetta Trio</li> <li>Main Course: Grilled Salmon with Asparagus</li> <li>Dessert: Chocolate Lava Cake</li> <li>Beverages: Freshly Squeezed Lemonade</li> <li>Specialty: Seasonal Risotto</li> </ul> </section> <section id="about" class="section"> <h2>About Us</h2> <p> We are a team of food enthusiasts dedicated to bringing you the best culinary creations. Our chefs have years of experience and a commitment to quality. We believe in the power of food to bring people together and create lasting memories. </p> </section> </main> <section id="contact"> <h2>Contact Us</h2> <p>Have any questions or want to make a reservation? Fill out the form below!</p> <form id="contact-form"> <input type="text" placeholder="Your Name" required> <input type="email" placeholder="Your Email" required> <textarea placeholder="Your Message" rows="4" required></textarea> <button type="submit">Send Message</button> </form> </section> <footer id="main-footer"> <p>&copy; 2023 Delicious Delights. All Rights Reserved.</p> </footer> </body> </html> `;
+const sampleHtml = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Foodie's Delight</title>
+  <style>
+    /* General Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+    body {
+      background-color: #f8f8f8;
+      color: #333;
+    }
+    #navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      background-color: #ff5722;
+      color: white;
+    }
+    #navbar a {
+      color: white;
+      text-decoration: none;
+      margin: 0 15px;
+    }
+    #navbar a:hover {
+      text-decoration: underline;
+    }
+    #hero {
+      text-align: center;
+      padding: 100px 20px;
+      background: url('https://via.placeholder.com/1920x1080') no-repeat center center/cover;
+      color: white;
+    }
+    #hero h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+    }
+    #hero p {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+    }
+    #hero button {
+      padding: 10px 20px;
+      background-color: #ff5722;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    #hero button:hover {
+      background-color: #e64a19;
+    }
+    #menu {
+      padding: 50px 20px;
+      text-align: center;
+    }
+    #menu h2 {
+      margin-bottom: 30px;
+      font-size: 2rem;
+    }
+    .menu-category {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .menu-item {
+      background-color: white;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 20px;
+      width: 250px;
+      transition: transform 0.3s;
+    }
+    .menu-item:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    .menu-item img {
+      width: 100%;
+      border-radius: 5px;
+      margin-bottom: 15px;
+    }
+    #contact {
+      background-color: #333;
+      color: white;
+      text-align: center;
+      padding: 50px 20px;
+    }
+    #contact h2 {
+      margin-bottom: 20px;
+    }
+    #contact form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    #contact input, #contact textarea, #contact button {
+      margin: 10px 0;
+      padding: 10px;
+      width: 300px;
+      border: none;
+      border-radius: 5px;
+    }
+    #contact button {
+      background-color: #ff5722;
+      color: white;
+      cursor: pointer;
+    }
+    #contact button:hover {
+      background-color: #e64a19;
+    }
+    footer {
+      text-align: center;
+      padding: 20px;
+      background-color: #ff5722;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <header id="navbar">
+    <h1 id="site-title">Foodie's Delight</h1>
+    <nav id="nav-links">
+      <a href="#hero" id="nav-home">Home</a>
+      <a href="#menu" id="nav-menu">Menu</a>
+      <a href="#contact" id="nav-contact">Contact</a>
+    </nav>
+  </header>
+  <section id="hero">
+    <h1 id="hero-title">Welcome to Foodie's Delight</h1>
+    <p id="hero-description">Satisfy your cravings with our delicious offerings.</p>
+    <button id="explore-menu-btn" onclick="scrollToMenu()">Explore Menu</button>
+  </section>
+  <section id="menu">
+    <h2 id="menu-heading">Our Menu</h2>
+    <div class="menu-category" id="menu-items">
+      <div class="menu-item" id="menu-pizza">
+        <img src="https://via.placeholder.com/250" alt="Pizza" id="pizza-img">
+        <h3 id="pizza-title">Pizza</h3>
+        <p id="pizza-desc">Delicious cheesy pizzas with fresh toppings.</p>
+      </div>
+      <div class="menu-item" id="menu-burgers">
+        <img src="https://via.placeholder.com/250" alt="Burgers" id="burger-img">
+        <h3 id="burger-title">Burgers</h3>
+        <p id="burger-desc">Juicy burgers served with crispy fries.</p>
+      </div>
+      <div class="menu-item" id="menu-desserts">
+        <img src="https://via.placeholder.com/250" alt="Desserts" id="desserts-img">
+        <h3 id="desserts-title">Desserts</h3>
+        <p id="desserts-desc">Sweet treats to satisfy your cravings.</p>
+      </div>
+    </div>
+  </section>
+  <section id="contact">
+    <h2 id="contact-heading">Contact Us</h2>
+    <form id="contact-form">
+      <input type="text" placeholder="Your Name" id="contact-name" required>
+      <input type="email" placeholder="Your Email" id="contact-email" required>
+      <textarea placeholder="Your Message" id="contact-message" rows="5" required></textarea>
+      <button type="submit" id="contact-submit">Send</button>
+    </form>
+  </section>
+  <footer id="footer">
+    <p id="footer-text">&copy; 2025 Foodie's Delight. All rights reserved.</p>
+  </footer>
+</body>
+</html>
+`;
 
 const rgbToHex = (rgb) => {
-  const rgbValues = rgb.match(/\d+/g); 
-  if (!rgbValues) return "#000000"; 
-
+  const rgbValues = rgb.match(/\d+/g);
+  if (!rgbValues) return "#000000";
   return `#${rgbValues
-    .slice(0, 3) 
+    .slice(0, 3)
     .map((val) => parseInt(val, 10).toString(16).padStart(2, "0"))
     .join("")}`;
 };
@@ -15,25 +190,19 @@ const rgbToHex = (rgb) => {
 const updateElementStyles = (htmlString, elementId, newStyles) => {
   const parser = new DOMParser();
   const doc = parser.parseFromString(htmlString, "text/html");
-
-  // Find the element by its unique ID
   const elementToUpdate = doc.getElementById(elementId);
-
   if (elementToUpdate) {
-    // Apply new styles as inline styles
     Object.entries(newStyles).forEach(([key, value]) => {
       elementToUpdate.style[key] = value;
     });
   }
-
   return doc.documentElement.outerHTML;
 };
 
-
 const CustomizePage = () => {
   const [html, setHtml] = useState(sampleHtml);
-  const [hoveredComponent, setHoveredComponent] = useState(null);
-  const [hoveredElementId, setHoveredElementId] = useState(null);
+  const [selectedElement, setSelectedElement] = useState(null);
+  const [selectedElementId, setSelectedElementId] = useState(null);
   const [filteredStyles, setFilteredStyles] = useState({});
   const iframeRef = useRef(null);
 
@@ -44,23 +213,32 @@ const CustomizePage = () => {
     "margin",
     "padding",
     "border",
-    "border-radius",
-    "border-width",
     "height",
     "width",
   ];
 
-  const injectHoverListener = () => {
+  const injectClickListener = () => {
     const iframe = iframeRef.current;
     if (iframe && iframe.contentDocument) {
       const iframeDocument = iframe.contentDocument;
 
-      iframeDocument.body.addEventListener("mouseover", (e) => {
-        const elementId = e.target.id; // Assume the element has a unique ID
-        setHoveredComponent(e.target.tagName);
-        setHoveredElementId(elementId);
+      let lastSelectedElement = null;
 
-        const computedStyles = window.getComputedStyle(e.target);
+      iframeDocument.body.addEventListener("click", (e) => {
+        e.preventDefault();
+
+        if (lastSelectedElement) {
+          lastSelectedElement.style.outline = "";
+        }
+
+        const clickedElement = e.target;
+        lastSelectedElement = clickedElement;
+        clickedElement.style.outline = "2px solid #ff5722";
+
+        setSelectedElement(clickedElement.tagName);
+        setSelectedElementId(clickedElement.id);
+
+        const computedStyles = window.getComputedStyle(clickedElement);
         const filtered = {};
 
         relevantStyles.forEach((style) => {
@@ -75,7 +253,7 @@ const CustomizePage = () => {
   useEffect(() => {
     const iframe = iframeRef.current;
     if (iframe) {
-      iframe.onload = injectHoverListener;
+      iframe.onload = injectClickListener;
     }
   }, []);
 
@@ -83,62 +261,53 @@ const CustomizePage = () => {
     const updatedStyles = { ...filteredStyles, [key]: value };
     setFilteredStyles(updatedStyles);
 
-    if (hoveredElementId) {
-      // Update the HTML string with the new styles for the exact hovered element
-      const updatedHtml = updateElementStyles(html, hoveredElementId, updatedStyles);
+    if (selectedElementId) {
+      const updatedHtml = updateElementStyles(html, selectedElementId, updatedStyles);
       setHtml(updatedHtml);
     }
   };
 
-  const handleHtmlChange = (e) => {
-    setHtml(e.target.value);
-  };
-
   return (
-    <div className="flex flex-wrap justify-center items-center gap-4 text-white p-6 w-full h-screen">
-      <div className="flex gap-4 p-2 flex-1 md:h-full">
-        <textarea
-          className="border-2 overflow-y-scroll no-scrollbar p-2 bg-[#1e1e1e] h-76 md:h-full w-1/2"
-          value={html}
-          onChange={handleHtmlChange}
-        />
-        <div className="border-2 h-76 w-1/2 flex flex-col gap-3 p-3 items-center md:h-full justify-center">
-          <h1>Customization Tab</h1>
-          <div className="bg-white text-black w-full p-2">
-            <h2 className="font-bold">Hovered Component:</h2>
-            <p>Component Type: {hoveredComponent}</p>
-            <p>Element ID: {hoveredElementId}</p>
+    <div className="flex flex-col md:flex-row justify-between items-stretch text-white p-6 w-full h-screen gap-4">
+      {/* Customization Tab */}
+      <div className="border-2 w-full md:w-2/5 flex flex-col gap-3 p-4 bg-[#1e1e1e] rounded-lg shadow-lg">
+        <h1 className="text-xl font-bold">Customization Tab</h1>
+        <div className="bg-white text-black w-full p-3 rounded-lg shadow-inner">
+          <h2 className="font-bold">Selected Component:</h2>
+          <p>Component Type: {selectedElement || "None"}</p>
+          <p>Element ID: {selectedElementId || "None"}</p>
 
-            <h3 className="font-bold mt-2">Relevant Styles:</h3>
-            <div className="overflow-y-scroll h-48 bg-slate-200 p-2">
-              {Object.entries(filteredStyles).map(([key, value]) => (
-                <div key={key} className="flex items-center gap-2">
-                  <strong>{key}:</strong>
-                  {key.includes("color") ? (
-                    <input
-                      type="color"
-                      value={rgbToHex(value)}
-                      onChange={(e) => handleStyleChange(key, e.target.value)}
-                    />
-                  ) : (
-                    <input
-                      type="text"
-                      value={value}
-                      onChange={(e) => handleStyleChange(key, e.target.value)}
-                    />
-                  )}
-                </div>
-              ))}
-            </div>
+          <h3 className="font-bold mt-4">Relevant Styles:</h3>
+          <div className="overflow-y-scroll h-48 bg-slate-200 p-3 rounded-lg">
+            {Object.entries(filteredStyles).map(([key, value]) => (
+              <div key={key} className="flex items-center gap-2 mb-2">
+                <strong className="capitalize">{key}:</strong>
+                {key.includes("color") ? (
+                  <input
+                    type="color"
+                    value={rgbToHex(value)}
+                    onChange={(e) => handleStyleChange(key, e.target.value)}
+                  />
+                ) : (
+                  <input
+                    type="text"
+                    className="border p-1 rounded w-full"
+                    value={value}
+                    onChange={(e) => handleStyleChange(key, e.target.value)}
+                  />
+                )}
+              </div>
+            ))}
           </div>
         </div>
       </div>
 
-      <div className="h-1/2 md:h-full w-full md:w-1/2 border-2">
+      {/* Iframe Preview */}
+      <div className="border-2 w-full md:w-3/5 flex items-center justify-center bg-white rounded-lg shadow-lg">
         <iframe
           title="HTML Preview"
           sandbox="allow-scripts allow-same-origin"
-          className="w-full h-full"
+          className="w-full h-full rounded-lg"
           srcDoc={html}
           ref={iframeRef}
         />
@@ -148,4 +317,3 @@ const CustomizePage = () => {
 };
 
 export default CustomizePage;
-
