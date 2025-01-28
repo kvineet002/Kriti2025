@@ -109,18 +109,18 @@ const HeroComponent = () => {
     <div className="w-full h-full top-0 flex flex-col bg-cover items-center justify-center gradient-overlay overflow-hidden relative">
       <Tiles />
       <img
-        src="/line.svg"
-        alt="line"
+        src="/Line.png"
+        alt="Line"
         className="w-[2px] translate-x-[144px] hidden md:flex translate-y-36 absolute inset-0 "
       />
       <img
-        src="/line.svg"
-        alt="line"
+        src="/Line.png"
+        alt="Line"
         className="w-[1px] -translate-x-[181px] hidden md:flex translate-y-6 absolute top-0 "
       />
       <img
-        src="/line.svg"
-        alt="line"
+        src="/Line.png"
+        alt="Line"
         className="w-[2px] -translate-x-[218px] right-0 top-0 hidden md:flex translate-y-16 absolute   "
       />
       <div className="flex flex-col gap-5 items-center justify-center mb-10 poppins pt-36 ">

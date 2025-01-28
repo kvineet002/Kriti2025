@@ -15,7 +15,7 @@ const Home = () => {
   };
 
   return (
-    <div className="flex flex-col md:flex-row h-screen w-full relative">
+    <div className="flex flex-col md:flex-row md:h-screen w-full relative">
       {/* Hamburger Menu */}
       <div className="text-white flex md:hidden justify-between items-center px-5 py-4">
         <img
@@ -53,7 +53,7 @@ const Home = () => {
       )}
 
       {/* Content Section */}
-      <div className="w-full md:w-[80%] flex flex-col items-center justify-center h-full gap-5">
+      <div className="w-full md:w-[80%] h-full flex flex-col items-center justify-center gap-5">
        <div className="md:w-[80%]  no-scrollbar overflow-scroll  ">
         <ChatSection />
       </div>

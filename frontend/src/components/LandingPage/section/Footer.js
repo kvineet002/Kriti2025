@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from 'react'
-import {motion} from 'framer-motion';
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 
 const Tiles = () => {
   const [columns, setColumns] = useState(0);
@@ -72,17 +72,49 @@ const Tiles = () => {
 };
 
 const Footer = () => {
-  
   return (
-    <div className=' flex flex-col text-white text-center relative bottom-0 overlay-gradient overflow-hidden h-[400px]'>
-      <div className='text-2xl font-bold'>Footer</div>
-      <div className='text-sm'>This is the footer</div>
-      <div className='bottom-0 absolute w-full overflow-hidden '>
-        <img src="footer.svg" alt="footer" className='w-full scale-150 md:scale-100'/>
+    <div className=" flex flex-col text-white relative bottom-0  overlay-gradient overflow-hidden h-[400px]">
+        {/* <img
+        src="/line.svg"
+        alt="line"
+        className="w-[1.5px] translate-x-[145px] hidden md:flex translate-y-40 absolute inset-0 "
+      /> */}
+      <img
+        src="/Line.png"
+        alt="line"
+        className="w-[1px] -translate-x-[510px] hidden md:flex  absolute right-0 translate-y-64 "
+      />
+      <img
+        src="/Line.png"
+        alt="line"
+        className="w-[1.5px] -translate-x-[218px] right-0 top-0 hidden md:flex translate-y-36 absolute   "
+      />
+      <div className=" flex flex-col justify-between  md:px-24 px-5 h-[200px] translate-y-32 ">
+        <div className=" flex flex-col gap-2">
+          <div className="flex">
+          <div className="bg-gradient-to-r   font-bold text-xl from-[#4E3262] to-[#875C3B] text-transparent bg-clip-text">
+            ogataEngine
+          </div></div>
+          <div className=" text-sm  font-extralight text-opacity-20 md:w-[30%]">
+            Proxima is an AI solution that boosts your product's SEO ranking and
+            visibility.
+          </div>
+        </div>
+        <div className="text-sm  font-extralight md:w-[30%]">
+          All copyrights are reserved @2024
+        </div>{" "}
+      </div>
+      {/* <div className='text-sm'>This is the footer</div> */}
+      <div className="bottom-0 absolute w-full overflow-hidden ">
+        <img
+          src="footer.svg"
+          alt="footer"
+          className="w-full scale-150 md:scale-100"
+        />
       </div>
       <Tiles />
     </div>
-  )
-}
+  );
+};
 
-export default Footer
+export default Footer;

@@ -137,7 +137,7 @@ function ChatSection() {
   }, [chatId, email]);
 
   return (
-    <div ref={containerRef} className=" flex rounded-3xl">
+    <div ref={containerRef} className=" h-full flex rounded-3xl">
       <div className="flex-1 flex flex-col">
         <div className="flex-1 p-4 overflow-y-auto rounded-lg">
           <div className="space-y-2">
@@ -166,7 +166,7 @@ function ChatSection() {
           <div ref={chatEndRef}></div>
         </div>
 
-        <div className="flex items-center  p-4 border-t">
+        <div className="flex items-center  bottom-0 bg-black w-full p-4 border-t">
           <input
             type="text"
             value={inputText}

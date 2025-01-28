@@ -36,7 +36,7 @@ const FirstChat = () => {
       <div
         className={`fixed top-0 left-0 h-full bg-gray-800 text-white z-50 transform ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
-        } md:relative md:translate-x-0 transition-transform duration-300 ease-in-out`}
+        } md:relative md:translate-x-0 w-[10%] transition-transform duration-300 ease-in-out`}
         style={{
           width: sidebarOpen ? "65%" : "20%", // Dynamically set width for mobile screens
         }}
