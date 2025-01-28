@@ -78,8 +78,7 @@ function FirstChatSection() {
           <img src="/sparkle.svg" alt="Sparkle" />
           Generate a Prompt
         </div>
-        <div
-          onClick={message.length === 0 ? null : handleSend}
+        <button
           className={`text-black bg-white p-[7px] px-4 rounded-md ${
             message.length === 0
               ? "cursor-not-allowed opacity-50"
@@ -87,7 +86,7 @@ function FirstChatSection() {
           }`}
         >
           Send
-        </div>
+        </button>
       </div>
     </form>
   );

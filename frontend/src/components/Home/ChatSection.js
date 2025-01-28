@@ -1,22 +1,24 @@
 import model from "../../config/gemini.js";
 import React, { useState, useEffect, useRef } from "react";
-import { useLocation } from "react-router-dom";
+import { redirect, useLocation } from "react-router-dom";
 import axios from "axios";
 
 function ChatSection() {
   const containerRef = useRef(null);
   const [chats, setChats] = useState([]);
   const [inputText, setInputText] = useState("");
+  const [loading, setLoading] = useState(false);
   const path = useLocation().pathname;
   const chatId = path.split("/").pop();
   const email = "vineetalp@gmail.com";
-
+  const [htmlContent, setHtmlContent] = useState("");
+  const [isGenerating, setIsGenerating] = useState(false);
   const chatEndRef = useRef(null);
 
   const scrollToBottom = () => {
-    // if (chatEndRef.current) {
-    //   chatEndRef.current.scrollIntoView({ behavior: "smooth" });
-    // }
+    if (chatEndRef.current) {
+      chatEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
   useEffect(() => {
@@ -24,14 +26,18 @@ function ChatSection() {
   }, [chats]);
 
   // Add new message to the chat
-  const addMessage = async (text) => {
+  const handleSend = async (e) => {
+    e.preventDefault();
+    const text = inputText;
     const newUserMessage = { role: "user", parts: [{ text }] };
     const updatedChats = [...chats, newUserMessage];
 
     // Optimistically update the UI
     setChats(updatedChats);
 
+    setInputText("");
     try {
+      setLoading(true);
       const chatInstance = model.startChat({
         history: updatedChats.map(({ role, parts }) => ({
           role,
@@ -39,7 +45,7 @@ function ChatSection() {
         })),
         generationConfig: {},
       });
-      console.log(updatedChats)
+      console.log(updatedChats);
       console.log("Chat instance created.", chatInstance);
 
       const result = await chatInstance.sendMessageStream([text]);
@@ -48,9 +54,18 @@ function ChatSection() {
       const newModelMessage = { role: "model", parts: [{ text: "" }] };
       setChats((prevChats) => [...prevChats, newModelMessage]);
 
+    
       for await (const chunk of result.stream) {
         const chunkText = chunk.text();
         accumulatedText += chunkText;
+        if (chunkText.includes("```")) {
+          console.log("Generating website...");
+          setIsGenerating(!isGenerating);
+        }
+        if(isGenerating){
+          setHtmlContent((prevContent) => prevContent + chunkText);
+        }
+  
 
         setChats((prevChats) =>
           prevChats.map((chat, index) =>
@@ -60,7 +75,6 @@ function ChatSection() {
           )
         );
       }
-
       // Save the latest question and answer to the server
       const dataToUpdate = { question: text, answer: accumulatedText };
       await axios.put(
@@ -70,8 +84,11 @@ function ChatSection() {
       );
 
       console.log("Chat successfully updated on the server.");
+      setLoading(false);
     } catch (err) {
       console.error("Error in addMessage or updating the chat:", err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -81,6 +98,7 @@ function ChatSection() {
     const fetchChats = async () => {
       if (hasFetched.current) return;
       hasFetched.current = true;
+      setLoading(true);
 
       try {
         const response = await axios.get(
@@ -109,6 +127,15 @@ function ChatSection() {
           for await (const chunk of result.stream) {
             const chunkText = chunk.text();
             accumulatedText += chunkText;
+            if (chunkText.includes("```")) {
+              setIsGenerating(!isGenerating);
+            }
+            if(isGenerating){
+              setHtmlContent( chunkText);
+              
+            }
+            if(isGenerating)console.log(htmlContent)
+      
 
             setChats((prevChats) =>
               prevChats.map((chat, index) =>
@@ -128,64 +155,138 @@ function ChatSection() {
 
           console.log("Chat successfully updated on the server.");
         }
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching chats:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchChats();
   }, [chatId, email]);
 
+  const handleViewWebsite = async (text) => {
+    try {
+      console.log("Viewing website:", htmlContent);
+      
+    } catch (error) {
+      console.error("Error viewing website:", error);
+    }
+  };
+
+  const processChunks = (chunks) => {
+    let htmlData = "";
+    for (const chunk of chunks) {
+      if (chunk.trim().startsWith("$$$html")) {
+        setIsGenerating(true);
+        const extractedHtml = chunk
+          .replace(/\$\$\$html/, "") // Remove the marker
+          .trim();
+        htmlData += extractedHtml;
+      } else {
+        htmlData += chunk.trim(); // Append non-html content
+      }
+    }
+
+    setIsGenerating(false); // Stop showing the "Generating website..." message
+    setHtmlContent(htmlData);
+  };
+  const formattedMessage = (message) => {
+    const chunks = message.split("```");
+    return chunks.map((chunk, index) => {
+      if (chunk.trim().startsWith("html")) {
+        return (
+          <div key={index} className="text-white flex">
+            
+            {/* {chunk.replace(/html/, "")} */}
+            <div className=" flex px-2 p-2 -ml-1 rounded-md  my-3 myborder  text-white gap-2">
+                     {isGenerating?" Generating website ...":"Generated website"}
+                      <div onClick={()=>handleViewWebsite(htmlContent)} className="  underline cursor-pointer"
+                      >
+                        View website
+                      </div>
+                      </div>
+          </div>
+        );
+      } else {
+        return (
+          <div key={index} className="text-white">
+            {chunk}
+          </div>
+        );
+      }
+    });
+  }
   return (
-    <div ref={containerRef} className=" h-full flex rounded-3xl">
+    <div ref={containerRef} className=" h-full flex no-scrollbar rounded-3xl">
       <div className="flex-1 flex flex-col">
-        <div className="flex-1 p-4 overflow-y-auto rounded-lg">
+        <div className="flex-1 p-4 md:px-[10%] transition-all overflow-y-auto no-scrollbar rounded-lg">
           <div className="space-y-2">
             {chats.length > 0 ? (
               chats.map((message, index) => (
                 <div
                   key={index}
-                  className={`p-2 rounded-md ${
-                    message.role === "model" ? "bg-gray-200" : "bg-blue-500"
+                  className={`flex text-sm${
+                    message.role === "model" ? "" : ""
                   }`}
                 >
-                  <div className="text-sm">
-
-                    {message.role === "model" ?<iframe
-                      srcDoc={message.parts[0].text.substring(7, message.parts[0].text.length - 1)}
-                      title="chat-response"
-                      className={`w-full h-screen `}
-                    ></iframe>:message.parts[0].text}
-                  </div>
+                  {message.role === "model" ? (
+                    // <iframe
+                    //   srcDoc={message.parts[0].text.substring(
+                    //     7,
+                    //     message.parts[0].text.length - 1
+                    //   ).replace(/<a /g, '<a target="blank" ')}
+                    //   title="chat-response"
+                    //   allowFullScreen="true"
+                    //   className={`w-full h-screen `}
+                    // ></iframe>
+                    <div className=" flex flex-col gap-2">
+                      <div className=" text-white px-2">
+                        {formattedMessage(message.parts[0].text)}
+                        </div>
+                    </div>
+                  ) : (
+                    <div className=" flex px-2 p-2 mb-2 rounded-md bg-white  bg-opacity-[0.15]  text-white gap-0">
+                      {message.parts[0].text}
+                    </div>
+                  )}
                 </div>
               ))
             ) : (
-              <p className="text-sm text-gray-500">No chat history available.</p>
+              <p className="text-sm text-gray-500">
+                No chat history available.
+              </p>
             )}
           </div>
           <div ref={chatEndRef}></div>
         </div>
 
-        <div className="flex items-center  bottom-0 bg-black w-full p-4 border-t">
+        <form
+          onSubmit={
+            inputText.length === 0 ? (e) => e.preventDefault() : handleSend
+          }
+          className="flex   justify-between  bottom-0  mt-2  h-32 border  flex-col text-white myborder p-2 px-4  md:mx-[10%] mx-3 rounded-xl bg-[#0F0F0F]  pointer-events-auto"
+        >
           <input
             type="text"
             value={inputText}
             onChange={(e) => setInputText(e.target.value)}
-            placeholder="Type your message"
-            className="flex-1 p-2 border rounded-md"
+            className="w-full p-4 px-0  bg-transparent opacity-50 outline-none"
+            placeholder="Ask engine a question...."
           />
-          <button
-            onClick={() => {
-              if (inputText.trim()) {
-                addMessage(inputText);
-                setInputText("");
-              }
-            }}
-            className="ml-2 px-4 py-2 bg-blue-500 text-white rounded-md"
-          >
-            Send
-          </button>
-        </div>
+          <div className=" flex items-center justify-end">
+            <button
+              className={`text-black bg-white p-[7px] px-4 rounded-md  ${
+                inputText.length === 0
+                  ? "cursor-not-allowed opacity-50"
+                  : "cursor-pointer"
+              }`}
+            >
+              Send
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   );

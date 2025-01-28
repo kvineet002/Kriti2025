@@ -93,7 +93,7 @@ const Footer = () => {
         <div className=" flex flex-col gap-2">
           <div className="flex">
           <div className="bg-gradient-to-r   font-bold text-xl from-[#4E3262] to-[#875C3B] text-transparent bg-clip-text">
-            ogataEngine
+            ogaTa.ai
           </div></div>
           <div className=" text-sm  font-extralight text-opacity-20 md:w-[30%]">
             Proxima is an AI solution that boosts your product's SEO ranking and

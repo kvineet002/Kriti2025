@@ -24,12 +24,17 @@ const Home = () => {
           className="w-5 h-5 cursor-pointer"
           alt="menu"
         />
+        <div className="flex items- justify-center gap-3">
+        <div className="   text-white flex bg-black">
+          . . .
+        </div>
         <Link
           to={"/chat"}
           className="text-white bg-opacity-[0.09] px-5 notapcolor text-sm bg-white p-2 justify-center items-center flex rounded-lg"
         >
           <span>New Chat</span>
         </Link>
+        </div>
       </div>
 
       {/* Sidebar */}
@@ -53,10 +58,12 @@ const Home = () => {
       )}
 
       {/* Content Section */}
-      <div className="w-full md:w-[80%] h-full flex flex-col items-center justify-center gap-5">
-       <div className="md:w-[80%]  no-scrollbar overflow-scroll  ">
-        <ChatSection />
-      </div>
+       <div className="w-full md:w-[80%] h-[87vh] md:h-[95vh] flex flex-col   ">
+        <div className="  items-center py-3 hidden md:flex border-b-[1px] border-opacity-10 border-b-white justify-end px-10 text-white  bg-black">
+          ...
+        </div>
+        <div className=" overflow-y-scroll no-scrollbar h-full">
+        <ChatSection /></div>
       </div>
     </div>
   );
