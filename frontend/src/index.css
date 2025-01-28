@@ -33,3 +33,30 @@ body{
   background: linear-gradient(to bottom, transparent, black);
   background-size: 100% 100%; /* Ensure it covers the element */
 }
+
+.overlay-gradient {
+  background: linear-gradient(to top, transparent, black);
+  background-size: 50% 100%; /* Ensure it covers the element */
+}
+
+/* Keyframe animation for the border */
+@keyframes borderGlow {
+  0% {
+    border-color: #4E3262;
+    box-shadow: 0 0 3px #4E3262;
+  }
+  50% {
+    border-color: #875C3B;
+    box-shadow: 0 0 6px #875C3B;
+  }
+  100% {
+    border-color: #4E3262;
+    box-shadow: 0 0 3px #4E3262;
+  }
+}
+
+/* Animated border effect */
+.border-animated {
+  animation: borderGlow 2s infinite;
+  border-style: dashed;
+}

@@ -1,52 +1,96 @@
-import axios from 'axios';
-import React from 'react'
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom';
+import axios from "axios";
+import React from "react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { promptList } from "../../constants/promptList";
 
 function FirstChatSection() {
-    const [message, setMessage] = useState('')
-    const [loading, setLoading] = useState(false)
-    const navigate = useNavigate();
-    const email="vineetalp@gmail.com"
+  const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [isLoading1, setisLoading1] = useState(false);
+  const navigate = useNavigate();
+  const email = "vineetalp@gmail.com";
 
-    const handleSendMessage = async (e) => {
-        e.preventDefault();
-        if (!message.trim()) return;
-    
-        try {
-          setLoading(true);
-          const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/chats`, {
-            email:email,
-            text: message,
-          });
-    
-            console.log("Message sent:", response.data);
+ function generatePrompt() {
+     const singlePrompt =
+       promptList[Math.floor(Math.random() * promptList.length)];
+     setisLoading1(true);
+   
+     // Clear the existing question
+     setMessage("");
+   
+     // Display the prompt letter by letter
+     let index = -1;
+     const typingInterval = setInterval(() => {
+       if (index <singlePrompt.length-1) {
+         setMessage((prev) => prev + singlePrompt[index]);
+         index++;
+       } else {
+         clearInterval(typingInterval);
+         setisLoading1(false); // Stop loading once the typing is complete
+       }
+     }, 15); // Adjust the interval speed as needed (100ms for each letter)
+   }
+  const handleSend = async (e) => {
+    e.preventDefault();
+    if (!message.trim()) return;
 
-          setMessage("");
-          const id = response.data;
-            navigate(`/chat/${id}`);
-
-        } catch (error) {
-          console.error("Error sending message:", error);
-          setLoading(false);
+    try {
+      setLoading(true);
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_URL}/api/chats`,
+        {
+          email: email,
+          text: message,
         }
-      };
+      );
 
-    return (
-        <form onSubmit={handleSendMessage} className="flex px-6 w-[60%] justify-center gap-3 items-center  p-5 myborder  bg-opacity-5 bg-white rounded-lg shadow-md">
-            <input
-                type="text"
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-                placeholder="Type your message"
-                className="w-full p-2 px-4 border myborder outline-none placeholder:text-white  text-white bg-black rounded-md"
-            />
-            <button type="submit" className="px-4 py-2  text-black rounded-md  bg-white hover:bg-opacity-90">
-                Send
-            </button>
-        </form>
-    )
-  
+      console.log("Message sent:", response.data);
+
+      setMessage("");
+      const id = response.data;
+      navigate(`/chat/${id}`);
+    } catch (error) {
+      console.error("Error sending message:", error);
+      setLoading(false);
+    }
+  };
+
+  return (
+    <form
+      onSubmit={message.length === 0 ? (e) => e.preventDefault() : handleSend}
+      className="h-32 border flex  flex-col items-end text-white myborder p-2 px-4  md:w-[70%] w-[90%] rounded-xl bg-[#0F0F0F] mt-6 pointer-events-auto"
+    >
+      <input
+        type="text"
+        value={message}
+        onChange={(e) => setMessage(e.target.value)}
+        className="w-full p-4 px-0  bg-transparent opacity-50 outline-none"
+        placeholder="Ask engine a question...."
+      />
+      <div className=" flex items-center justify-center gap-2 ">
+      <div
+          onClick={!isLoading1 ? generatePrompt : null}
+          className={`select-none border-2 myborder rounded-xl p-[7px] px-4 ${
+            isLoading1 ? "border-animated" : "hover:bg-opacity-5"
+          } cursor-pointer font-light items-center justify-center myborder border-dashed text-sm flex gap-2 bg-white bg-opacity-10`}
+        >
+          <img src="/sparkle.svg" alt="Sparkle" />
+          Generate a Prompt
+        </div>
+        <div
+          onClick={message.length === 0 ? null : handleSend}
+          className={`text-black bg-white p-[7px] px-4 rounded-md ${
+            message.length === 0
+              ? "cursor-not-allowed opacity-50"
+              : "cursor-pointer"
+          }`}
+        >
+          Send
+        </div>
+      </div>
+    </form>
+  );
 }
 
-export default FirstChatSection
+export default FirstChatSection;

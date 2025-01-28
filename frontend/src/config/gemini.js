@@ -1,18 +1,21 @@
-import {
-    GoogleGenerativeAI
-  } from "@google/generative-ai";
-  
-    const API_KEY = process.env.REACT_APP_GOOGLE_API_KEY||"AIzaSyD6_5dM2ze7f-_mnlm26xeC3LJCMNFWcIg";
-    
- 
-  const genAI = new GoogleGenerativeAI(API_KEY);
-  
-  const model = genAI.getGenerativeModel({
-    model: "gemini-2.0-flash-exp"
-  });
-  const systemPrompt = {
-    prompt: "You are a website generator AI. When given a prompt, generate a complete, functional website with the HTML, CSS, and JavaScript code all combined into a single file. Use `<style>` tags for CSS and `<script>` tags for JavaScript within the same file. Ensure the code is clean, properly formatted, and ready to run."
-  };
-  
-  // model.setSystemPrompt(systemPrompt);
-  export default model;
+import { GoogleGenerativeAI } from "@google/generative-ai";
+
+const API_KEY =
+  process.env.REACT_APP_GOOGLE_API_KEY ||
+  "AIzaSyD6_5dM2ze7f-_mnlm26xeC3LJCMNFWcIg";
+
+const genAI = new GoogleGenerativeAI(API_KEY);
+const imagePrompt = "";
+const systemPrompt =
+  `You are a website generator AI. When given a prompt, generate a complete, functional website with the HTML, CSS, and JavaScript code all combined into a single file. Use  < style >
+  // tags for CSS with very nice colours and <script> tags for JavaScript where user can interact within the same file. Ensure the code is clean, properly formatted, and ready to run.Note these points:-. The website should have a header with a title and a navigation bar.-The website should have caurosel where placeholder will be from link of pexels and relevant to the prompted website.- The website should have a main section with a heading and 
+// a paragraph and sections according to nav items where nav links will redirected .-Section of contact 
+// us in user theme- The website should have a footer with a copyright notice. also note that the website should be responsive. add animations and transitions.
+`;
+const model = genAI.getGenerativeModel({
+  model: "gemini-2.0-flash-exp",
+  systemInstruction: systemPrompt,
+});
+
+// model.setSystemPrompt(systemPrompt);
+export default model;
