@@ -7,7 +7,7 @@ const API_KEY =
 const genAI = new GoogleGenerativeAI(API_KEY);
 const imagePrompt = "";
 const systemPrompt = `You are a website generator AI. When given a prompt, generate a complete, functional website with the HTML
-//, CSS, and JavaScript code all combined into a single file. Use  < style >
+//, CSS, and JavaScript code all combined into a single file and Note (**very important** add id to each tag) . Use  < style >
   // tags for CSS with very nice colours and <script> tags for JavaScript where user can interact within the same file. 
   // Ensure the code is clean, properly formatted, and ready to run and your 
   // output will be like 

@@ -134,7 +134,6 @@ function ChatSection() {
               setHtmlContent( chunkText);
               
             }
-            if(isGenerating)console.log(htmlContent)
       
 
             setChats((prevChats) =>
@@ -168,7 +167,7 @@ function ChatSection() {
 
   const handleViewWebsite = async (text) => {
     try {
-      console.log("Viewing website:", htmlContent);
+      console.log("Viewing website:", text);
       
     } catch (error) {
       console.error("Error viewing website:", error);
@@ -202,7 +201,7 @@ function ChatSection() {
             {/* {chunk.replace(/html/, "")} */}
             <div className=" flex px-2 p-2 -ml-1 rounded-md  my-3 myborder  text-white gap-2">
                      {isGenerating?" Generating website ...":"Generated website"}
-                      <div onClick={()=>handleViewWebsite(htmlContent)} className="  underline cursor-pointer"
+                      <div onClick={()=>handleViewWebsite(chunks[1])} className="  underline cursor-pointer"
                       >
                         View website
                       </div>
