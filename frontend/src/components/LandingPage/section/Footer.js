@@ -80,12 +80,12 @@ const Footer = () => {
         className="w-[1.5px] translate-x-[145px] hidden md:flex translate-y-40 absolute inset-0 "
       /> */}
       <img
-        src="/line.svg"
+        src="/Line.png"
         alt="line"
         className="w-[1px] -translate-x-[510px] hidden md:flex  absolute right-0 translate-y-64 "
       />
       <img
-        src="/line.svg"
+        src="/Line.png"
         alt="line"
         className="w-[1.5px] -translate-x-[218px] right-0 top-0 hidden md:flex translate-y-36 absolute   "
       />
