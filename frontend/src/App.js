@@ -19,6 +19,7 @@ function App() {
         <Route path='/' element={<LandingPage/>}/>
           <Route path='/chat' element={<FirstChat/>}/>
           <Route path='/chat/:id' element={<Home/>}/>
+          <Route path='/customizable-dashboard/:id' element={<Home/>}/>
         <Route element={<ProtectedRoutes/>}>
         </Route>
       </Routes>
