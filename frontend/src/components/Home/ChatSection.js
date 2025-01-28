@@ -137,7 +137,7 @@ function ChatSection() {
   }, [chatId, email]);
 
   return (
-    <div ref={containerRef} className=" flex rounded-3xl">
+    <div ref={containerRef} className=" h-full flex rounded-3xl">
       <div className="flex-1 flex flex-col">
         <div className="flex-1 p-4 overflow-y-auto rounded-lg">
           <div className="space-y-2">
@@ -151,11 +151,17 @@ function ChatSection() {
                 >
                   <div className="text-sm">
 
-                    {message.role === "model" ?<iframe
-                      srcDoc={message.parts[0].text.substring(7, message.parts[0].text.length - 1)}
-                      title="chat-response"
-                      className={`w-full h-screen `}
-                    ></iframe>:message.parts[0].text}
+                    {message.role === "model" ? <iframe
+        height="500"
+        style={{ width: "100%" }}
+        scrolling="no"
+        title="Embedded CodePen"
+        src="https://codepen.io/username/pen/abc123?height=500&theme-id=dark"
+        frameBorder="no"
+        loading="lazy"
+        allowTransparency="true"
+        allowFullScreen={true}
+      ></iframe>:message.parts[0].text}
                   </div>
                 </div>
               ))
@@ -166,7 +172,7 @@ function ChatSection() {
           <div ref={chatEndRef}></div>
         </div>
 
-        <div className="flex items-center  p-4 border-t">
+        <div className="flex items-center  bottom-0 bg-black w-full p-4 border-t">
           <input
             type="text"
             value={inputText}
