@@ -114,7 +114,7 @@ const Testimonials = () => {
         />
 
         <div className="mx-auto bg-white bg-opacity-5 rounded-lg p-4 h-[720px] w-full flex gap-3">
-          <Marquee speed={30}>
+          <Marquee speed={30} direction="down">
             <motion.div className="h-full lg:w-1/3 w-full overflow-y-hidden flex flex-col gap-3">
               {tweets.map((tweet, index) => (
                 <div
