@@ -113,28 +113,33 @@ const Testimonials = () => {
           }
         />
 
-        <div className="mx-auto bg-white bg-opacity-5 rounded-lg p-4 h-[720px] w-full flex gap-3">
-          <Marquee speed={30} direction="down">
-            <motion.div className="h-full lg:w-1/3 w-full overflow-y-hidden flex flex-col gap-3">
-              {tweets.map((tweet, index) => (
-                <div
-                  className="w-full h-[420px] bg-[#1a1a1a] rounded-lg p-4 flex flex-col gap-3"
-                  key={index}
-                >
-                  <h1 className="font-bold text-2xl p-4"> “ </h1>
-                  <p className="text-white  px-4">{tweet.tweet}</p>
-                  <div className="flex justify-between items-center p-4">
-                    <div className="flex flex-col">
-                      <div className="font-bold">{tweet.name}</div>
-                      <div>{tweet.position}</div>
-                    </div>
-                    <div className="w-12 h-12 bg-gradient-to-b from-[#474747] to-[#1d1d1d] rounded-lg " />
+        <div className="mx-auto bg-white bg-opacity-5 rounded-lg p-4 h-[720px] w-full flex gap-3 relative overflow-hidden">
+          <motion.div
+            animate={{ y: ["0%", "-200%"] }}
+            className="h-full lg:w-1/3 w-full overflow-visible flex flex-col gap-3 absolute top-0 left-0"
+            transition={{
+              duration: 15,
+              ease: "linear",
+              repeat: Infinity,
+            }}
+          >
+            {tweets.map((tweet, index) => (
+              <div
+                className="w-full h-[420px] bg-[#1a1a1a] rounded-lg p-4 flex flex-col gap-3"
+                key={index}
+              >
+                <h1 className="font-bold text-2xl p-4"> “ </h1>
+                <p className="text-white  px-4">{tweet.tweet}</p>
+                <div className="flex justify-between items-center p-4">
+                  <div className="flex flex-col">
+                    <div className="font-bold">{tweet.name}</div>
+                    <div>{tweet.position}</div>
                   </div>
+                  <div className="w-12 h-12 bg-gradient-to-b from-[#474747] to-[#1d1d1d] rounded-lg " />
                 </div>
-              ))}
-            </motion.div>
-          </Marquee>
-          <motion.div className="h-full lg:w-1/3 hidden lg:flex lg:flex-col overflow-y-hidden lg:gap-3">
+              </div>
+            ))}
+
             {tweets.map((tweet, index) => (
               <div
                 className="w-full h-[420px] bg-[#1a1a1a] rounded-lg p-4 flex flex-col gap-3"
@@ -152,7 +157,16 @@ const Testimonials = () => {
               </div>
             ))}
           </motion.div>
-          <motion.div className="h-full lg:w-1/3 hidden lg:flex lg:flex-col overflow-y-hidden lg:gap-3">
+
+          <motion.div
+            animate={{ y: ["-200%", "0%"] }}
+            className="h-full lg:w-1/3 w-full overflow-visible flex flex-col gap-3 absolute top-0 left-[34%]"
+            transition={{
+              duration: 15,
+              ease: "linear",
+              repeat: Infinity,
+            }}
+          >
             {tweets.map((tweet, index) => (
               <div
                 className="w-full h-[420px] bg-[#1a1a1a] rounded-lg p-4 flex flex-col gap-3"
@@ -170,6 +184,70 @@ const Testimonials = () => {
               </div>
             ))}
           </motion.div>
+
+          <motion.div
+            animate={{ y: ["0%", "-200%"] }}
+            className="h-full lg:w-1/3 w-full overflow-visible flex flex-col gap-3 absolute top-0 left-[68%]"
+            transition={{
+              duration: 15,
+              ease: "linear",
+              repeat: Infinity,
+            }}
+          >
+            {tweets.map((tweet, index) => (
+              <div
+                className="w-full h-[420px] bg-[#1a1a1a] rounded-lg p-4 flex flex-col gap-3"
+                key={index}
+              >
+                <h1 className="font-bold text-2xl p-4"> “ </h1>
+                <p className="text-white  px-4">{tweet.tweet}</p>
+                <div className="flex justify-between items-center p-4">
+                  <div className="flex flex-col">
+                    <div className="font-bold">{tweet.name}</div>
+                    <div>{tweet.position}</div>
+                  </div>
+                  <div className="w-12 h-12 bg-gradient-to-b from-[#474747] to-[#1d1d1d] rounded-lg " />
+                </div>
+              </div>
+            ))}
+          </motion.div>
+
+          {/* <motion.div className="h-full lg:w-1/3 hidden lg:flex lg:flex-col overflow-y-hidden lg:gap-3 absolute top-0 left-">
+            {tweets.map((tweet, index) => (
+              <div
+                className="w-full h-[420px] bg-[#1a1a1a] rounded-lg p-4 flex flex-col gap-3"
+                key={index}
+              >
+                <h1 className="font-bold text-2xl p-4"> “ </h1>
+                <p className="text-white  px-4">{tweet.tweet}</p>
+                <div className="flex justify-between items-center p-4">
+                  <div className="flex flex-col">
+                    <div className="font-bold">{tweet.name}</div>
+                    <div>{tweet.position}</div>
+                  </div>
+                  <div className="w-12 h-12 bg-gradient-to-b from-[#474747] to-[#1d1d1d] rounded-lg " />
+                </div>
+              </div>
+            ))}
+          </motion.div> */}
+          {/* <motion.div className="h-full lg:w-1/3 hidden lg:flex lg:flex-col overflow-y-hidden lg:gap-3">
+            {tweets.map((tweet, index) => (
+              <div
+                className="w-full h-[420px] bg-[#1a1a1a] rounded-lg p-4 flex flex-col gap-3"
+                key={index}
+              >
+                <h1 className="font-bold text-2xl p-4"> “ </h1>
+                <p className="text-white  px-4">{tweet.tweet}</p>
+                <div className="flex justify-between items-center p-4">
+                  <div className="flex flex-col">
+                    <div className="font-bold">{tweet.name}</div>
+                    <div>{tweet.position}</div>
+                  </div>
+                  <div className="w-12 h-12 bg-gradient-to-b from-[#474747] to-[#1d1d1d] rounded-lg " />
+                </div>
+              </div>
+            ))}
+          </motion.div> */}
         </div>
       </div>
     </div>
