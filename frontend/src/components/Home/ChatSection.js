@@ -4,7 +4,7 @@ import { redirect, useLocation } from "react-router-dom";
 import axios from "axios";
 import Loader from "./loading.js";
 
-function ChatSection() {
+function ChatSection({setHtmlCode}) {
   const containerRef = useRef(null);
   const [chats, setChats] = useState([]);
   const [inputText, setInputText] = useState("");
@@ -131,10 +131,6 @@ function ChatSection() {
             if (chunkText.includes("```")) {
               setIsGenerating(!isGenerating);
             }
-            if(isGenerating){
-              setHtmlContent( chunkText);
-              
-            }
       
 
             setChats((prevChats) =>
@@ -192,8 +188,24 @@ function ChatSection() {
     setIsGenerating(false); // Stop showing the "Generating website..." message
     setHtmlContent(htmlData);
   };
+  const parseText = (text) => {
+    let parsedText = text;
+  
+    // Convert **text** to <strong>text</strong> (bold)
+    parsedText = parsedText.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
+  
+    // Convert numbered lists (e.g., 1. Text) to <ol> and <li>
+    parsedText = parsedText.replace(/(\d+)\.\s(.*?)(?=\n|$)/g, "<li>$2</li>");
+    if (parsedText.includes("<li>")) {
+      parsedText = parsedText.replace(/(<li>.*?<\/li>)/gs, "<ol>$1</ol>");
+    }
+  
+  
+    return parsedText;
+  };
   const formattedMessage = (message) => {
     const chunks = message.split("```");
+    setHtmlCode(chunks[1]);
     return chunks.map((chunk, index) => {
       if (chunk.trim().startsWith("html")) {
         return (
@@ -202,7 +214,7 @@ function ChatSection() {
             {/* {chunk.replace(/html/, "")} */}
             <div className=" flex px-2 p-2 -ml-1 rounded-md  my-3 myborder  text-white gap-2">
                      {isGenerating?" Generating website ...":"Generated website"}
-                      <div onClick={()=>handleViewWebsite(chunks[1])} className="  underline cursor-pointer"
+                      <div onClick={()=>setHtmlCode(chunks[1])} className="  underline cursor-pointer"
                       >
                         View website
                       </div>
@@ -211,12 +223,12 @@ function ChatSection() {
         );
       } else {
         return (
-          <div key={index} className="text-white">
-            {chunk}
+          <div key={index} dangerouslySetInnerHTML={{ __html: parseText(chunk) }} className="text-white">
           </div>
         );
       }
-    });
+    }
+  );
   }
   return (
     <div ref={containerRef} className=" h-full flex no-scrollbar rounded-3xl">
@@ -241,7 +253,7 @@ function ChatSection() {
                     //   allowFullScreen="true"
                     //   className={`w-full h-screen `}
                     // ></iframe>
-                    <div className=" flex flex-col gap-2">
+                    <div className=" flex flex-col gap-2 mb-2">
                       <div className=" text-white px-2">
                         {formattedMessage(message.parts[0].text)}
                         </div>
@@ -263,9 +275,11 @@ function ChatSection() {
         </div>
 
         <form
+        
           onSubmit={
             inputText.length === 0 ? (e) => e.preventDefault() : handleSend
           }
+          disabled={loading}
           className="flex   justify-between  bottom-0  mt-2  h-32 border  flex-col text-white myborder p-2 px-4  md:mx-[10%] mx-3 rounded-xl bg-[#0F0F0F]  pointer-events-auto"
         >
           <input
@@ -277,8 +291,9 @@ function ChatSection() {
           />
           <div className=" flex items-center justify-end">
             <button
+              disabled={inputText.length === 0 || loading}
               className={`text-black bg-white p-[7px] px-4 rounded-md  ${
-                inputText.length === 0
+                inputText.length === 0||loading
                   ? "cursor-not-allowed opacity-50"
                   : "cursor-pointer"
               }`}

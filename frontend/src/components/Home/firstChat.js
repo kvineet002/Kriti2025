@@ -3,6 +3,8 @@ import React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { promptList } from "../../constants/promptList";
+import Loader from "./loading";
+import SendingLoader from "./sending";
 
 function FirstChatSection() {
   const [message, setMessage] = useState("");
@@ -59,6 +61,7 @@ function FirstChatSection() {
   return (
     <form
       onSubmit={message.length === 0 ? (e) => e.preventDefault() : handleSend}
+      disabled={loading}
       className="h-32 border flex  flex-col items-end text-white myborder p-2 px-4  md:w-[70%] w-[90%] rounded-xl bg-[#0F0F0F] mt-6 pointer-events-auto"
     >
       <input
@@ -79,13 +82,16 @@ function FirstChatSection() {
           Generate a Prompt
         </div>
         <button
+          disabled={message.length === 0 || loading}
           className={`text-black bg-white p-[7px] px-4 rounded-md ${
-            message.length === 0
+            message.length === 0||loading
               ? "cursor-not-allowed opacity-50"
               : "cursor-pointer"
           }`}
         >
-          Send
+          {!loading?"Send":(<div className="px-1  py-[2px]">
+            <SendingLoader/>
+          </div>)}
         </button>
       </div>
     </form>

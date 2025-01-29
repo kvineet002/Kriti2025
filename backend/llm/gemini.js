@@ -1,40 +1,15 @@
-const { createConversation, getConversation, deleteConversation } = require("../utils/sessionManager");
-const langchainService = require("../services/langchainService");
+const { GoogleGenerativeAI } = require("@google/generative-ai");
 
-// Start a new conversation
-const startConversation = (req, res) => {
-  const sessionId = createConversation();
-  res.json({ message: "New conversation started", sessionId });
-};
+const API_KEY =
+  process.env.REACT_APP_GOOGLE_API_KEY ||
+  "AIzaSyD6_5dM2ze7f-_mnlm26xeC3LJCMNFWcIg";
 
-// Continue a conversation
-const chat = async (req, res) => {
-  const { sessionId, input } = req.body;
+const genAI = new GoogleGenerativeAI(API_KEY);
+const systemPrompt = `You are a title provider to my prompt. When given a prompt, provide a title that is relevant to the prompt not more 3-4 words.`;
+const model = genAI.getGenerativeModel({
+  model: "gemini-2.0-flash-exp",
+  systemInstruction: systemPrompt,
+});
 
-  if (!sessionId || !getConversation(sessionId)) {
-    return res.status(400).json({ error: "Invalid or expired session ID" });
-  }
-
-  try {
-    const conversationChain = getConversation(sessionId);
-    const response = await langchainService.runConversation(conversationChain, input);
-    res.json({ response });
-  } catch (error) {
-    console.error("Error processing chat:", error);
-    res.status(500).json({ error: "Failed to process your request" });
-  }
-};
-
-// End a conversation
-const endConversation = (req, res) => {
-  const { sessionId } = req.body;
-
-  if (!sessionId || !getConversation(sessionId)) {
-    return res.status(400).json({ error: "Invalid or expired session ID" });
-  }
-
-  deleteConversation(sessionId);
-  res.json({ message: "Conversation ended successfully" });
-};
-
-module.exports = { startConversation, chat, endConversation };
+// model.setSystemPrompt(systemPrompt);
+module.exports = {model};

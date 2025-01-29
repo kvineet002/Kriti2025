@@ -62,6 +62,7 @@ function Sidebar() {
       {loading?(<div className=" h-full flex items-center justify-center"><Loader/></div>):(<div
         className={`flex flex-col gap-2 p-2 px-4 overflow-y-auto no-scrollbar h-full `}
       >
+        {/* <div>Your Chat History</div> */}
         {chatHistory &&
           chatHistory
             .slice()

@@ -13,7 +13,7 @@ const systemPrompt = `You are a website generator AI. When given a prompt, gener
   // output will be like 
   // (brief intro i.e. " Here your generated website with all features as per prompt and then mention the prompt" thats it)---(code)---(conclusion directly write conclustion part without mentioning that it is conclusion).
   // Note these points:-. The website should have a header with a title and a navigation bar.
-  // -The website should have caurosel where placeholder will be from link of pexels(do not mention it anywhere) and relevant to the prompted website.
+  // -The website should have caurosel where placeholder will be from link of pexels(do not mention it anywhere) and relevant to the prompted website Note:sometimes you provide wrong links.
   // - The website should have a main section with a heading and 
 // a paragraph and sections according to nav items where nav links will redirected .-Section of contact 
 // us in user theme- The website should have a footer with a copyright notice. 
