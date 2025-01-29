@@ -193,6 +193,11 @@ function ChatSection({setHtmlCode}) {
   
     // Convert **text** to <strong>text</strong> (bold)
     parsedText = parsedText.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
+    if (parsedText.includes("https://")) {
+      parsedText = parsedText.replace(/https:\/\/[^\s]+/g, (url) => {
+      return `<strong href="${url}" target="_blank" rel="noopener noreferrer">IMAGE</strong>`;
+      });
+    }
   
     // Convert numbered lists (e.g., 1. Text) to <ol> and <li>
     parsedText = parsedText.replace(/(\d+)\.\s(.*?)(?=\n|$)/g, "<li>$2</li>");
@@ -232,7 +237,7 @@ function ChatSection({setHtmlCode}) {
   }
   return (
     <div ref={containerRef} className=" h-full flex no-scrollbar rounded-3xl">
-      <div className="flex-1 flex flex-col">
+      <div className="flex-1 flex flex-col overflow-hidden">
         <div className="flex-1 p-4 md:px-[10%] transition-all overflow-y-auto no-scrollbar rounded-lg">
           <div className="space-y-2">
             {chats.length > 0 ? (

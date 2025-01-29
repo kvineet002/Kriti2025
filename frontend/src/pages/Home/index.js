@@ -76,7 +76,7 @@ const Home = () => {
             •••
           </div>{" "}
         </div>
-        <div className=" flex overflow-scroll no-scrollbar">
+        <div className=" flex overflow-scroll h-full no-scrollbar">
           <div className="  w-full  md:w-[50%] h-full">
             <ChatSection {...{ setHtmlCode }} />
           </div>
