@@ -6,6 +6,7 @@ const bodyParser = require("body-parser");
 const app = express();
 const port = 3003;
 const chatRoutes = require("./routes/chatRoutes");
+const imageRoutes = require("./routes/imageRouter");
 
 connect(
   process.env.MONGODB_URI
@@ -21,11 +22,7 @@ app.get("/", (req, res) => {
 }
 );
 app.use("/api/chats", chatRoutes);
-app.use("/view",(req, res) => {
-  const {HtmlCode}=req.body;
-  res.send(HtmlCode);
-  res.status(404).send("<h1>404 Page Not Found</h1>");
-});
+app.use("/images", imageRoutes);
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
