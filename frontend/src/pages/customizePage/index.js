@@ -253,7 +253,7 @@ const sampleHtml = `
  </html>
  `
 
-const rgbToHex = (rgb) => {
+ const rgbToHex = (rgb) => {
   const rgbValues = rgb.match(/\d+/g);
   if (!rgbValues) return "#000000";
   return `#${rgbValues
@@ -262,15 +262,21 @@ const rgbToHex = (rgb) => {
     .join("")}`;
 };
 
-const updateElementStyles = (htmlString, elementId, newStyles) => {
+const updateElementStyles = (htmlString, elementId, newStyles, newSrc = null) => {
   const parser = new DOMParser();
   const doc = parser.parseFromString(htmlString, "text/html");
   const elementToUpdate = doc.getElementById(elementId);
+
   if (elementToUpdate) {
-    Object.entries(newStyles).forEach(([key, value]) => {
-      elementToUpdate.style[key] = value;
-    });
+    if (newSrc && elementToUpdate.tagName === "IMG") {
+      elementToUpdate.src = newSrc;
+    } else {
+      Object.entries(newStyles).forEach(([key, value]) => {
+        elementToUpdate.style[key] = value;
+      });
+    }
   }
+
   return doc.documentElement.outerHTML;
 };
 
@@ -296,7 +302,6 @@ const CustomizePage = () => {
     const iframe = iframeRef.current;
     if (iframe && iframe.contentDocument) {
       const iframeDocument = iframe.contentDocument;
-
       let lastSelectedElement = null;
 
       iframeDocument.body.addEventListener("click", (e) => {
@@ -342,6 +347,15 @@ const CustomizePage = () => {
     }
   };
 
+  const handleImageUpload = (event) => {
+    const file = event.target.files[0];
+    if (file && selectedElementId) {
+      const imageUrl = URL.createObjectURL(file);
+      const updatedHtml = updateElementStyles(html, selectedElementId, {}, imageUrl);
+      setHtml(updatedHtml);
+    }
+  };
+
   return (
     <div className="flex flex-col md:flex-row justify-between items-stretch text-white p-6 w-full h-screen gap-4">
       {/* Customization Tab */}
@@ -352,6 +366,14 @@ const CustomizePage = () => {
           <p>Component Type: {selectedElement || "None"}</p>
           <p>Element ID: {selectedElementId || "None"}</p>
 
+          {/* Image Upload Section */}
+          {selectedElement === "IMG" && (
+            <div className="mt-4">
+              <h3 className="font-bold">Change Image:</h3>
+              <input type="file" accept="image/*" onChange={handleImageUpload} />
+            </div>
+          )}
+
           <h3 className="font-bold mt-4">Relevant Styles:</h3>
           <div className="overflow-y-scroll h-48 bg-slate-200 p-3 rounded-lg">
             {Object.entries(filteredStyles).map(([key, value]) => (
@@ -360,7 +382,7 @@ const CustomizePage = () => {
                 {key.includes("color") ? (
                   <input
                     type="color"
-                    value={(value||"#000000")}
+                    value={value || "#000000"}
                     onChange={(e) => handleStyleChange(key, e.target.value)}
                   />
                 ) : (
