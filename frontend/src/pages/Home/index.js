@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import Sidebar from "../../components/Home/Sidebar";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import ChatSection from "../../components/Home/ChatSection";
 import MoreOptions from "../../components/Home/MoreOptions";
 
@@ -8,6 +8,7 @@ const Home = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [moreOptions, setMoreOptions] = useState(false);
   const [htmlCode, setHtmlCode] = useState("");
+  const buttonRef = useRef(null);
 
   const handleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
@@ -15,6 +16,10 @@ const Home = () => {
 
   const closeSidebar = () => {
     setSidebarOpen(false);
+  };
+   const handleRightClick = (e) => {
+    if (e) e.stopPropagation();
+    setMoreOptions(!moreOptions);
   };
 
   return (
@@ -30,8 +35,9 @@ const Home = () => {
         <div className="flex items-center justify-center gap-4">
           <div className="   text-white flex justify-center items-center bg-black">
             <div
-              onClick={() => setMoreOptions(!moreOptions)}
-              className=" flex -translate-y-[40%] w-4 h-4"
+              ref={buttonRef}
+              onClick={()=>{setMoreOptions(!moreOptions)}}
+              className=" flex    text-xs  px-2 py-[5px]  cursor-pointer hover:bg-white hover:bg-opacity-10 rounded-md "
             >
               •••
             </div>
@@ -44,7 +50,12 @@ const Home = () => {
           </Link>
         </div>
       </div>
-      {moreOptions && <MoreOptions onClose={() => setMoreOptions(false)} />}
+      {moreOptions && (
+        <MoreOptions
+        buttonRef={buttonRef}
+        onClose={handleRightClick}
+        />
+      )}
 
       {/* Sidebar */}
       <div
@@ -67,27 +78,40 @@ const Home = () => {
       )}
 
       {/* Content Section */}
-      <div className="w-full md:w-[80%] h-[85vh] md:h-[95vh] flex flex-col  ">
-        <div className="  items-center  py-4 hidden md:flex border-b-[1px] border-opacity-10 border-b-white justify-end px-10 text-white  bg-black">
-          <div
-            onClick={() => setMoreOptions(!moreOptions)}
-            className=" flex -translate-y-[30%] w-4 h-4  cursor-pointer"
-          >
-            •••
-          </div>{" "}
-        </div>
-        <div className=" flex overflow-scroll h-full no-scrollbar">
-          <div className="  w-full  md:w-[50%] h-full">
+      <div className="w-full md:w-[80%]   ">
+        <div className=" flex">
+          <div className="  w-full  md:w-[50%] h-[85vh]  md:h-[90vh]  flex flex-col">
+            <div className="  items-center  py-2 hidden md:flex border-b-[1px] border-opacity-10 border-b-white justify-end px-10 text-white  bg-black">
+              <div
+                ref={buttonRef}
+                onClick={()=>{setMoreOptions(!moreOptions)}}
+                className=" flex font-extralight text-xs  px-2 py-[5px]  cursor-pointer hover:bg-white hover:bg-opacity-10 rounded-md "
+
+              >
+                •••
+              </div>{" "}
+            </div>
+
             <ChatSection {...{ setHtmlCode }} />
           </div>
-          <div className=" w-[50%] hidden h-[85vh]  md:flex items-center justify-center rounded-md">
-            //{" "}
+          <div className=" w-[50%] hidden h-screen  bg-white md:flex md:flex-col items-center justify-center rounded-md">
+          <div className="  items-center  w-full  py-2 hidden md:flex  border-b-[1px] border-opacity-10 border-b-white justify-end px-10 text-white  bg-black">
+              <div
+                ref={buttonRef}
+                onClick={()=>{setMoreOptions(!moreOptions)}}
+                className=" flex  text-xs  px-1  cursor-pointer hover:bg-white hover:bg-opacity-10 rounded-md "
+
+              >
+                Fork
+              </div>{" "}
+            </div>
             <iframe
               srcDoc={htmlCode && htmlCode.substring(4, htmlCode.length)}
+              sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
               title="chat-response"
-              allowFullScreen="true"
+              seamless
               className={`w-full  h-full no-scrollbar`}
-            ></iframe>
+            />
           </div>
         </div>
       </div>

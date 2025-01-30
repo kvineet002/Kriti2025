@@ -158,9 +158,9 @@ function ChatSection({setHtmlCode}) {
         setLoading(false);
       }
     };
-
+    // hasFetched.current = false; 
     fetchChats();
-  }, [chatId, email]);
+  }, [ chatId]);
 
   const handleViewWebsite = async (text) => {
     try {
@@ -285,7 +285,7 @@ function ChatSection({setHtmlCode}) {
             inputText.length === 0 ? (e) => e.preventDefault() : handleSend
           }
           disabled={loading}
-          className="flex   justify-between  bottom-0  mt-2  h-32 border  flex-col text-white myborder p-2 px-4  md:mx-[10%] mx-3 rounded-xl bg-[#0F0F0F]  pointer-events-auto"
+          className="flex   justify-between  bottom-0  h-32 border  flex-col text-white myborder p-2 px-4  md:mx-[10%] mx-3 rounded-xl bg-[#0F0F0F]  pointer-events-auto"
         >
           <input
             type="text"

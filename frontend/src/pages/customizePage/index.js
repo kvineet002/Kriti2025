@@ -351,6 +351,7 @@ const CustomizePage = () => {
     const file = event.target.files[0];
     if (file && selectedElementId) {
       const imageUrl = URL.createObjectURL(file);
+      console.log(imageUrl);
       const updatedHtml = updateElementStyles(html, selectedElementId, {}, imageUrl);
       setHtml(updatedHtml);
     }
@@ -401,13 +402,15 @@ const CustomizePage = () => {
 
       {/* Iframe Preview */}
       <div className="border-2 w-full md:w-3/5 flex items-center justify-center bg-white rounded-lg shadow-lg">
+
         <iframe
           title="HTML Preview"
           sandbox="allow-scripts allow-same-origin"
           className="w-full h-full rounded-lg"
           srcDoc={html}
           ref={iframeRef}
-        />
+      />
+
       </div>
     </div>
   );
