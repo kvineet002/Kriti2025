@@ -95,7 +95,7 @@ function Sidebar() {
             className="w-8 h-8 rounded-full bg-gray-300"
             alt="User Avatar"
           />
-          <span className="text-white  overflow-hidden text-sm">Vineet Kumar</span>
+          <span className="text-white  overflow-hidden text-sm">Vikas Anand</span>
         </div>
         <Link
           to={"/chat"}

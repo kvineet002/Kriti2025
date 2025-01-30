@@ -22,77 +22,55 @@ const tweets = [
     {name: 'Mia Wallace', tweet: 'I highly recommend this company for their excellent service.', position: 'Film Producer', profileLink: 'https://twitter.com/miawallace'}
 ];
 
+
+
+const tweetSlider = () => {
+    return (
+        [...tweets,...tweets,...tweets, ...tweets].map((tweet, index) => (
+            <div className='w-full bg-white bg-opacity-5 rounded-lg p-4 flex flex-col gap-4 myborder' key={index}>
+            <h1 className="font-bold text-2xl p-4">“</h1>
+            <p className="text-white px-4">{tweet.tweet}</p>
+            <div className="flex justify-between items-center p-4">
+                <div className="flex flex-col">
+                <div className="font-bold">{tweet.name}</div>
+                <div>{tweet.position}</div>
+                </div>
+                <div className="w-12 h-12 bg-gradient-to-b from-[#474747] to-[#1d1d1d] rounded-lg" />
+            </div>
+            </div>
+        ))
+    )
+}
+
 const Testimonials = () => {
     return (
-        <div className=' bg-black flex  px-5 md:px-24 flex-col text-white'>
+        <div className=' overflow-hidden bg-black flex px-5 md:px-24 flex-col text-white items-center '>
+            
             <Name name={"Testimonials"}/>
-            <div className='flex flex-col  lg:-mt-48 gap-2 lg:w-[full] sm:-mt-12'>
+            <div className='flex flex-col lg:-mt-48 gap-2 lg:w-[full] sm:-mt-12'>
                 <Heading heading={"Testimonials"}/>             
                 <Desc tag1={"Our AI Capabilities"} tag2={"Discover the cutting-edge capabilities of our AI solutions designed to transform your business operations."}/>
-                <div className=' overflow-hidden bg-gradient-to-b from-[#474747] to-[#1d1d1d] border rounded-full  z-20 h-[500px] '>
-                <div className=' flex gap-3'>
-                    <div className="vertical-slider md:w-1/3  flex flex-col gap-3">
-                    
+
+                <div className= 'overflow-hidden z-20 h-[600px] flex gap-4 rounded-xl relative items-center'>
+                    <div className="vertical-silder md:w-1/3 hidden  md:flex md:flex-col overflow-y-hidden md:gap-3">
                         <div className="slider-content">
-                            {
-                            [...tweets, ...tweets].map((tweet, index) => (
-                                <div className='w-full bg-[#1a1a1a] rounded-lg p-4 flex flex-col gap-3' key={index}>
-                                <h1 className="font-bold text-2xl p-4">“</h1>
-                                <p className="text-white px-4">{tweet.tweet}</p>
-                                <div className="flex justify-between items-center p-4">
-                                    <div className="flex flex-col">
-                                    <div className="font-bold">{tweet.name}</div>
-                                    <div>{tweet.position}</div>
-                                    </div>
-                                    <div className="w-12 h-12 bg-gradient-to-b from-[#474747] to-[#1d1d1d] rounded-lg" />
-                                </div>
-                                </div>
-                            ))
-                            }
+                            {tweetSlider()}
                         </div>
                     </div>
 
-                    <div className='vertical-silder md:w-1/3 hidden  md:flex md:flex-col overflow-y-hidden md:gap-3'>
+                    <div className='vertical-slider md:w-1/3  flex flex-col gap-3'>
                         <div className="reverse-slider-content">
-                            {
-                                [...tweets, ...tweets].map((tweet, index) => (
-                                    <div className='w-full bg-[#1a1a1a] rounded-lg p-4 flex flex-col gap-3' key={index}>
-                                    <h1 className="font-bold text-2xl p-4">“</h1>
-                                    <p className="text-white px-4">{tweet.tweet}</p>
-                                    <div className="flex justify-between items-center p-4">
-                                        <div className="flex flex-col">
-                                        <div className="font-bold">{tweet.name}</div>
-                                        <div>{tweet.position}</div>
-                                        </div>
-                                        <div className="w-12 h-12 bg-gradient-to-b from-[#474747] to-[#1d1d1d] rounded-lg" />
-                                    </div>
-                                    </div>
-                                ))
-                            }
+                            {tweetSlider()}
                         </div>
                     </div>
-
 
                     <div className='vertical-sider md:w-1/3 hidden  md:flex md:flex-col overflow-y-hidden md:gap-3'>
                         <div className="slider-content">
-                            {
-                                [...tweets, ...tweets].map((tweet, index) => (
-                                    <div className='w-full bg-[#1a1a1a] rounded-lg p-4 flex flex-col gap-3' key={index}>
-                                    <h1 className="font-bold text-2xl p-4">“</h1>
-                                    <p className="text-white px-4">{tweet.tweet}</p>
-                                    <div className="flex justify-between items-center p-4">
-                                        <div className="flex flex-col">
-                                        <div className="font-bold">{tweet.name}</div>
-                                        <div>{tweet.position}</div>
-                                        </div>
-                                        <div className="w-12 h-12 bg-gradient-to-b from-[#474747] to-[#1d1d1d] rounded-lg" />
-                                    </div>
-                                    </div>
-                                ))
-                            }
+                            {tweetSlider()}
                         </div>
                     </div>
-                </div></div>
+
+                </div>
                 
             </div>
         </div>
