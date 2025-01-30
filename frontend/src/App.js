@@ -12,7 +12,6 @@ const ProtectedRoutes = () => {
   return isAuthenticated ? <Outlet /> : <Navigate to="/" />;
 };
 
-
 function App() {
   return (
     <>

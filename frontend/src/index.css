@@ -33,7 +33,11 @@ body{
   background: linear-gradient(to bottom, transparent, black);
   background-size: 100% 100%; /* Ensure it covers the element */
 }
-
+.gradient-overlay-reviews{
+  
+  background: linear-gradient(to left, black, transparent, black);
+  background-size:100% 500% 100%; /* Controls the size of the gradient */
+}
 .overlay-gradient {
   background: linear-gradient(to top, transparent, black);
   background-size: 50% 100%; /* Ensure it covers the element */
@@ -60,3 +64,33 @@ body{
   animation: borderGlow 2s infinite;
   border-style: dashed;
 }
+
+@keyframes slide {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-50%);
+  }
+}
+
+.vertical-slider {
+  overflow: hidden;
+  position: relative;
+}
+
+.slider-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  animation: slide 60s linear infinite reverse;
+}
+
+.reverse-slider-content{
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  animation: slide 60s linear infinite;
+}
+
+

@@ -1,3 +1,4 @@
+const { model } = require("../llm/gemini");
 const Chat = require("../models/chat");
 const UserChat = require("../models/userChat");
 
@@ -16,14 +17,18 @@ const newChat = async (req, res) => {
     // CHECK IF THE USERCHATS EXISTS
     const userChats = await UserChat.findOne({ email: email });
 
+    const result = await model.generateContent(text);
+    const response = await result.response;
+    const generateTitle = response.text();
+    
+    console.log(generateTitle);
     if (!userChats) {
-      // IF DOESN'T EXIST, CREATE A NEW ONE AND ADD THE CHAT IN THE CHATS ARRAY
       const newUserChats = new UserChat({
         email: email,
         chats: [
           {
             _id: savedChat._id,
-            title: text.substring(0, 40),
+            title: generateTitle,
           },
         ],
       });
@@ -37,7 +42,7 @@ const newChat = async (req, res) => {
           $push: {
             chats: {
               _id: savedChat._id,
-              title: text.substring(0, 40),
+              title: generateTitle,
             },
           },
         }
