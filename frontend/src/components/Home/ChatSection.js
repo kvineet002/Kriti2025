@@ -236,7 +236,7 @@ function ChatSection({setHtmlCode}) {
   );
   }
   return (
-    <div ref={containerRef} className=" h-full flex no-scrollbar rounded-3xl">
+    <div ref={containerRef} className=" h-full select-none flex no-scrollbar rounded-3xl">
       <div className="flex-1 flex flex-col overflow-hidden">
         <div className="flex-1 p-4 md:px-[10%] transition-all overflow-y-auto no-scrollbar rounded-lg">
           <div className="space-y-2">
