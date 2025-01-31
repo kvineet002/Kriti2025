@@ -16,6 +16,13 @@ const Home = () => {
   const dividerRef = useRef(null);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [showBottomSheet, setShowBottomSheet] = useState(false);
+  const [isUpdating, setIsUpdating] = useState(false);
+  useEffect(() => {
+  const setShowBottom = () => {
+    setShowBottomSheet(true);
+  }
+  setShowBottom();
+}, [isUpdating]);
 
   const startResizing = (e) => {
     e.preventDefault();
@@ -58,6 +65,7 @@ const Home = () => {
       setShowBottomSheet(false);
     }
   };
+
 
   // Add event listener for clicking outside
   useEffect(() => {
@@ -162,6 +170,8 @@ const Home = () => {
               <SandPackCode
                 htmlCode={htmlCode && htmlCode.substring(4, htmlCode.length)}
                 {...{ setSandpackWidth }}
+                isUpdate={isUpdating}
+              setIsUpdate={setIsUpdating}
               />
             </motion.div>
           )}
@@ -204,11 +214,13 @@ const Home = () => {
             <SandPackCode
               htmlCode={htmlCode && htmlCode.substring(4, htmlCode.length)}
               {...{ setShowBottomSheet }}
+              isUpdate={isUpdating}
+              setIsUpdate={setIsUpdating}
             />
           </div>
         </motion.div>
       )}
-      {showBottomSheet && (
+      {showBottomSheet&&isMobile && (
         <div
           ref={overlayRef}
           className="fixed inset-0 bg-black bg-opacity-90 transition-all z-40"

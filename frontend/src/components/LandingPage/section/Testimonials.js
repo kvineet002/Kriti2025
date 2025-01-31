@@ -33,7 +33,7 @@ const Testimonials = () => {
                 <Heading heading={"Testimonials"}/>             
                 <Desc tag1={"Our AI Capabilities"} tag2={"Discover the cutting-edge capabilities of our AI solutions designed to transform your business operations."}/>
 
-                <div className= 'overflow-hidden h-[600px] flex gap-4 rounded-xl relative items-center myborder p-3'>
+                <div className= 'overflow-hidden h-[500px] flex gap-4 rounded-xl relative items-center'>
                     <div className="absolute z-10 grad w-full h-full"/>
                     <div className="vertical-silder md:w-1/3 hidden  md:flex md:flex-col overflow-y-hidden md:gap-3">
                         <div className="slider-content">
@@ -41,7 +41,7 @@ const Testimonials = () => {
                         </div>
                     </div>
 
-                    <div className='vertical-slider md:w-1/3  flex flex-col gap-3'>
+                    <div className='vertical-slider md:w-1/3 w-full  flex flex-col gap-3'>
                         <div className="reverse-slider-content">
                             {tweetSlider()}
                         </div>

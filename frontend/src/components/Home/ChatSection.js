@@ -244,8 +244,8 @@ function ChatSection({setHtmlCode}) {
               chats.map((message, index) => (
                 <div
                   key={index}
-                  className={`flex text-sm${
-                    message.role === "model" ? "" : ""
+                  className={`flex text-sm ${
+                    message.role === "model" ? "" : " justify-end"
                   }`}
                 >
                   {message.role === "model" ? (
@@ -263,10 +263,15 @@ function ChatSection({setHtmlCode}) {
                         {formattedMessage(message.parts[0].text)}
                         </div>
                     </div>
-                  ) : (
-                    <div className=" flex px-2 p-2 mb-2 rounded-md bg-white  bg-opacity-[0.15]  text-white gap-0">
+                  ) : (<div className=" flex items-start justify-start gap-2">
+                    {/* <img
+                    src="https://api.multiavatar.com/Binx Bond.svg"
+                    className="w-8 h-8 rounded-full translate-y-1 bg-gray-300"
+                    alt="User Avatar"
+                  /> */}
+                    <div className=" flex px-2 p-2  rounded-md bg-white  bg-opacity-[0.1]  text-white gap-0">
                       {message.parts[0].text}
-                    </div>
+                    </div></div>
                   )}
                 </div>
               ))
