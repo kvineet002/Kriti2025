@@ -119,7 +119,7 @@ const Home = () => {
         <div className="flex h-full ">
           <div
             style={{ width: isMobile ? "100%" : `${sandpackWidth}%` }}
-            className="w-auto h-[82vh] md:h-[90vh] flex flex-col"
+            className="w-auto h-[80vh] md:h-[90vh] flex flex-col"
           >
             <div className="items-center select-none py-[10.5px] hidden md:flex md:gap-2 border-b-[1px]  border-opacity-10 border-b-white justify-end px-5 text-white bg-black">
               <div
@@ -171,7 +171,7 @@ const Home = () => {
             <div className="fixed bottom-0 left-0 w-full">
               <button
                 onClick={() => setShowBottomSheet(true)}
-                className="w-full bg-transparent  flex items-center justify-center no-tap  text-white text-center pb-6"
+                className="w-full bg-transparent  flex items-center -translate-y-2 justify-center no-tap  text-white text-center pb-6"
               >
                 <motion.img
                   className="opacity-80  w-[12px]"
@@ -194,7 +194,7 @@ const Home = () => {
       {isMobile && showBottomSheet && (
         <motion.div
           ref={bottomSheetRef}
-          className="fixed bottom-0 left-0 w-full h-[95vh] text-white z-50 rounded-t-xl shadow-lg"
+          className="fixed bottom-0 left-0 w-full h-[85vh] text-white z-50 rounded-t-xl shadow-lg"
           initial={{ y: "100%" }} // Start off-screen
           animate={{ y: 0 }} // Animate to visible
           exit={{ y: "50%" }} // Animate off-screen when closed

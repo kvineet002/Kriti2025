@@ -10,7 +10,7 @@ function SandPackCode({ htmlCode, setSandpackWidth, setShowBottomSheet }) {
   const [selectSection, setSelectSection] = React.useState("preview");
   return (
     <div className="h-full w-full overflow-hidden">
-      <div className="  items-center select-none   rounded-t-md border-t-[1px]  py-2 border-opacity-40 flex md:border-b-[1px] md:border-opacity-10 border-white justify-between px-5 text-white  bg-black">
+      <div className="  items-center select-none   rounded-t-md border-t-[1px]  border-opacity-20 py-2 flex md:border-b-[1px] md:border-opacity-10 border-white justify-between px-5 text-white  bg-black">
         <div className=" flex gap-1 items-center">
           {window.innerWidth >= 768 ? (
             <div
@@ -74,7 +74,7 @@ function SandPackCode({ htmlCode, setSandpackWidth, setShowBottomSheet }) {
           {selectSection == "code" ? (
             <>
               <SandpackCodeEditor
-                style={{ height: window.innerWidth >= 768 ? "95vh" : "90vh" }}
+                style={{ height: window.innerWidth >= 768 ? "95vh" : "80vh" }}
                 files={{
                   "/index.html": {
                     code: htmlCode,
@@ -89,7 +89,7 @@ function SandPackCode({ htmlCode, setSandpackWidth, setShowBottomSheet }) {
                 showNavigator={true}
                 fullScreen={true}
                 showOpenInCodeSandbox={false}
-                style={{ height: window.innerWidth >= 768 ? "95vh" : "90vh" }}
+                style={{ height: window.innerWidth >= 768 ? "95vh" : "80vh" }}
                 files={{
                   "/index.html": {
                     code: htmlCode,
