@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app";
 import {getAuth, OAuthProvider,GoogleAuthProvider,GithubAuthProvider} from "firebase/auth"
+
 const firebaseConfig = {
   apiKey: "AIzaSyDECq8D3Va4P0rmBVJJYwmJDyz1UdcVQq8",
   authDomain: "auth0-17635.firebaseapp.com",
@@ -12,7 +13,6 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth=getAuth(app);
-
 
 
 const microsoftProvider=new OAuthProvider('microsoft.com');
