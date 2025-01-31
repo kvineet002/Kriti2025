@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import Sidebar from "../../components/Home/Sidebar";
 import FirstChatSection from "../../components/Home/firstChat";
 import { useState } from "react";
+import Layout from "./Layout";
 
 const FirstChat = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -54,13 +55,19 @@ const FirstChat = () => {
 
       {/* Content Section */}
       <div
-        className="w-full md:w-[80%] flex flex-col items-center justify-center h-[80vh] md:h-full gap-5"
+        className="w-full md:w-[80%] flex flex-col items-center justify-center h-[80vh] md:h-full gap-5 relative"
       >
         <div className="text-white text-3xl font-bold text-center">
           What do you want to create today?
         </div>
         <FirstChatSection />
+
+        <div className="absolute inset-0 flex items-center justify-center w-full z-50">
+          <Layout />
+        </div>
+        
       </div>
+
     </div>
   );
 };
