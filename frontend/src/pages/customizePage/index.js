@@ -1,24 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
 import uploadImage from "../../utils/ImageUpload.js"
 import { sampleHtml } from "../../constants.js";
+import { updateElementStyles, getElementDetails } from "../../utils/HTMLCustomization.js";
 
-const updateElementStyles = (htmlString, elementId, newStyles, newSrc = null) => {
-  const parser = new DOMParser();
-  const doc = parser.parseFromString(htmlString, "text/html");
-  const elementToUpdate = doc.getElementById(elementId);
-
-  if (elementToUpdate) {
-    if (newSrc && elementToUpdate.tagName === "IMG") {
-      elementToUpdate.src = newSrc;
-    } else {
-      Object.entries(newStyles).forEach(([key, value]) => {
-        elementToUpdate.style[key] = value;
-      });
-    }
-  }
-
-  return doc.documentElement.outerHTML;
-};
+getElementDetails(sampleHtml);
 
 const CustomizePage = () => {
   const [html, setHtml] = useState(sampleHtml);
@@ -31,11 +16,13 @@ const CustomizePage = () => {
     "background-color",
     "color",
     "font-size",
+    "font-weight",
     "margin",
     "padding",
     "border",
     "height",
     "width",
+    "border-radius",
   ];
 
   const injectClickListener = () => {
@@ -53,7 +40,7 @@ const CustomizePage = () => {
 
         const clickedElement = e.target;
         lastSelectedElement = clickedElement;
-        clickedElement.style.outline = "2px solid #ff5722";
+        clickedElement.style.outline = "2px solid blue";
 
         setSelectedElement(clickedElement.tagName);
         setSelectedElementId(clickedElement.id);
@@ -69,13 +56,6 @@ const CustomizePage = () => {
       });
     }
   };
-
-  useEffect(() => {
-    const iframe = iframeRef.current;
-    if (iframe) {
-      iframe.onload = injectClickListener;
-    }
-  }, []);
 
   const handleStyleChange = (key, value) => {
     const updatedStyles = { ...filteredStyles, [key]: value };
@@ -101,13 +81,20 @@ const CustomizePage = () => {
             console.error("Error uploading image:", error);
         }
     }
-};
+  };
+
+  useEffect(() => {
+    const iframe = iframeRef.current;
+    if (iframe) {
+      iframe.onload = injectClickListener;
+    }
+  }, []);
 
 
   return (
     <div className="flex flex-col md:flex-row justify-between items-stretch text-white p-6 w-full h-screen gap-4">
       {/* Customization Tab */}
-      <div className="border-2 w-full md:w-2/5 flex flex-col gap-3 p-4 bg-[#1e1e1e] rounded-lg shadow-lg">
+      <div className="myborder w-full h-1/2 md:h-full md:w-[30%] flex flex-col gap-3 p-4 bg-black rounded-lg shadow-lg overflow-y-auto no-scrollbar">
         <h1 className="text-xl font-bold">Customization Tab</h1>
         <div className="bg-white text-black w-full p-3 rounded-lg shadow-inner">
           <h2 className="font-bold">Selected Component:</h2>
@@ -123,7 +110,7 @@ const CustomizePage = () => {
           )}
 
           <h3 className="font-bold mt-4">Relevant Styles:</h3>
-          <div className="overflow-y-scroll h-48 bg-slate-200 p-3 rounded-lg">
+          <div className="overflow-y-scroll bg-slate-200 p-3 rounded-lg">
             {Object.entries(filteredStyles).map(([key, value]) => (
               <div key={key} className="flex items-center gap-2 mb-2">
                 <strong className="capitalize">{key}:</strong>
@@ -148,8 +135,7 @@ const CustomizePage = () => {
       </div>
 
       {/* Iframe Preview */}
-      <div className="border-2 w-full md:w-3/5 flex items-center justify-center bg-white rounded-lg shadow-lg">
-
+      <div className="myborder w-full h-1/2 md:h-full md:w-[70%] flex items-center justify-center bg-black rounded-lg shadow-lg">
         <iframe
           title="HTML Preview"
           sandbox="allow-scripts allow-same-origin"
