@@ -18,7 +18,7 @@ function MoreOptions({ buttonRef, onClose }) {
       initial={{ opacity: 0, scale: 0.8, y: -10, x: 10 }}
       animate={{ opacity: 1, scale: 1, y: 0, x: 0 }}
       exit={{ opacity: 0, scale: 0.8, y: -10, x: 10 }}
-      transition={{ duration: 0.15, ease: "easeOut" }}
+      transition={{ duration: 0, ease: "easeOut" }}
     >
       <div className="text-white cursor-pointer transition-all rounded-md py-2 px-3 flex items-center justify-start gap-2 hover:bg-white hover:bg-opacity-5 w-full">
         <img className="w-[14px]" src="/share.png" alt="Share" /> Share
