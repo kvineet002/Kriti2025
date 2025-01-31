@@ -264,3 +264,21 @@ export const sampleHtml = `
  </body>
  </html>
  `;
+
+export const tweets = [
+  {name: 'John Doe', tweet: 'This is a tweet about how great this company is. I am so happy with the service I received.', position: 'Founder & CEO', profileLink: 'https://twitter.com/johndoe'},
+  {name: 'Jane Doe', tweet: 'This is a tweet about how great this company is. I am so happy with the service I received.', position: 'Founder & CEO', profileLink: 'https://twitter.com/janedoe'},
+  {name: 'Alice Smith', tweet: 'Amazing experience! Highly recommend this company.', position: 'Marketing Manager', profileLink: 'https://twitter.com/alicesmith'},
+  {name: 'Bob Johnson', tweet: 'The service was exceptional and the team was very professional.', position: 'Product Manager', profileLink: 'https://twitter.com/bobjohnson'},
+  {name: 'Charlie Brown', tweet: 'I am extremely satisfied with the results. Great job!', position: 'Sales Director', profileLink: 'https://twitter.com/charliebrown'},
+  {name: 'Diana Prince', tweet: 'Fantastic service and support. Will use again.', position: 'Customer Support', profileLink: 'https://twitter.com/dianaprince'},
+  {name: 'Eve Adams', tweet: 'The team went above and beyond to meet our needs.', position: 'Operations Manager', profileLink: 'https://twitter.com/eveadams'},
+  {name: 'Frank Castle', tweet: 'Top-notch service from start to finish.', position: 'Project Manager', profileLink: 'https://twitter.com/frankcastle'},
+  {name: 'Grace Hopper', tweet: 'Highly professional and reliable. Great experience.', position: 'Software Engineer', profileLink: 'https://twitter.com/gracehopper'},
+  {name: 'Hank Pym', tweet: 'The best company I have ever worked with.', position: 'Research Scientist', profileLink: 'https://twitter.com/hankpym'},
+  {name: 'Ivy League', tweet: 'Outstanding service and attention to detail.', position: 'HR Manager', profileLink: 'https://twitter.com/ivyleague'},
+  {name: 'Jack Sparrow', tweet: 'I am very impressed with the quality of service.', position: 'Creative Director', profileLink: 'https://twitter.com/jacksparrow'},
+  {name: 'Karen Page', tweet: 'Exceptional service and great results.', position: 'Legal Advisor', profileLink: 'https://twitter.com/karenpage'},
+  {name: 'Leo Messi', tweet: 'The team was very professional and efficient.', position: 'Athlete', profileLink: 'https://twitter.com/leomessi'},
+  {name: 'Mia Wallace', tweet: 'I highly recommend this company for their excellent service.', position: 'Film Producer', profileLink: 'https://twitter.com/miawallace'}
+];
