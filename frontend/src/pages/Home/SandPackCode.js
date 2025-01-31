@@ -9,7 +9,7 @@ import React from "react";
 function SandPackCode({ htmlCode, setSandpackWidth, setShowBottomSheet }) {
   const [selectSection, setSelectSection] = React.useState("preview");
   return (
-    <div className="h-full w-full overflow-hidden">
+    <div className="h-full w-full overflow-hidden no-tap">
       <div className="  items-center select-none   rounded-t-md border-t-[1px]  border-opacity-20 py-2 flex md:border-b-[1px] md:border-opacity-10 border-white justify-between px-5 text-white  bg-black">
         <div className=" flex gap-1 items-center">
           {window.innerWidth >= 768 ? (

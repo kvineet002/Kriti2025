@@ -171,7 +171,7 @@ const Home = () => {
             <div className="fixed bottom-0 left-0 w-full">
               <button
                 onClick={() => setShowBottomSheet(true)}
-                className="w-full bg-transparent  flex items-center -translate-y-2 justify-center no-tap  text-white text-center pb-6"
+                className="w-full bg-transparent  flex items-center -translate-y-1 justify-center no-tap  text-white text-center pb-6"
               >
                 <motion.img
                   className="opacity-80  w-[12px]"
