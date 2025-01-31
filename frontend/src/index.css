@@ -67,7 +67,7 @@ body{
 
 @keyframes slide {
   from {
-    transform: translateY(0);
+    transform: translateY(0%);
   }
   to {
     transform: translateY(-50%);
@@ -83,14 +83,18 @@ body{
   display: flex;
   flex-direction: column;
   gap: 12px;
-  animation: slide 60s linear infinite reverse;
+  animation: slide 120s linear infinite reverse;
 }
 
 .reverse-slider-content{
   display: flex;
   flex-direction: column;
   gap: 12px;
-  animation: slide 60s linear infinite;
+  animation: slide 120s linear infinite;
+}
+
+.grad{
+  background-image: linear-gradient(black ,rgba(255, 255, 255, 0), rgba(255, 255, 255, 0),rgba(255, 255, 255, 0), rgba(255, 255, 255, 0),black );
 }
 
 

@@ -6,20 +6,22 @@ import Desc from "../subcomp/Desc";
 const tools = [
   {
     name: "Gemini",
-    src: "figma.svg",
-    text: "Unlock the potential of automation, data synchronization, and improved experiences.",
+    src: "/gemini.svg",
+    text: "Generates website content based on user prompts, making site creation effortless.",
   },
   {
     name: "Pexels",
     src: "https://cdn.creazilla.com/icons/3270419/pexels-icon-lg.png",
-    text: "Unlock the integration of AI and ML to improve your business operations.",
+    text: "Provides high-quality stock images to enhance the visual appeal of generated websites.",
   },
   {
-    name: "adobe.com",
-    src: "adobe.svg",
-    text: "Unlock the potential of automation, data synchronization, and improved experiences.",
+    name: "Supabase",
+    src: "supabase.svg",
+    text: "Stores and manages website metadata, ensuring seamless access and organization.",
   },
 ];
+
+
 
 const Integrations = () => {
   return (
@@ -43,10 +45,10 @@ const Integrations = () => {
             className="w-[75%] mx-auto md:p-0 scale-[2.9] md:scale-100 "
           />
         </div>
-        <div className="flex flex-col lg:flex-row justify-around items-center gap-4 lg:gap-2 z-10 w-full">
+        <div className="flex flex-col px-6 lg:flex-row justify-around items-center gap-4 lg:gap-3 z-10 w-full">
           {tools.map((item, index) => (
             <div
-              className="border myborder p-4 lg:h-60 rounded-lg "
+              className="border myborder p-3 lg:h-60 rounded-xl "
               key={index}
             >
               <div className="border border-[#222222] h-full rounded-lg bg-gradient-to-br from-[#181818] via-[#080808] to-[#181818] flex flex-col justify-around items-start gap-3 py-3">
