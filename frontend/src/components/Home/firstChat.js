@@ -64,13 +64,23 @@ function FirstChatSection({flag}) {
       disabled={loading}
       className={`h-36 border flex  flex-col items-end justify-between p-2 text-white myborder  px-4 rounded-xl bg-[#0F0F0F]  pointer-events-auto ${flag? "rounded-tl-none":""}`}
     >
-      <input
-        type="text"
+      <textarea
         value={message}
         onChange={(e) => setMessage(e.target.value)}
-        className="w-full p-4 px-0  bg-transparent  pb-8  opacity-50 outline-none"
+        onKeyDown={(e) => {
+          if (e.ctrlKey && e.shiftKey && e.key === "Enter") {
+            e.preventDefault();
+            setMessage((prev) => prev + "\n"); // Add a new line
+          } else if (e.key === "Enter" && !e.shiftKey && !e.ctrlKey) {
+            e.preventDefault();
+            handleSend(e); // Submit the form on Enter
+          }
+        }}
+        className="w-full p-4 px-0 bg-transparent pb-8 opacity-50 outline-none resize-none no-scrollbar"
         placeholder="Ask engine a question...."
       />
+
+
       <div className=" flex items-center justify-center gap-2 ">
       <div
           onClick={!isLoading1 ? generatePrompt : null}
