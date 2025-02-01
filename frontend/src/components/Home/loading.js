@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Loader = () => {
+const Loader = ({h, w}) => {
   return (
-    <StyledWrapper>
+    <StyledWrapper h={h||30} w={w||30}>
       <div className="loader">
         <div className="bar1" />
         <div className="bar2" />
@@ -25,8 +25,8 @@ const Loader = () => {
 const StyledWrapper = styled.div`
   .loader {
     position: relative;
-    width: 30px;
-    height: 30px;
+    width: ${props => props.w}px;
+    height: ${props => props.h}px;
     border-radius: 10px;
   }
 

@@ -2,7 +2,7 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const API_KEY =
   process.env.REACT_APP_GOOGLE_API_KEY ||
-  "AIzaSyD6_5dM2ze7f-_mnlm26xeC3LJCMNFWcIg";
+  "AIzaSyDikZzq9BC1KVbU3Qo-dOFKvLWo-_Z77wo";
 
 const genAI = new GoogleGenerativeAI(API_KEY);
 const imagePrompt = "";

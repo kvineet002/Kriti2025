@@ -4,14 +4,12 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { promptList } from "../../constants/promptList";
 import Loader from "./loading";
-import SendingLoader from "./sending";
-
 function FirstChatSection({flag}) {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [isLoading1, setisLoading1] = useState(false);
   const navigate = useNavigate();
-  const email = "vineetalp@gmail.com";
+  const email = localStorage.getItem("email");
   
   console.log("flag",flag);
  function generatePrompt() {
@@ -101,7 +99,7 @@ function FirstChatSection({flag}) {
           }`}
         >
           {!loading?"Send":(<div className="px-1  py-[2px]">
-            <SendingLoader/>
+            <Loader w={22} h={22}/>
           </div>)}
         </button>
       </div>
