@@ -12,7 +12,8 @@ function FirstChatSection({flag}) {
   const [isLoading1, setisLoading1] = useState(false);
   const navigate = useNavigate();
   const email = "vineetalp@gmail.com";
-
+  
+  console.log("flag",flag);
  function generatePrompt() {
      const singlePrompt =
        promptList[Math.floor(Math.random() * promptList.length)];
@@ -62,7 +63,7 @@ function FirstChatSection({flag}) {
     <form
       onSubmit={message.length === 0 ? (e) => e.preventDefault() : handleSend}
       disabled={loading}
-      className={`h-36 border flex  flex-col items-end justify-between p-2 text-white myborder  px-4 rounded-xl bg-[#0F0F0F]  pointer-events-auto ${flag? "rounded-tl-none":""}`}
+      className={`h-32 border flex  flex-col items-end justify-between p-2 text-white myborder  px-4 rounded-xl bg-[#0F0F0F]  pointer-events-auto ${flag[0]||flag[1]? "rounded-tl-none":""}`}
     >
       <textarea
         value={message}

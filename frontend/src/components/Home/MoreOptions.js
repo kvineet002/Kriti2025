@@ -5,7 +5,7 @@ function MoreOptions({buttonRef, onClose }) {
   const [isFavorite, setIsFavorite] = React.useState(false);
   return (
     <motion.div
-      className="flex flex-col items-start  bg-[#0f0f0f]  border-[2px] border-[#272728] w-fit  text-sm gap-1 p-3 py-2   transition-all ease-in-out rounded-[10px] z-50 absolute top-20 right-5"
+      className="flex flex-col items-start  bg-[#0f0f0f]  border-[1.5px] border-[#272728] w-fit  text-sm gap-1 p-3 py-2   transition-all ease-in-out rounded-[10px] z-50 absolute top-[53px] right-4"
       // onClick={onClose}
       
       initial={{ opacity: 0, scale: 0.8, y: -10, x: 10 }} // Starts small & slightly above

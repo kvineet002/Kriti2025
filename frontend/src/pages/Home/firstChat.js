@@ -3,13 +3,13 @@ import Sidebar from "../../components/Home/Sidebar";
 import FirstChatSection from "../../components/Home/firstChat";
 import { useState } from "react";
 import Layout from "./Layout";
-
+import { motion } from "framer-motion";
 const FirstChat = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [selectLayout, setSelectLayout] = useState(false);
   const [selectedColorPalette, setSelectedColorPalette] = useState(null);
   const [selectedTheme, setSelectedTheme] = useState(null);
-  
+
   const handleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
   };
@@ -57,48 +57,73 @@ const FirstChat = () => {
       )}
 
       {/* Content Section */}
-      <div
-        className="w-full md:w-[80%] flex flex-col items-center justify-center h-[80vh] md:h-full gap-5 relative"
-      >
+      <div className="w-full md:w-[80%] flex flex-col items-center justify-center h-[80vh] md:h-full gap-5 relative">
         <div className="text-white text-3xl font-bold text-center">
           What do you want to create today?
         </div>
-        <div 
-        onClick={()=>setSelectLayout(true)}
-        className=" text-white cursor-pointer bg-white bg-opacity-10 rounded-md p-2">
+        <div
+          onClick={() => setSelectLayout(true)}
+          className=" text-white cursor-pointer bg-white bg-opacity-10 rounded-md p-2"
+        >
           Click Here to Select a Layout
         </div>
 
-         <div className="flex flex-col md:w-[70%] w-[90%] mt-6">
-         {(selectedColorPalette || selectedTheme) &&<div className="flex flex-col mr-auto items-center justify-center">
-            <div className="flex text-white border-[2px] border-white rounded-tr-xl border-opacity-20 overflow-hidden">
-              {selectedColorPalette && <div className="flex gap-3 p-2 px-4 border-r-[2px] border-white rounded-tr-xl border-opacity-20 justify-center items-center">
-                <div className="flex md:w-full gap-2 w-24 overflow-x-auto no-scrollbar">
-                  {selectedColorPalette.colors.map((color, ind) => (
-                      <div key={ind} className={`${color} h-2 w-6 md:h-3 md:w-8 flex-shrink-0`} />
-                  ))}
-                </div>
-                  <div className="text-sm font-bold opacity-50 cursor-pointer" onClick={()=> setSelectedColorPalette(null)}>X</div>
-                </div>
-              }
-              {selectedTheme && <div className="px-4 py-2 flex gap-3 justify-between w-full items-center bg-[#0F0F0F] text-sm md:text-lg">
-                  <p>{selectedTheme.name}</p>
-                  <div className="text-sm font-bold opacity-50 cursor-pointer" onClick={()=>setSelectedTheme(null)}>X</div>
-                  </div>}
+        <div className="flex flex-col md:w-[70%] w-[90%] mt-6">
+          {(selectedColorPalette || selectedTheme) && (
+            <div className="flex flex-col mr-auto items-center justify-center">
+              <div className="flex text-white border-l-[1px] border-t-[1px] border-white rounded-tr-xl border-opacity-20 overflow-hidden">
+                {selectedColorPalette && (
+                  <div className="flex gap-3 p-2 px-4 border-r-[1px] border-white rounded-tr-xl border-opacity-20 justify-center items-center">
+                    <div className="flex md:w-full gap-2 w-24 overflow-x-auto no-scrollbar">
+                      {selectedColorPalette.colors.map((color, ind) => (
+                        <div
+                          key={ind}
+                          className={`${color} h-2 w-6 md:h-3 md:w-8 flex-shrink-0`}
+                        />
+                      ))}
+                    </div>
+                    <div
+                      className="text-sm font-bold opacity-50 cursor-pointer"
+                      onClick={() => setSelectedColorPalette(null)}
+                    >
+                      ✖
+                    </div>
+                  </div>
+                )}
+                {selectedTheme && (
+                
+                  <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.3 }}
+                  className="px-4  py-2 flex gap-3 text-sm justify-between w-full border-white border-opacity-20 border-r-[1px] items-center bg-white bg-opacity-5 "
+                  >
+                  <div className="opacity-70">{selectedTheme.name}</div>
+                  <div
+                    className="text-sm font-bold opacity-50 cursor-pointer"
+                    onClick={() => setSelectedTheme(null)}
+                  >
+                    ✖
+                  </div>
+                  </motion.div>
+                )}
+              </div>
             </div>
-          </div>}
-          <FirstChatSection flag={selectedColorPalette || selectedTheme} />
+          )}
+          <FirstChatSection flag={[selectedColorPalette, selectedTheme]} />
         </div>
-        
 
-        {
-            selectLayout && <div className="absolute inset-0 flex items-center justify-center w-full z-50">
-              <Layout setSelectLayout={setSelectLayout} setSelectedColorPalette={setSelectedColorPalette} setSelectedTheme={setSelectedTheme} />
-            </div>
-        }
-        
+        {selectLayout && (
+          <div className="absolute inset-0 flex items-center justify-center w-full z-50">
+            <Layout
+              setSelectLayout={setSelectLayout}
+              setSelectedColorPalette={setSelectedColorPalette}
+              setSelectedTheme={setSelectedTheme}
+            />
+          </div>
+        )}
       </div>
-
     </div>
   );
 };
