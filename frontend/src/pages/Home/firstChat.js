@@ -73,13 +73,15 @@ const FirstChat = () => {
          {(selectedColorPalette || selectedTheme) &&<div className="flex flex-col mr-auto items-center justify-center">
             <div className="flex text-white border-[2px] border-white rounded-tr-xl border-opacity-20 overflow-hidden">
               {selectedColorPalette && <div className="flex gap-3 p-2 px-4 border-r-[2px] border-white rounded-tr-xl border-opacity-20 justify-center items-center">
+                <div className="flex md:w-full gap-2 w-24 overflow-x-auto no-scrollbar">
                   {selectedColorPalette.colors.map((color, ind) => (
-                      <div key={ind} className={`${color} h-3 w-8 flex-shrink-0`} />
+                      <div key={ind} className={`${color} h-2 w-6 md:h-3 md:w-8 flex-shrink-0`} />
                   ))}
+                </div>
                   <div className="text-sm font-bold opacity-50 cursor-pointer" onClick={()=> setSelectedColorPalette(null)}>X</div>
                 </div>
               }
-              {selectedTheme && <div className="px-4 py-2 flex gap-3 justify-between w-full items-center bg-[#0F0F0F] ">
+              {selectedTheme && <div className="px-4 py-2 flex gap-3 justify-between w-full items-center bg-[#0F0F0F] text-sm md:text-lg">
                   <p>{selectedTheme.name}</p>
                   <div className="text-sm font-bold opacity-50 cursor-pointer" onClick={()=>setSelectedTheme(null)}>X</div>
                   </div>}
