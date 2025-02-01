@@ -7,6 +7,9 @@ import Layout from "./Layout";
 const FirstChat = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [selectLayout, setSelectLayout] = useState(false);
+  const [selectedColorPalette, setSelectedColorPalette] = useState(null);
+  const [selectedTheme, setSelectedTheme] = useState(null);
+  
   const handleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
   };
@@ -65,11 +68,32 @@ const FirstChat = () => {
         className=" text-white cursor-pointer bg-white bg-opacity-10 rounded-md p-2">
           Click Here to Select a Layout
         </div>
-        <FirstChatSection />
 
-      {  selectLayout&&<div className="absolute inset-0 flex items-center justify-center w-full z-50">
-          <Layout setSelectLayout={setSelectLayout}  />
-        </div>}
+         <div className="flex flex-col md:w-[70%] w-[90%] mt-6">
+         {(selectedColorPalette || selectedTheme) &&<div className="flex flex-col mr-auto items-center justify-center">
+            <div className="flex text-white border-[2px] border-white rounded-tr-xl border-opacity-20 overflow-hidden">
+              {selectedColorPalette && <div className="flex gap-3 p-2 px-4 border-r-[2px] border-white rounded-tr-xl border-opacity-20 justify-center items-center">
+                  {selectedColorPalette.colors.map((color, ind) => (
+                      <div key={ind} className={`${color} h-3 w-8 flex-shrink-0`} />
+                  ))}
+                  <div className="text-sm font-bold opacity-50 cursor-pointer" onClick={()=> setSelectedColorPalette(null)}>X</div>
+                </div>
+              }
+              {selectedTheme && <div className="px-4 py-2 flex gap-3 justify-between w-full items-center bg-[#0F0F0F] ">
+                  <p>{selectedTheme.name}</p>
+                  <div className="text-sm font-bold opacity-50 cursor-pointer" onClick={()=>setSelectedTheme(null)}>X</div>
+                  </div>}
+            </div>
+          </div>}
+          <FirstChatSection flag={selectedColorPalette || selectedTheme} />
+        </div>
+        
+
+        {
+            selectLayout && <div className="absolute inset-0 flex items-center justify-center w-full z-50">
+              <Layout setSelectLayout={setSelectLayout} setSelectedColorPalette={setSelectedColorPalette} setSelectedTheme={setSelectedTheme} />
+            </div>
+        }
         
       </div>
 

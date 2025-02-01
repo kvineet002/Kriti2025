@@ -6,7 +6,7 @@ import { promptList } from "../../constants/promptList";
 import Loader from "./loading";
 import SendingLoader from "./sending";
 
-function FirstChatSection() {
+function FirstChatSection({flag}) {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [isLoading1, setisLoading1] = useState(false);
@@ -62,7 +62,7 @@ function FirstChatSection() {
     <form
       onSubmit={message.length === 0 ? (e) => e.preventDefault() : handleSend}
       disabled={loading}
-      className="h-36 border flex  flex-col items-end justify-between p-2 text-white myborder  px-4  md:w-[70%] w-[90%] rounded-xl bg-[#0F0F0F] mt-6 pointer-events-auto"
+      className={`h-36 border flex  flex-col items-end justify-between p-2 text-white myborder  px-4 rounded-xl bg-[#0F0F0F]  pointer-events-auto ${flag? "rounded-tl-none":""}`}
     >
       <input
         type="text"
