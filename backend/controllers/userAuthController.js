@@ -8,8 +8,8 @@ const googleCallback = (req, res) => {
     res.cookie("token", token, {
         httpOnly: true,
     });
-    
-  res.redirect(`http://localhost:3000/chat`);
+    const redirect_url=process.env.REDIRECT_URL;
+  res.redirect(redirect_url);
 };
 
 module.exports = { googleCallback };
