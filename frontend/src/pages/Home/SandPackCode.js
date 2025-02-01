@@ -56,13 +56,7 @@ function SandPackCode({
   }, [htmlCode, isUpdating]);
 
 const navigate = useNavigate();
-const openInNewTab = (url) => {
-  const link = document.createElement("a");
-  link.href = url;
-  link.target = "_blank";
-  link.rel = "noopener noreferrer"; // Security best practice
-  link.click();
-};
+
 const handleDeploy = async () => {
   try {
     setLoading(true);
@@ -70,7 +64,7 @@ const handleDeploy = async () => {
       html: htmlCode,
     });
     console.log(response);
-    openInNewTab(response.data.url);
+    window.location.href = response.data.url;
   } catch (err) {
     console.log(err);
   }
