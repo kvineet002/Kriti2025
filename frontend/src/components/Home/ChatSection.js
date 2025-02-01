@@ -324,13 +324,23 @@ function ChatSection({setHtmlCode,htmlCode,sandPackWidth}) {
           disabled={loading}
           className="flex   justify-between  bottom-0  h-32 border  flex-col text-white myborder p-2 px-4  md:mx-[10%] mx-3 rounded-xl bg-[#0F0F0F]  pointer-events-auto"
         >
-          <input
-            type="text"
+          <textarea
             value={inputText}
             onChange={(e) => setInputText(e.target.value)}
-            className="w-full p-4 px-0  bg-transparent opacity-50 outline-none"
+            onKeyDown={(e) => {
+              if (e.ctrlKey && e.shiftKey && e.key === "Enter") {
+                e.preventDefault();
+                setInputText((prev) => prev + "\n"); // Add new line
+              } else if (e.key === "Enter" && !e.shiftKey && !e.ctrlKey) {
+                e.preventDefault();
+                handleSend(e); // Submit the form
+              }
+            }}
+            className="w-full p-4 px-0 bg-transparent opacity-50 outline-none resize-none"
             placeholder="Ask engine a question...."
           />
+
+
           <div className=" flex items-center justify-end">
             <button
               disabled={inputText.length === 0 || loading}
