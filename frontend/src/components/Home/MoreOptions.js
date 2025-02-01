@@ -2,18 +2,12 @@ import React from "react";
 import { motion } from "framer-motion";
 
 function MoreOptions({buttonRef, onClose }) {
-  const top = buttonRef.current.getBoundingClientRect().top;
-  const right = buttonRef.current.getBoundingClientRect().right;
   const [isFavorite, setIsFavorite] = React.useState(false);
   return (
     <motion.div
-      className="flex flex-col items-start  bg-[#0f0f0f]  border-[2px] border-[#272728] w-fit  text-sm gap-1 p-3 py-2   transition-all ease-in-out rounded-[10px] z-50 absolute"
+      className="flex flex-col items-start  bg-[#0f0f0f]  border-[2px] border-[#272728] w-fit  text-sm gap-1 p-3 py-2   transition-all ease-in-out rounded-[10px] z-50 absolute top-20 right-5"
       // onClick={onClose}
-      style={{
-        top: buttonRef.current.getBoundingClientRect().top + 30,
-        right: buttonRef.current.getBoundingClientRect().right-200,
-
-      }}
+      
       initial={{ opacity: 0, scale: 0.8, y: -10, x: 10 }} // Starts small & slightly above
       animate={{ opacity: 1, scale: 1, y: 0, x: 0 }} // Expands normally
       exit={{ opacity: 0, scale: 0.8, y: -10, x: 10 }} // Shrinks back to top-right

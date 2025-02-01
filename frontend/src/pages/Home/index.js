@@ -83,6 +83,8 @@ const Home = () => {
           className="w-5 h-4 cursor-pointer"
           alt="menu"
         />
+
+        {/* Chhote Screen ke liye */}
         <div className="flex items-center justify-center gap-4">
           <div className="text-white flex justify-center items-center bg-black">
             <div
@@ -104,7 +106,7 @@ const Home = () => {
         </div>
       </div>
 
-      {moreOptions && (
+      {moreOptions && isMobile && (
         <MoreOptions buttonRef={buttonRef} onClose={handleRightClick} />
       )}
 
@@ -127,6 +129,7 @@ const Home = () => {
           onClick={closeSidebar}
         ></div>
       )}
+
       {/* Content Section */}
       <div className="w-full md:w-[80%]">
         <div className="flex h-full ">
@@ -134,7 +137,8 @@ const Home = () => {
             style={{ width: isMobile ? "100%" : `${sandpackWidth}%` }}
             className="w-auto h-[80vh] md:h-[90vh] flex flex-col"
           >
-            <div className="items-center select-none py-[10.5px] hidden md:flex md:gap-2 border-b-[1px]  border-opacity-10 border-b-white justify-end px-5 text-white bg-black">
+            <div className="items-center select-none py-[10.5px] hidden md:flex md:gap-2 border-b-[1px]  border-opacity-10 border-b-white justify-end px-5 text-white bg-black relative">
+              {/* Bade Screen ke liye */}
               <div
                 ref={buttonRef}
                 onClick={() => {
@@ -144,6 +148,9 @@ const Home = () => {
               >
                 •••
               </div>
+              {moreOptions && (
+                <MoreOptions buttonRef={buttonRef} onClose={handleRightClick} />
+              )}
               <div
                 onClick={() => setSandpackWidth(50)}
                 className={` p-2 hover:bg-white hover:bg-opacity-10 ${
