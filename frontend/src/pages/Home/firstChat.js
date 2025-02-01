@@ -6,7 +6,7 @@ import Layout from "./Layout";
 
 const FirstChat = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-
+  const [selectLayout, setSelectLayout] = useState(false);
   const handleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
   };
@@ -60,11 +60,16 @@ const FirstChat = () => {
         <div className="text-white text-3xl font-bold text-center">
           What do you want to create today?
         </div>
+        <div 
+        onClick={()=>setSelectLayout(true)}
+        className=" text-white cursor-pointer bg-white bg-opacity-10 rounded-md p-2">
+          Click Here to Select a Layout
+        </div>
         <FirstChatSection />
 
-        <div className="absolute inset-0 flex items-center justify-center w-full z-50">
-          <Layout />
-        </div>
+      {  selectLayout&&<div className="absolute inset-0 flex items-center justify-center w-full z-50">
+          <Layout setSelectLayout={setSelectLayout}  />
+        </div>}
         
       </div>
 

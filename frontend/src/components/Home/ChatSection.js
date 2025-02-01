@@ -4,7 +4,7 @@ import { redirect, useLocation } from "react-router-dom";
 import axios from "axios";
 import Loader from "./loading.js";
 
-function ChatSection({setHtmlCode}) {
+function ChatSection({setHtmlCode,htmlCode,sandPackWidth}) {
   const containerRef = useRef(null);
   const [chats, setChats] = useState([]);
   const [inputText, setInputText] = useState("");
@@ -12,20 +12,24 @@ function ChatSection({setHtmlCode}) {
   const path = useLocation().pathname;
   const chatId = path.split("/").pop();
   const email = "vineetalp@gmail.com";
-  const [htmlContent, setHtmlContent] = useState("");
-  const [isGenerating, setIsGenerating] = useState(false);
   const chatEndRef = useRef(null);
-
+  const [htmlArray, setHtmlArray] = useState([]);
+  let htmlContent = "";
   const scrollToBottom = () => {
     if (chatEndRef.current) {
-      chatEndRef.current.scrollIntoView({ behavior: "smooth" });
+      // Use block: 'end' for better alignment
+      chatEndRef.current.scrollIntoView({
+        behavior: "smooth",
+      });
     }
   };
 
   useEffect(() => {
-    scrollToBottom();
-  }, [chats]);
-
+    // Use requestAnimationFrame for better timing
+    requestAnimationFrame(() => {
+      scrollToBottom();
+    });
+  }, [sandPackWidth, chats]);
   // Add new message to the chat
   const handleSend = async (e) => {
     e.preventDefault();
@@ -59,15 +63,8 @@ function ChatSection({setHtmlCode}) {
       for await (const chunk of result.stream) {
         const chunkText = chunk.text();
         accumulatedText += chunkText;
-        if (chunkText.includes("```")) {
-          console.log("Generating website...");
-          setIsGenerating(!isGenerating);
-        }
-        if(isGenerating){
-          setHtmlContent((prevContent) => prevContent + chunkText);
-        }
+        htmlContent += accumulatedText;
   
-
         setChats((prevChats) =>
           prevChats.map((chat, index) =>
             index === prevChats.length - 1
@@ -76,6 +73,7 @@ function ChatSection({setHtmlCode}) {
           )
         );
       }
+      htmlContent = accumulatedText;
       // Save the latest question and answer to the server
       const dataToUpdate = { question: text, answer: accumulatedText };
       await axios.put(
@@ -85,7 +83,6 @@ function ChatSection({setHtmlCode}) {
       );
 
       console.log("Chat successfully updated on the server.");
-      setLoading(false);
     } catch (err) {
       console.error("Error in addMessage or updating the chat:", err);
     } finally {
@@ -96,21 +93,29 @@ function ChatSection({setHtmlCode}) {
   // Fetch chats on component mount
   const hasFetched = useRef(false);
   useEffect(() => {
+    const abortController = new AbortController();
+    let isMounted = true;
+  
     const fetchChats = async () => {
-      if (hasFetched.current) return;
       hasFetched.current = true;
       setLoading(true);
-
+  
       try {
         const response = await axios.get(
           `${process.env.REACT_APP_API_URL}/api/chats/all/${chatId}`,
-          { params: { email } }
+          {
+            params: { email },
+            signal: abortController.signal
+          }
         );
-
+  
+        if (!isMounted) return;
+  
         const fetchedChats = response.data.history || [];
         setChats(fetchedChats);
-
-        if (fetchedChats.length === 1) {
+  
+        // Only generate response if we have exactly 1 message and component is mounted
+        if (fetchedChats.length === 1 && isMounted) {
           const text = fetchedChats[0].parts[0].text;
           const chatInstance = model.startChat({
             history: fetchedChats.map(({ role, parts }) => ({
@@ -118,76 +123,55 @@ function ChatSection({setHtmlCode}) {
               parts: parts.map((part) => ({ text: part.text })),
             })),
           });
-
+  
           const result = await chatInstance.sendMessageStream([text]);
           let accumulatedText = "";
-
-          const newModelMessage = { role: "model", parts: [{ text: "" }] };
-          setChats((prevChats) => [...prevChats, newModelMessage]);
-
+  
+          setChats(prev => [...prev, { role: "model", parts: [{ text: "" }] }]);
+  
           for await (const chunk of result.stream) {
+            if (!isMounted) break;
+            
             const chunkText = chunk.text();
             accumulatedText += chunkText;
-            if (chunkText.includes("```")) {
-              setIsGenerating(!isGenerating);
-            }
-      
-
-            setChats((prevChats) =>
-              prevChats.map((chat, index) =>
-                index === prevChats.length - 1
-                  ? { ...chat, parts: [{ text: accumulatedText }] }
-                  : chat
-              )
+  
+            setChats(prev => prev.map((chat, idx) => 
+              idx === prev.length - 1 ? 
+              { ...chat, parts: [{ text: accumulatedText }] } : 
+              chat
+            ));
+          }
+  
+          if (isMounted) {
+            await axios.put(
+              `${process.env.REACT_APP_API_URL}/api/chats/update/${chatId}`,
+              { answer: accumulatedText },
+              { params: { email } }
             );
           }
-
-          const dataToUpdate = { answer: accumulatedText };
-          await axios.put(
-            `${process.env.REACT_APP_API_URL}/api/chats/update/${chatId}`,
-            dataToUpdate,
-            { params: { email } }
-          );
-
-          console.log("Chat successfully updated on the server.");
         }
-        setLoading(false);
       } catch (error) {
-        console.error("Error fetching chats:", error);
+        if (error.name !== 'CanceledError' && isMounted) {
+          console.error("Error fetching chats:", error);
+        }
       } finally {
-        setLoading(false);
+        if (isMounted) setLoading(false);
       }
     };
-    // hasFetched.current = false; 
-    fetchChats();
-  }, [ chatId]);
-
-  const handleViewWebsite = async (text) => {
-    try {
-      console.log("Viewing website:", text);
-      
-    } catch (error) {
-      console.error("Error viewing website:", error);
+  
+    // Reset fetch flag when chatId changes
+    hasFetched.current = false;
+    if (!hasFetched.current) {
+      fetchChats();
     }
-  };
+  
+    return () => {
+      isMounted = false;
+      abortController.abort();
+      hasFetched.current = false;
+    };
+  }, [chatId]); // Only depend on chatId
 
-  const processChunks = (chunks) => {
-    let htmlData = "";
-    for (const chunk of chunks) {
-      if (chunk.trim().startsWith("$$$html")) {
-        setIsGenerating(true);
-        const extractedHtml = chunk
-          .replace(/\$\$\$html/, "") // Remove the marker
-          .trim();
-        htmlData += extractedHtml;
-      } else {
-        htmlData += chunk.trim(); // Append non-html content
-      }
-    }
-
-    setIsGenerating(false); // Stop showing the "Generating website..." message
-    setHtmlContent(htmlData);
-  };
   const parseText = (text) => {
     let parsedText = text;
   
@@ -208,33 +192,95 @@ function ChatSection({setHtmlCode}) {
   
     return parsedText;
   };
-  const formattedMessage = (message) => {
+  
+
+  useEffect(() => {
+    const allCodes = [];
+    chats.forEach((chat) => {
+      if (chat.role === "model") {
+        const text = chat.parts[0].text;
+        const regex = /```html([\s\S]*?)```/g;
+        const matches = [...text.matchAll(regex)];
+        matches.forEach((match) => {
+          allCodes.push(match[1].trim());
+        });
+      }
+    });
+    setHtmlArray(allCodes);
+  }, [chats]);
+
+  useEffect(() => {
+    if (loading || htmlCode.length === 0) {
+      const lastModelMessage = chats.findLast(msg => msg.role === "model");
+      if (lastModelMessage) {
+        const chunks = lastModelMessage.parts[0].text.split("```");
+        if (chunks[1]) {
+          setHtmlCode(chunks[1].substring(4).trim());
+        }
+      }
+    }
+  }, [chats, loading, htmlCode, setHtmlCode]);
+  const formattedMessage = (message, messageIndex) => {
     const chunks = message.split("```");
-    setHtmlCode(chunks[1]);
-    return chunks.map((chunk, index) => {
+   
+
+    // Calculate previous code blocks count up to the current message
+    let previousCodeBlocksCount = 0;
+    for (let idx = 0; idx < messageIndex; idx++) {
+      const msg = chats[idx];
+      if (msg.role === "model") {
+        const text = msg.parts[0].text;
+        const regex = /```html([\s\S]*?)```/g;
+        const matches = [...text.matchAll(regex)];
+        previousCodeBlocksCount += matches.length;
+      }
+    }
+
+    let currentCodeBlockIndex = 0;
+    return chunks.map((chunk, chunkIndex) => {
       if (chunk.trim().startsWith("html")) {
+        const code = chunk.replace(/html/, "").trim();
+
+        const htmlArrayIndex = previousCodeBlocksCount + currentCodeBlockIndex;
+        currentCodeBlockIndex++;
+        const versionNumber = htmlArrayIndex + 1;
+
         return (
-          <div key={index} className="text-white flex">
-            
-            {/* {chunk.replace(/html/, "")} */}
-            <div className=" flex px-2 p-2 -ml-1 rounded-md  my-3 myborder  text-white gap-2">
-                     {isGenerating?" Generating website ...":"Generated website"}
-                      <div onClick={()=>setHtmlCode(chunks[1])} className="  underline cursor-pointer"
-                      >
-                        View website
-                      </div>
-                      </div>
+          <div key={chunkIndex} className="text-white flex">
+            <div className="flex flex-col my-3 -ml-1 border-white border-opacity-20">
+              <div className="bg-white bg-opacity-10 flex gap-1 text-white myborder rounded-t-xl py-3 px-2">
+              {htmlArrayIndex === htmlArray.length && loading
+                ? "Generating website..."
+                : "Generated website"}
+                <div className="bg-white text-black px-2 rounded-full">
+                  version {versionNumber}
+                </div>
+              </div>
+              <div className="flex px-2 p-2 myborder text-white gap-2">
+                
+                
+                <div
+                  onClick={() => setHtmlCode(htmlArray[htmlArrayIndex])}
+                  className="underline cursor-pointer"
+                >
+                  View website
+                </div>
+              </div>
+            </div>
           </div>
         );
       } else {
         return (
-          <div key={index} dangerouslySetInnerHTML={{ __html: parseText(chunk) }} className="text-white">
-          </div>
+          <div
+            key={chunkIndex}
+            dangerouslySetInnerHTML={{ __html: parseText(chunk) }}
+            className="text-white"
+          ></div>
         );
       }
-    }
-  );
-  }
+    });
+
+  };
   return (
     <div ref={containerRef} className=" h-full select-none flex no-scrollbar rounded-3xl">
       <div className="flex-1 flex flex-col overflow-hidden">
@@ -249,26 +295,12 @@ function ChatSection({setHtmlCode}) {
                   }`}
                 >
                   {message.role === "model" ? (
-                    // <iframe
-                    //   srcDoc={message.parts[0].text.substring(
-                    //     7,
-                    //     message.parts[0].text.length - 1
-                    //   ).replace(/<a /g, '<a target="blank" ')}
-                    //   title="chat-response"
-                    //   allowFullScreen="true"
-                    //   className={`w-full h-screen `}
-                    // ></iframe>
                     <div className=" flex flex-col gap-2 mb-2">
                       <div className=" text-white px-2">
-                        {formattedMessage(message.parts[0].text)}
+                        {formattedMessage(message.parts[0].text,index)}
                         </div>
                     </div>
                   ) : (<div className=" flex items-start justify-start gap-2">
-                    {/* <img
-                    src="https://api.multiavatar.com/Binx Bond.svg"
-                    className="w-8 h-8 rounded-full translate-y-1 bg-gray-300"
-                    alt="User Avatar"
-                  /> */}
                     <div className=" flex px-2 p-2  rounded-md bg-white  bg-opacity-[0.1]  text-white gap-0">
                       {message.parts[0].text}
                     </div></div>

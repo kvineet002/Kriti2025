@@ -11,7 +11,7 @@ const Home = () => {
   const [moreOptions, setMoreOptions] = useState(false);
   const [htmlCode, setHtmlCode] = useState("");
   const buttonRef = useRef(null);
-  const [sandpackWidth, setSandpackWidth] = useState(50); // % of total width
+  const [sandpackWidth, setSandpackWidth] = useState(100); // % of total width
   const [isCollapsed, setIsCollapsed] = useState(false);
   const dividerRef = useRef(null);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
@@ -149,7 +149,7 @@ const Home = () => {
               </div>
             </div>
 
-            <ChatSection {...{ setHtmlCode }} />
+            <ChatSection {...{ setHtmlCode }} htmlCode={htmlCode} sandpackWidth={sandpackWidth}/>
           </div>
 
           {/* Draggable Divider */}
@@ -168,7 +168,7 @@ const Home = () => {
               className="hidden md:flex md:flex-col items-center justify-center rounded-md"
             >
               <SandPackCode
-                htmlCode={htmlCode && htmlCode.substring(4, htmlCode.length)}
+                htmlCode={htmlCode}
                 {...{ setSandpackWidth }}
                 isUpdate={isUpdating}
               setIsUpdate={setIsUpdating}
@@ -212,8 +212,9 @@ const Home = () => {
         >
           <div className=" overflow-auto h-full">
             <SandPackCode
-              htmlCode={htmlCode && htmlCode.substring(4, htmlCode.length)}
+              htmlCode={htmlCode}
               {...{ setShowBottomSheet }}
+              {...{ setSandpackWidth }}
               isUpdate={isUpdating}
               setIsUpdate={setIsUpdating}
             />

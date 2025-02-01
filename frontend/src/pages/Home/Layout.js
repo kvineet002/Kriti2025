@@ -27,9 +27,9 @@ const colorPalette = [
     }
 ];
 
-const Layout = () => {
+const Layout = ({setSelectLayout}) => {
   return (
-    <div className="myborder bg-black text-white rounded-xl w-[80%] h-[95%] md:h-[70%] flex flex-col md:flex-row items-center justify-center">
+    <div className="myborder bg-[#141415] text-white rounded-xl w-[95%] h-full md:h-[70%] flex flex-col md:flex-row items-center justify-center">
       {/* Color Palettes Section */}
       <div className='w-full md:w-[45%] h-[40%] md:h-full p-6 md:p-10 flex flex-col'>
         <h1 className="text-base md:text-lg font-bold pb-6">Choose Color Palettes</h1>
@@ -38,7 +38,7 @@ const Layout = () => {
             <div key={index} className='flex flex-col gap-4 border-dashed border-opacity-20 border-white border-b-[1px] pb-4 md:pb-6'>
               <div className='text-sm md:text-base'>{palette.name}</div>
               <div className='overflow-x-auto no-scrollbar'>
-                <div className='flex gap-4 md:gap-6 w-max'>
+                <div className='flex gap-4 w-max'>
                   {palette.colors.map((color, ind) => (
                     <div key={ind} className={`${color} h-8 w-12 flex-shrink-0`}/>
                   ))}
@@ -55,9 +55,12 @@ const Layout = () => {
         <div className='flex flex-col overflow-auto no-scrollbar border-2 flex-1'>
           {/* Layout options go here */}
         </div>
-        <div className='flex ml-auto justify-between gap-4 pt-4'>
-          <div className='cursor-pointer'>Cancel</div>
-          <div className='cursor-pointer'>Proceed</div>
+        <div className='flex ml-auto justify-between items-center gap-4 pt-4'>
+          <div 
+          onClick={() => setSelectLayout(false)}
+          className='cursor-pointer'>Cancel</div>
+          <div 
+          className='cursor-pointer bg-white text-black p-2 rounded-md'>Proceed</div>
         </div>
       </div>
     </div>

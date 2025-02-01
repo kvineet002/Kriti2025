@@ -5,7 +5,10 @@ import {
   SandpackPreview,
   SandpackProvider,
 } from "@codesandbox/sandpack-react";
+import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Loader from "../../components/Home/loading";
 
 function SandPackCode({
   htmlCode,
@@ -18,6 +21,7 @@ function SandPackCode({
   const [lastHtmlCode, setLastHtmlCode] = useState(""); // Store previous code
   const [isUpdating, setIsUpdating] = useState(true);
   const updateTimeout = useRef(null);
+  const [loading, setLoading] = useState(false);
   // Handle code updates and switching logic
   useEffect(() => {
     if (htmlCode === "") {
@@ -29,6 +33,7 @@ function SandPackCode({
     if (htmlCode !== lastHtmlCode) {
       setIsUpdating(true);
       setIsUpdate(true);
+      setSandpackWidth(50);
       setLastHtmlCode(htmlCode);
       // Clear existing timeout when new code comes in
       if (updateTimeout.current) {
@@ -49,6 +54,24 @@ function SandPackCode({
         codeContainerRef.current.scrollHeight;
     }
   }, [htmlCode, isUpdating]);
+
+const navigate = useNavigate();
+
+const handleDeploy = async () => {
+  try {
+    setLoading(true);
+    const response = await axios.post(`https://deploy-test-production-1630.up.railway.app/deploy`, {
+      html: htmlCode,
+    });
+    console.log(response);
+    window.location.href = response.data.url;
+  } catch (err) {
+    console.log(err);
+  }
+  finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div className="h-full w-full overflow-hidden no-tap">
@@ -101,8 +124,8 @@ function SandPackCode({
             </div>
           </div>
         </div>
-        <div className="flex pb-[3px] px-[10px] py-[4px] font-medium text-sm bg-white text-black cursor-pointer hover:bg-white hover:bg-opacity-10 rounded-md">
-          Deploy
+        <div onClick={handleDeploy} className="flex pb-[3px] px-[10px] py-[4px] font-medium text-sm bg-white text-black cursor-pointer hover:bg-white hover:bg-opacity-80 rounded-md">
+          {loading?"Deploying...":"Deploy"}
         </div>
       </div>
 
@@ -118,7 +141,7 @@ function SandPackCode({
           {selectSection === "code" ? (
             <div
               ref={codeContainerRef}
-              className="no-scrollbar bg-[#151515]"
+              className="no-scrollbar bg-[#151515] pt-2"
               style={{
                 height: window.innerWidth >= 768 ? "95vh" : "80vh",
                 overflowY: "auto", // Enable scrolling
