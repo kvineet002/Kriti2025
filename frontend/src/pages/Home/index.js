@@ -121,7 +121,12 @@ const Home = () => {
       </div>
 
       {/* Overlay */}
-
+      {sidebarOpen && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden"
+          onClick={closeSidebar}
+        ></div>
+      )}
       {/* Content Section */}
       <div className="w-full md:w-[80%]">
         <div className="flex h-full ">
