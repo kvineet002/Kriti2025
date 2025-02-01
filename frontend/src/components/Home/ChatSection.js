@@ -267,7 +267,11 @@ function ChatSection({ setHtmlCode, htmlCode, sandPackWidth }) {
                       Generating website...
                     </div>
                   ) : (
-                    <div className=" underline cursor-pointer">
+                    <div 
+                      onClick={() => {  
+                        setHtmlCode(code);
+                      }}
+                    className=" underline cursor-pointer">
                     View website
                     </div>
                   )}

@@ -26,6 +26,7 @@ function SandPackCode({
   useEffect(() => {
     if (htmlCode === "") {
       setSelectSection("code");
+      console.log("Empty code starting");
       setIsUpdating(true);
       return;
     }
@@ -44,7 +45,7 @@ function SandPackCode({
         setSelectSection("preview");
       }, 1000); // Increase delay to wait for code chunks to settle
     }
-  }, [htmlCode]);
+  }, [htmlCode,setIsUpdate]);
 
   // Auto-scroll functionality
   useEffect(() => {
