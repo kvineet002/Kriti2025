@@ -10,9 +10,7 @@ router.get('/google', passport.authenticate('google', { scope: ['profile', 'emai
 // Google OAuth Callback
 router.get('/google/callback',
   passport.authenticate('google', { session: false }),
-  (req,res) => {
-    console.log(req.user);
-  }
+  googleCallback
 );
 
 module.exports = router;
