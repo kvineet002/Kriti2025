@@ -1,9 +1,15 @@
 const { createAccessToken } = require('../handlers/jwtHandler');
 
 const googleCallback = (req, res) => {
-  const token = createAccessToken(req.user.email);
+    const email = req.user._json.email;
+    console.log(email);
+  const token = createAccessToken(req.user._json.email);
   console.log(token);
-  res.redirect(`http://localhost:3000/chat?token=${token}`);
+    res.cookie("token", token, {
+        httpOnly: true,
+    });
+    
+  res.redirect(`http://localhost:3000/chat`);
 };
 
 module.exports = { googleCallback };
