@@ -8,9 +8,7 @@ const router = express.Router();
 router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 
 // Google OAuth Callback
-router.get('/google/callback',
-  passport.authenticate('google', { session: false }),
-  googleCallback
+router.get('/google/callback',googleCallback
 );
 
 module.exports = router;
