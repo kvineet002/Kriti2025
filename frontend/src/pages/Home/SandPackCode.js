@@ -119,7 +119,7 @@ function SandPackCode({
           {selectSection === "code" ? (
             <div
               ref={codeContainerRef}
-              className="no-scrollbar bg-[#151515]"
+              className="no-scrollbar bg-[#151515] pt-2"
               style={{
                 height: window.innerWidth >= 768 ? "95vh" : "80vh",
                 overflowY: "auto", // Enable scrolling
