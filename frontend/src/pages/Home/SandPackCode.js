@@ -29,6 +29,7 @@ function SandPackCode({
     if (htmlCode !== lastHtmlCode) {
       setIsUpdating(true);
       setIsUpdate(true);
+      setSandpackWidth(50);
       setLastHtmlCode(htmlCode);
       // Clear existing timeout when new code comes in
       if (updateTimeout.current) {

@@ -62,13 +62,13 @@ function FirstChatSection() {
     <form
       onSubmit={message.length === 0 ? (e) => e.preventDefault() : handleSend}
       disabled={loading}
-      className="h-32 border flex  flex-col items-end text-white myborder p-2 px-4  md:w-[70%] w-[90%] rounded-xl bg-[#0F0F0F] mt-6 pointer-events-auto"
+      className="h-36 border flex  flex-col items-end justify-between p-2 text-white myborder  px-4  md:w-[70%] w-[90%] rounded-xl bg-[#0F0F0F] mt-6 pointer-events-auto"
     >
       <input
         type="text"
         value={message}
         onChange={(e) => setMessage(e.target.value)}
-        className="w-full p-4 px-0  bg-transparent opacity-50 outline-none"
+        className="w-full p-4 px-0  bg-transparent  pb-8  opacity-50 outline-none"
         placeholder="Ask engine a question...."
       />
       <div className=" flex items-center justify-center gap-2 ">
