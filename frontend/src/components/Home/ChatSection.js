@@ -11,6 +11,7 @@ function ChatSection({ setHtmlCode, htmlCode, sandPackWidth }) {
   const [inputText, setInputText] = useState("");
   const [loading, setLoading] = useState(false);
   const path = useLocation().pathname;
+
   const chatId = path.split("/").pop();
     const token = localStorage.getItem("token");
       const decodedToken = token ? jwtDecode(token) : {};
@@ -26,7 +27,7 @@ function ChatSection({ setHtmlCode, htmlCode, sandPackWidth }) {
       });
     }
   };
-
+console.log(path.split('/'));
   useEffect(() => {
     // Use requestAnimationFrame for better timing
     requestAnimationFrame(() => {
@@ -222,10 +223,16 @@ function ChatSection({ setHtmlCode, htmlCode, sandPackWidth }) {
     });
     setHtmlArray(allCodes);
   }, [chats]);
-  console.log(htmlArray);
-
+  useEffect(() => {
+    if (htmlArray.length > 0) {
+      setHtmlCode(htmlArray[htmlArray.length - 1]);
+    } else {
+      setHtmlCode(''); // Reset if no code available
+    }
+  }, [htmlArray, setHtmlCode]);
   useEffect(() => {
     if (loading || htmlCode.length === 0) {
+      setHtmlCode("");
       const lastModelMessage = chats.findLast((msg) => msg.role === "model");
       if (lastModelMessage) {
         const chunks = lastModelMessage.parts[0].text.split("```");
@@ -265,10 +272,9 @@ function ChatSection({ setHtmlCode, htmlCode, sandPackWidth }) {
         return (
           <div key={chunkIndex} className="text-white flex">
             <div className="flex flex-col my-3 -ml-1 border-white border-opacity-20">
-              <div className="bg-white bg-opacity-10 flex gap-4 text-white myborder rounded-t-xl py-3 px-2">
-                {htmlArrayIndex === htmlArray.length && loading
-                  ? "Generating website..."
-                  : "Website Generated"}
+              <div className="bg-white bg-opacity-10 flex gap-4 text-white myborder rounded-t-xl py-3  px-2">
+                <div className=" ml-2">
+                   Your Website</div>
                 <div className="bg-white text-black px-2 rounded-full">
                   version {versionNumber}
                 </div>
@@ -283,13 +289,18 @@ function ChatSection({ setHtmlCode, htmlCode, sandPackWidth }) {
                       Generating website...
                     </div>
                   ) : (
-                    <div 
+                   (
+
+                    (code === htmlCode && !loading)
+                    ?<div>
+                      Previewing
+                      </div>: <div 
                       onClick={() => {  
                         setHtmlCode(code);
                       }}
                     className=" underline cursor-pointer">
                     View website
-                    </div>
+                    </div>)
                   )}
                 </div>
               </div>
@@ -347,7 +358,7 @@ function ChatSection({ setHtmlCode, htmlCode, sandPackWidth }) {
           <div ref={chatEndRef}></div>
         </div>
 
-        <form
+    { path.split('/')[2]!=="s" &&  <form
           onSubmit={
             inputText.length === 0 ? (e) => e.preventDefault() : handleSend
           }
@@ -382,7 +393,7 @@ function ChatSection({ setHtmlCode, htmlCode, sandPackWidth }) {
               Send
             </button>
           </div>
-        </form>
+        </form>}
       </div>
     </div>
   );

@@ -1,43 +1,22 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Sidebar from "../../components/Home/Sidebar";
 import { useEffect, useRef, useState } from "react";
 import ChatSection from "../../components/Home/ChatSection";
 import MoreOptions from "../../components/Home/MoreOptions";
-import SandPackCode from "./SandPackCode";
+import SandPackCode from "../Home/SandPackCode";
 import { motion } from "framer-motion";
 import DeleteConfirmation from "../../components/Home/DeleteConfirmation";
-import ShareConfirmation from "../../components/Home/Share";
 import axios from "axios";
+import Loader from "../../components/Home/loading";
 
 const Home = () => {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [moreOptions, setMoreOptions] = useState(false);
-  const [showdeleteConfirmation, setshowDeleteConfirmation] = useState(false);
-  const [showShareConfirmation, setshowShareConfirmation] = useState(false);
   const [htmlCode, setHtmlCode] = useState("");
   const [sandpackWidth, setSandpackWidth] = useState(100); // % of total width
-  const [isCollapsed, setIsCollapsed] = useState(false);
   const dividerRef = useRef(null);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [showBottomSheet, setShowBottomSheet] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
-  const [isPublic, setIsPublic] = useState(true);
-  const chatId = window.location.pathname.split("/").pop();
-  useEffect(() => {
-    const checkShared = async () => {
-      try {
-        const response = await axios.get(
-          `${process.env.REACT_APP_API_URL}/api/chats//check-share/${chatId}`
-        );
-        console.log("Shared code:", response.data);
-        setIsPublic(response.data);
-      } catch (error) {
-        console.error("Error fetching shared code:", error);
-      }
-    };
-    checkShared();
-  }, [moreOptions]);
-
+const navigate = useNavigate();
   useEffect(() => {
     const setShowBottom = () => {
       setShowBottomSheet(true);
@@ -61,18 +40,6 @@ const Home = () => {
     document.removeEventListener("mouseup", stopResizing);
   };
 
-  const handleSidebar = () => {
-    setSidebarOpen(!sidebarOpen);
-  };
-
-  const closeSidebar = () => {
-    setSidebarOpen(false);
-  };
-
-  const handleRightClick = (e) => {
-    if (e) e.stopPropagation();
-    setMoreOptions(!moreOptions);
-  };
   const bottomSheetRef = useRef(null); // Reference for the bottom sheet
   const overlayRef = useRef(null); // Reference for the overlay
 
@@ -96,133 +63,63 @@ const Home = () => {
   useEffect(() => {
     setIsMobile(window.innerWidth <= 768);
   }, [window.innerWidth]);
-
-  const handleDeleteConfirmation = () => {
-    setshowDeleteConfirmation(!showdeleteConfirmation);
-  };
-  const handleShareConfirmation = () => {
-    setshowShareConfirmation(!showShareConfirmation);
-  };
+  const [loading, setLoading] = useState("Loading...");
 
   const triggerBottomSheet = () => {
     setShowBottomSheet(true);
   };
+  const chatId = window.location.pathname.split("/").pop();
+
+  useEffect(()=>{
+    const checkShared = async () => {
+        try {
+          const response = await axios.get(
+            `${process.env.REACT_APP_API_URL}/api/chats//check-share/${chatId}`,
+          );
+          console.log("Shared code:", response.data);
+          if(response.data){
+            setLoading("");
+          }
+          else{
+            navigate('/');
+          }
+        } catch (error) {
+          console.error("Error fetching shared code:", error);
+        }
+    
+      }
+      checkShared();
+  },[])
+
+  if (loading==="Loading...") {
+    return (
+        <div className=" text-white text-opacity-70  overflow-hidden  flex gap-2 font-bold text-xl  py-10 w-full justify-center">
+         <Loader h={30} w={30}/>
+         {loading}
+         </div>
+          )
+  }
+
   return (
     <div className="flex flex-col md:flex-row md:h-screen w-full relative">
       {/* Hamburger Menu */}
-      <div className="text-white flex md:hidden justify-between items-center px-5 py-4"><div className=" flex gap-4 items-center justify-center">
-        <img
-          onClick={handleSidebar}
-          src="/burger.png"
-          className="w-5 h-4 cursor-pointer"
-          alt="menu"
-        />
-  {isPublic ? (
-                <div className="   text-xs px-5 py-1 rounded-full bg-green-400 bg-opacity-10 font-semibold items-center justify-center  text-green-400">
-                  Public
-                </div>
-              ) : (
-                <div className="myborder  flex gap-2 text-xs px-4 py-1 rounded-full items-center justify-center">
-                  <img className="w-3 h-3" src="/private.png" />
-                  Private
-                </div>
-              )}</div>
-        {/* Chhote Screen ke liye */}
-        <div className="flex items-center justify-center gap-4">
-          <div className="text-white flex justify-center items-center bg-black">
-            <div
-              onClick={() => {
-                setMoreOptions(!moreOptions);
-              }}
-              className="flex pb-[3px] px-[6px] py-[1px] cursor-pointer hover:bg-white hover:bg-opacity-10 rounded-md"
-            >
-              •••
-            </div>
-          </div>
-          <Link
-            to={"/chat"}
-            className="text-white bg-opacity-[0.09] px-5 notapcolor text-sm bg-white p-2 justify-center items-center flex rounded-lg"
-          >
-            <span>New Chat</span>
-          </Link>
-        </div>
-      </div>
 
-      {moreOptions && isMobile && (
-        <MoreOptions
-          onClose={handleRightClick}
-          onDelete={handleDeleteConfirmation}
-          onShare={handleShareConfirmation}
-        />
-      )}
-      {showdeleteConfirmation && (
-        <DeleteConfirmation
-          onClose={handleRightClick}
-          onDelete={handleDeleteConfirmation}
-        />
-      )}
-      {showShareConfirmation && (
-        <ShareConfirmation
-          onClose={handleRightClick}
-          onShare={handleShareConfirmation}
-        />
-      )}
       {/* Sidebar */}
-      <div
-        className={`fixed top-0 left-0 h-full bg-gray-800 text-white z-50 transform ${
-          sidebarOpen ? "translate-x-0" : "-translate-x-full"
-        } md:relative md:translate-x-0 transition-transform duration-300 ease-in-out`}
-        style={{
-          width: sidebarOpen ? "65%" : "20%", // Dynamically set width for mobile screens
-        }}
-      >
-        <Sidebar closeSidebar={closeSidebar} />
-      </div>
-
-      {/* Overlay */}
-      {sidebarOpen && (
-        <div
-          className="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden"
-          onClick={closeSidebar}
-        ></div>
-      )}
 
       {/* Content Section */}
-      <div className="w-full md:w-[80%]">
+      <div className="w-full ">
         <div className="flex h-full ">
           <div
             style={{ width: isMobile ? "100%" : `${sandpackWidth}%` }}
             className="w-auto h-[80vh] md:h-[90vh] flex flex-col"
           >
-            <div className="items-center select-none py-[10.5px] hidden md:flex md:gap-2 border-b-[1px]  border-opacity-10 border-b-white justify-between px-5 text-white bg-black relative">
+            <div className="items-center select-none  hidden md:flex md:gap-2 py-[10.5px] border-b-[1px]  border-opacity-10 border-b-white justify-end px-5 text-white bg-black relative">
               {/* Bade Screen ke liye */}
-              {isPublic ? (
-                <div className="   text-xs px-4 py-1 flex items-center gap-1 rounded-full bg-green-400 bg-opacity-10 items-center justify-center  text-green-400">
-              <div className=" w-[5px] h-[5px] bg-green-400 rounded-full"></div>    Public
-                </div>
-              ) : (
-                <div className="myborder  flex gap-2 text-xs px-4 py-1 rounded-full items-center justify-center">
-                  <img className="w-3 h-3" src="/private.png" />
-                  Private
-                </div>
-              )}
-
-              <div className=" flex gap-2 items-center">
-              <div
-                onClick={() => {
-                  setMoreOptions(!moreOptions);
-                }}
-                className="flex font-extralight pb-[3px] opacity-80 px-[6px] py-[1px] cursor-pointer hover:bg-white hover:bg-opacity-10 rounded-md"
-              >
-                •••
+              <div>Ogata.ai</div>
+              <div className="flex pb-[3px] px-[10px] py-[4px] font-medium text-xs md:text-sm bg-white text-black cursor-pointer hover:bg-white hover:bg-opacity-80 rounded-md">
+                {"Get Started"}
               </div>
-              {moreOptions && !isMobile && (
-                <MoreOptions
-                  onClose={handleRightClick}
-                  onDelete={handleDeleteConfirmation}
-                  onShare={handleShareConfirmation}
-                />
-              )}
+
               <div
                 onClick={() => setSandpackWidth(50)}
                 className={` p-2 hover:bg-white hover:bg-opacity-10 ${
@@ -230,7 +127,6 @@ const Home = () => {
                 } rounded-md cursor-pointer`}
               >
                 <img className=" opacity-80  w-[10px]" src="/left.png" />
-              </div>
               </div>
             </div>
 

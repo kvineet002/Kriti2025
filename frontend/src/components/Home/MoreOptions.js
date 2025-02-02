@@ -1,7 +1,7 @@
 import {useState, useRef, useEffect} from "react";
 import { motion } from "framer-motion";
 
-function MoreOptions({onClose,onDelete})  {
+function MoreOptions({onClose,onDelete,onShare})  {
   const [isFavorite, setIsFavorite] = useState(false);
   const menuRef = useRef(null);
   useEffect(() => {
@@ -25,7 +25,7 @@ function MoreOptions({onClose,onDelete})  {
 
       ref={menuRef}
       >
-      <div className=" text-white cursor-pointer transition-all rounded-md py-2 px-3 flex items-center justify-start gap-2 hover:bg-white hover:bg-opacity-5  w-full "><img className="  w-[14px]" src="/share.png"/>Share</div>
+      <div onClick={onShare} className=" text-white cursor-pointer transition-all rounded-md py-2 px-3 flex items-center justify-start gap-2 hover:bg-white hover:bg-opacity-5  w-full "><img className="  w-[14px]" src="/share.png"/>Share</div>
       <div onClick={()=>setIsFavorite(!isFavorite)} className=" text-white cursor-pointer transition-all rounded-md py-2 px-3 flex w-full items-center justify-start gap-2  hover:bg-white hover:bg-opacity-5 "><img className=" w-4 transition-all" src={isFavorite?"/star-filled.png":"/star.png"}/>Add to Favourites</div>
       <div onClick={onDelete} className=" text-[#F87171]  cursor-pointer transition-all rounded-md py-2 px-3 flex w-full items-center justify-start gap-2  hover:bg-red-400 hover:bg-opacity-10 "><img className=" w-5" src="/deletee.png"/>Delete</div>
     </motion.div>

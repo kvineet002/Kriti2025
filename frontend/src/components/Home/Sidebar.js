@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios, { AxiosHeaders } from "axios";
 import Loader from "./loading";
 import {jwtDecode} from "jwt-decode";
-function Sidebar() {
+function Sidebar({closeSidebar}) {
   const [hovered, setHovered] = useState(null); // State for hover effect
   const [loading, setLoading] = useState(false);
   const [chatHistory, setChatHistory] = useState([]);
@@ -43,9 +43,8 @@ function Sidebar() {
   const handleClick = (e, link) => {
     e.preventDefault(); // Prevent immediate navigation
     setHovered(true); // Trigger hover effect
-    setTimeout(() => {
-      navigate(link); // Navigate after 200ms
-    }, 200); // Delay for 200ms (adjust as needed)
+    window.innerWidth <768&&closeSidebar();
+      navigate(link); 
   };
   const groupChatsByTime = (chats) => {
     const groups = {

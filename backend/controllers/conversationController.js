@@ -140,6 +140,41 @@ const deleteChat = async (req, res) => {
     res.status(500).send("Error deleting chat!");
   }
 };
+const shareChat = async (req, res) => {
+  const { email } = req.body;
+  const { id } = req.params;
+
+  try {
+    const chat = await Chat.findOne({ _id: id,email:email });
+    if (!chat) {
+      res.status(404).send("Chat not found!");
+    }
+
+    chat.isPublic =!chat.isPublic;
+    await chat.save();
+    console.log("Chat status changed to", chat.isPublic);
+    res.status(200).send("Chat shared successfully!");
+  }
+  catch (err) {
+    console.error(err);
+    res.status(500).send("Error sharing chat!");
+  }
+
+}
+const checkPublic=  async (req, res) => {
+  try {
+      const chat = await Chat.findOne({ _id: req.params.id });
+      if (!chat) {
+          res.status(404).send("Chat not found!");
+      }
+      res.status(200).send(chat.isPublic);
+  }
+  catch (err) {
+      console.error(err);
+      res.status(500).send("Error checking chat share!");
+  }
+}
 
 
-module.exports = { newChat, getChatsHistory, getChat, updateChat, deleteChat };
+
+module.exports = { newChat, getChatsHistory, getChat, updateChat, deleteChat, shareChat ,checkPublic };
