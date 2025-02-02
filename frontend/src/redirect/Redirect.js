@@ -9,16 +9,10 @@ function OAuthRedirectHandler() {
     // Capture query parameters after redirect
     const urlParams = new URLSearchParams(window.location.search);
     const token = urlParams.get("token");
-    const email = urlParams.get("email");
-    const name = urlParams.get("name");
-    const avatar = urlParams.get("avatar");
 
-    if (token && email && name ) {
+    if (token ) {
       // Store data in localStorage
       localStorage.setItem("token", token);
-      localStorage.setItem("email", email);
-      localStorage.setItem("name", name);
-      localStorage.setItem("avatar", avatar);
 
       // Redirect to the dashboard or desired route
       navigate("/chat");

@@ -1,24 +1,32 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import axios from "axios";
+import axios, { AxiosHeaders } from "axios";
 import Loader from "./loading";
-
+import {jwtDecode} from "jwt-decode";
 function Sidebar() {
   const [hovered, setHovered] = useState(null); // State for hover effect
   const [loading, setLoading] = useState(false);
   const [chatHistory, setChatHistory] = useState([]);
   const [isOpen, setIsOpen] = useState(false); // Track if sidebar is open
-  const email = localStorage.getItem("email");
-  const location = useLocation().pathname.split("/").pop();
+  const token = localStorage.getItem("token");
+  const decodedToken = token ? jwtDecode(token) : {};
+  const email =decodedToken&& decodedToken.email;
+  const location =  useLocation().pathname.split("/").pop();
   const navigate = useNavigate();
 
   useEffect(() => {
     const getChatsHistory = async () => {
       setLoading(true);
       try {
-        const response = await axios.get(
-          `${process.env.REACT_APP_API_URL}/api/chats/${email}` // Fixed string interpolation
-        );
+        
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/api/chats/${email}`,
+        {
+          headers: {
+            authorization: `Bearer ${localStorage.getItem('token')}`
+          }
+        }
+      );
         setChatHistory(response.data.chats);
         setLoading(false);
       } catch (err) {
@@ -141,11 +149,11 @@ function Sidebar() {
       <div className="flex flex-col gap-4 items-center p-4 py-6 border-t-white  border-opacity-10">
         <div className="flex justify-center items-center gap-3">
           <img
-            src={`${localStorage.getItem('avatar')}`}
+            src={`${ decodedToken.avatar}`}
             className="w-8 h-8 rounded-full bg-gray-300"
             alt="User Avatar"
           />
-          <span className="text-white  overflow-hidden text-sm">{localStorage.getItem('name')}</span>
+          <span className="text-white  overflow-hidden text-sm">{decodedToken&& decodedToken.name}</span>
         </div>
         <Link
           to={"/chat"}

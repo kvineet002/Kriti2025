@@ -5,10 +5,12 @@ import ChatSection from "../../components/Home/ChatSection";
 import MoreOptions from "../../components/Home/MoreOptions";
 import SandPackCode from "./SandPackCode";
 import { motion } from "framer-motion";
+import DeleteConfirmation from "../../components/Home/DeleteConfirmation";
 
 const Home = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [moreOptions, setMoreOptions] = useState(false);
+  const [showdeleteConfirmation, setshowDeleteConfirmation] = useState(false);
   const [htmlCode, setHtmlCode] = useState("");
   const [sandpackWidth, setSandpackWidth] = useState(100); // % of total width
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -77,6 +79,10 @@ const Home = () => {
     setIsMobile(window.innerWidth <= 768);
   }, [window.innerWidth]);
 
+  const handleDeleteConfirmation = () => {  
+    setshowDeleteConfirmation(!showdeleteConfirmation);
+  }
+
   return (
     <div className="flex flex-col md:flex-row md:h-screen w-full relative">
       {/* Hamburger Menu */}
@@ -110,9 +116,13 @@ const Home = () => {
       </div>
 
       {moreOptions && isMobile && (
-        <MoreOptions onClose={handleRightClick}/>
+        <MoreOptions onClose={handleRightClick} onDelete={handleDeleteConfirmation}/>
       )}
-
+      {
+        showdeleteConfirmation && (
+        <DeleteConfirmation onClose={handleRightClick} onDelete={handleDeleteConfirmation}/>
+      )
+      }
       {/* Sidebar */}
       <div
         className={`fixed top-0 left-0 h-full bg-gray-800 text-white z-50 transform ${
@@ -150,8 +160,8 @@ const Home = () => {
               >
                 •••
               </div>
-              {moreOptions && (
-                <MoreOptions onClose={handleRightClick}/>
+              {moreOptions && !isMobile&&(
+                <MoreOptions onClose={handleRightClick} onDelete={handleDeleteConfirmation}/>
               )}
               <div
                 onClick={() => setSandpackWidth(50)}

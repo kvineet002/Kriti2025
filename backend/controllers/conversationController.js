@@ -119,5 +119,27 @@ const updateChat= async (req, res) => {
     res.status(500).send("Error adding conversation!");
   }
 }
+const deleteChat = async (req, res) => {
+  const { email } = req.query;
+  const { id } = req.params;
 
-module.exports = { newChat, getChatsHistory, getChat, updateChat };
+  try {
+    
+    const deletedChat = await Chat.findOneAndDelete({ _id: id,email:email });
+    console.log(deletedChat);
+
+    // REMOVE CHAT REFERENCE FROM USERCHATS
+    await UserChat.updateOne(
+      { email: email },
+      { $pull: { chats: { _id: id } } }
+    );
+
+    res.status(200).send("Chat deleted successfully!");
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error deleting chat!");
+  }
+};
+
+
+module.exports = { newChat, getChatsHistory, getChat, updateChat, deleteChat };

@@ -20,7 +20,7 @@ const googleCallback = async (req, res) => {
     res.status(500).send("Error creating user!");
   }
   const redirect_url = process.env.REDIRECT_URL;
-  const token = createAccessToken(req.user._json.email);
+  const token = createAccessToken(email, name, avatar);
   res.redirect(
     `${redirect_url}/?token=${token}&email=${email}&name=${name}&avatar=${avatar}`
   );

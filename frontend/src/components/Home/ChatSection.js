@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { redirect, useLocation } from "react-router-dom";
 import axios from "axios";
 import Loader from "./loading.js";
+import { jwtDecode } from "jwt-decode";
 
 function ChatSection({ setHtmlCode, htmlCode, sandPackWidth }) {
   const containerRef = useRef(null);
@@ -11,7 +12,9 @@ function ChatSection({ setHtmlCode, htmlCode, sandPackWidth }) {
   const [loading, setLoading] = useState(false);
   const path = useLocation().pathname;
   const chatId = path.split("/").pop();
-  const email = localStorage.getItem("email");
+    const token = localStorage.getItem("token");
+      const decodedToken = token ? jwtDecode(token) : {};
+      const email =decodedToken&& decodedToken.email;
   const chatEndRef = useRef(null);
   const [htmlArray, setHtmlArray] = useState([]);
   let htmlContent = "";
@@ -78,7 +81,10 @@ function ChatSection({ setHtmlCode, htmlCode, sandPackWidth }) {
       await axios.put(
         `${process.env.REACT_APP_API_URL}/api/chats/update/${chatId}`,
         dataToUpdate,
-        { params: { email } }
+        { params: { email },
+        headers: {
+          authorization: `Bearer ${localStorage.getItem('token')}`
+        } }
       );
 
       console.log("Chat successfully updated on the server.");
@@ -105,6 +111,9 @@ function ChatSection({ setHtmlCode, htmlCode, sandPackWidth }) {
           {
             params: { email },
             signal: abortController.signal,
+            headers: {
+              authorization: `Bearer ${localStorage.getItem('token')}`
+            }
           }
         );
 
@@ -150,7 +159,10 @@ function ChatSection({ setHtmlCode, htmlCode, sandPackWidth }) {
             await axios.put(
               `${process.env.REACT_APP_API_URL}/api/chats/update/${chatId}`,
               { answer: accumulatedText },
-              { params: { email } }
+              { params: { email },
+              headers: {
+                authorization: `Bearer ${localStorage.getItem('token')}`
+              } },
             );
           }
         }
@@ -210,6 +222,7 @@ function ChatSection({ setHtmlCode, htmlCode, sandPackWidth }) {
     });
     setHtmlArray(allCodes);
   }, [chats]);
+  console.log(htmlArray);
 
   useEffect(() => {
     if (loading || htmlCode.length === 0) {
@@ -221,7 +234,10 @@ function ChatSection({ setHtmlCode, htmlCode, sandPackWidth }) {
         }
       }
     }
+
   }, [chats, loading, htmlCode, setHtmlCode]);
+
+
   const formattedMessage = (message, messageIndex) => {
     const chunks = message.split("```");
 
