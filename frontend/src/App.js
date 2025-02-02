@@ -37,7 +37,7 @@ function App() {
         <Route element={<ProtectedRoutes/>}>
           <Route path='/chat' element={<FirstChat/>}/>
           <Route path='/chat/:id' element={<Home/>}/>
-          <Route path='/customizable-dashboard' element={<CustomizePage/>}/>
+          <Route path='/customize/:id' element={<CustomizePage/>}/>
         </Route>
       </Routes>
     </>

@@ -1,16 +1,23 @@
 import React, { useState, useRef, useEffect } from "react";
+import {useLocation} from 'react-router-dom';
 import uploadImage from "../../utils/ImageUpload.js"
 import { sampleHtml } from "../../constants.js";
 import { updateElementStyles, getElementDetails } from "../../utils/HTMLCustomization.js";
 
-//redirect to customization page from chat page with html code
-
 const CustomizePage = () => {
-  const [html, setHtml] = useState(sampleHtml);
+  // const [html, setHtml] = useState("<h1 style='color: white; text-align:center;'>Loading</h1>");
+  const [html,setHtml] = useState(sampleHtml);
   const [selectedElement, setSelectedElement] = useState(null);
   const [selectedElementId, setSelectedElementId] = useState(null);
   const [filteredStyles, setFilteredStyles] = useState({});
   const iframeRef = useRef(null);
+  // const location = useLocation();
+  // const htmlCode = location.state?.htmlCode || "<h1 style='color: white;text-align:center;'>Code is not working</h1>";
+  // useEffect(() => {
+  //   if(htmlCode){
+  //     setHtml(htmlCode);
+  //   }
+  // }, [htmlCode]);
 
   const relevantStyles = [
     "background-color",

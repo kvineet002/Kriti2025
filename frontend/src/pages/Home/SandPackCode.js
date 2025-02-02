@@ -8,6 +8,7 @@ import {
 import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import {useParams} from 'react-router-dom';
 import Loader from "../../components/Home/loading";
 
 function SandPackCode({
@@ -22,6 +23,8 @@ function SandPackCode({
   const [isUpdating, setIsUpdating] = useState(true);
   const updateTimeout = useRef(null);
   const [loading, setLoading] = useState(false);
+  const id = useParams().id;
+  
   // Handle code updates and switching logic
   useEffect(() => {
     if (htmlCode === "") {
@@ -74,6 +77,10 @@ const handleDeploy = async () => {
   }
 };
 
+const handleCustomize = () => {
+  navigate(`/customize/${id}`, { state: { htmlCode }});
+};
+
   return (
     <div className="h-full w-full overflow-hidden no-tap">
       <div className="items-center select-none rounded-t-md border-t-[1px] border-opacity-20 py-2 flex md:border-b-[1px] md:border-opacity-10 border-white justify-between px-5 text-white bg-black">
@@ -123,11 +130,19 @@ const handleDeploy = async () => {
               <img className="w-[12px] h-[12px]" src="/preview.png" />
               Preview
             </div>
+            <div className={`hover:bg-white hover:bg-opacity-10 cursor-pointer flex gap-1 rounded-lg px-3 py-1 items-center transition-all justify-center opacity-80`}
+              onClick={handleCustomize}
+            >
+              <img className="w-[12px] h-[12px] invert" src="/customize.svg" />
+              Customize
+            </div>
           </div>
         </div>
+        
         <div onClick={handleDeploy} className="flex pb-[3px] px-[10px] py-[4px] font-medium text-sm bg-white text-black cursor-pointer hover:bg-white hover:bg-opacity-80 rounded-md">
           {loading?"Deploying...":"Deploy"}
         </div>
+        
       </div>
 
       <SandpackProvider
