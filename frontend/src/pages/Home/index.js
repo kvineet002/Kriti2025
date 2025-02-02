@@ -4,13 +4,12 @@ import { useEffect, useRef, useState } from "react";
 import ChatSection from "../../components/Home/ChatSection";
 import MoreOptions from "../../components/Home/MoreOptions";
 import SandPackCode from "./SandPackCode";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 const Home = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [moreOptions, setMoreOptions] = useState(false);
   const [htmlCode, setHtmlCode] = useState("");
-  const buttonRef = useRef(null);
   const [sandpackWidth, setSandpackWidth] = useState(100); // % of total width
   const [isCollapsed, setIsCollapsed] = useState(false);
   const dividerRef = useRef(null);
@@ -73,6 +72,10 @@ const Home = () => {
     return () => document.removeEventListener("mousedown", handleOutsideClick);
   }, []);
 
+  useEffect(()=>{
+    setIsMobile(window.innerWidth <= 768);
+  }, [window.innerWidth]);
+
   return (
     <div className="flex flex-col md:flex-row md:h-screen w-full relative">
       {/* Hamburger Menu */}
@@ -88,7 +91,6 @@ const Home = () => {
         <div className="flex items-center justify-center gap-4">
           <div className="text-white flex justify-center items-center bg-black">
             <div
-              ref={buttonRef}
               onClick={() => {
                 setMoreOptions(!moreOptions);
               }}
@@ -107,7 +109,7 @@ const Home = () => {
       </div>
 
       {moreOptions && isMobile && (
-        <MoreOptions buttonRef={buttonRef} onClose={handleRightClick} />
+        <MoreOptions onClose={handleRightClick}/>
       )}
 
       {/* Sidebar */}
@@ -140,7 +142,6 @@ const Home = () => {
             <div className="items-center select-none py-[10.5px] hidden md:flex md:gap-2 border-b-[1px]  border-opacity-10 border-b-white justify-end px-5 text-white bg-black relative">
               {/* Bade Screen ke liye */}
               <div
-                ref={buttonRef}
                 onClick={() => {
                   setMoreOptions(!moreOptions);
                 }}
@@ -149,7 +150,7 @@ const Home = () => {
                 •••
               </div>
               {moreOptions && (
-                <MoreOptions buttonRef={buttonRef} onClose={handleRightClick} />
+                <MoreOptions onClose={handleRightClick}/>
               )}
               <div
                 onClick={() => setSandpackWidth(50)}
