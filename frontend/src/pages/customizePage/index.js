@@ -92,7 +92,6 @@ const CustomizePage = () => {
     if (iframe) {
       iframe.onload = injectClickListener;
     }
-    
   }, [html]);
 
   const handleStyleChange = (key, value) => {
@@ -216,7 +215,7 @@ const CustomizePage = () => {
       <div className="myborder w-full h-1/2 md:h-full md:w-[35%] flex flex-col gap-3 p-4 bg-black shadow-lg">
         <h1 className="text-xl font-bold">Customization Tab</h1>
         <div className="bg-white bg-opacity-10 text-black w-full p-3 rounded-lg shadow-inner overflow-scroll no-scrollbar">
-          <div className="overflow-scroll flex flex-col bg-black text-white rounded-lg p-3 no-scrollbar">
+          <div className="overflow-scroll flex flex-col bg-black text-white text-opacity-70 rounded-lg p-3 no-scrollbar">
             {selectedElement === "IMG" && (
               <div className="flex gap-2 overflow-hidden w-full items-center">
                 <h3 className="font-bold">Change Image:</h3>
@@ -231,7 +230,7 @@ const CustomizePage = () => {
                 type="text"
                 value={innerText}
                 onChange={handleTextChange}
-                className="p-2 border border-gray-700 rounded-lg resize-none outline-none focus:outline-none focus:ring-0 bg-white bg-opacity-20"
+                className="p-2  rounded-md resize-none outline-none focus:outline-none focus:ring-0 bg-white bg-opacity-10"
               />
             </div>
             }
@@ -245,7 +244,7 @@ const CustomizePage = () => {
                 onChange={(e) => handleStyleChange("color", e.target.value)}
                 className="outline-none focus:outline-none focus:ring-0 border-none"
               />
-              <div className="bg-white bg-opacity-20 text-white px-2">{filteredStyles["color"]}</div>
+              <div className="bg-white bg-opacity-10 text-white px-2 rounded-md">{filteredStyles["color"]}</div>
             </div>}
 
             {/* Bg-color */}
@@ -257,7 +256,7 @@ const CustomizePage = () => {
                 onChange={(e) => handleStyleChange("background-color", e.target.value)}
                 className="outline-none focus:outline-none focus:ring-0 border-none"
               />
-              <div className="bg-white bg-opacity-20 text-white px-2">{filteredStyles["background-color"]}</div>
+              <div className="bg-white bg-opacity-10 text-white px-2 rounded-md">{filteredStyles["background-color"]}</div>
             </div>}
 
             {/* Font-Family */}
@@ -266,7 +265,7 @@ const CustomizePage = () => {
               <select
                 value={filteredStyles["font-family"]}
                 onChange={(e) => handleStyleChange("font-family", e.target.value)}
-                className="bg-white bg-opacity-20 border-gray-700  outline-none px-2 py-1 text-white"
+                className="bg-white bg-opacity-10   outline-none px-2 py-1 text-white rounded-md"
               >
                 {
                   ["Arial", "Helvetica", "sans-serif", "Verdana", "Courier"].map((value) => (
@@ -282,7 +281,7 @@ const CustomizePage = () => {
               <select
                 value={filteredStyles["font-weight"]}
                 onChange={(e) => handleStyleChange("font-weight", e.target.value)}
-                className="bg-white bg-opacity-20 border-gray-700  outline-none px-2 py-1 text-white"
+                className="bg-white bg-opacity-10  outline-none px-2 py-1 text-white rounded-md"
               >
                 {
                   ["normal", "bold", "bolder", "lighter"].map((value) => (
@@ -300,8 +299,10 @@ const CustomizePage = () => {
                 const newHeight = parseFloat(currHeight.replace("px", "")) - 1;
                 handleStyleChange("font-size", newHeight + "px");
               }}
-                className="cursor-pointer select-none h-8 text-center w-8 text-lg hover:bg-white hover:bg-opacity-10 rounded-md"
-              >-</div>
+                className="cursor-pointer flex items-center justify-center select-none h-8 text-center w-8 text-lg hover:bg-white hover:bg-opacity-10 rounded-md"
+              >
+                <img src="/minus.png" alt="-" className="w-4"/>
+              </div>
               <div className="flex gap-1 bg-white bg-opacity-10 justify-center items-center p-1 pr-2 rounded-md">
                 <input
                   type="text"
@@ -316,8 +317,10 @@ const CustomizePage = () => {
                 const newHeight = parseFloat(currHeight.replace("px", "")) + 1;
                 handleStyleChange("font-size", newHeight + "px");
               }}
-                className="cursor-pointer select-none h-8 text-center w-8 text-lg hover:bg-white hover:bg-opacity-10 rounded-md"
-              >+</div>
+                className="flex justify-center items-center cursor-pointer select-none h-8 text-center w-8 text-lg hover:bg-white hover:bg-opacity-10 rounded-md"
+              >
+                <img src="/plus.png" alt="+" className="w-4"/>
+              </div>
               </div>
             }
 
@@ -329,22 +332,25 @@ const CustomizePage = () => {
                 const newHeight = parseFloat(currHeight.replace("px", "")) - 1;
                 handleStyleChange("height", newHeight + "px");
               }}
-                className="cursor-pointer text-xl select-none"
-              >-</div>
-              <input
-                type="text"
-                value={filteredStyles["height"]?.replace("px", "")}
-                onChange={(e) => handleStyleChange("height", e.target.value)}
-                className="bg-white border-gray-700  outline-none px-2 bg-opacity-20 text-white w-20"
-              />
-              <div>px</div>
+                className="flex justify-center items-center cursor-pointer select-none h-8 text-center w-8 text-lg hover:bg-white hover:bg-opacity-10 rounded-md"
+              ><img src="/minus.png" alt="-" className="w-4"/></div>
+              <div className="flex gap-1 bg-white bg-opacity-10 justify-center items-center p-1 pr-2 rounded-md">
+                <input
+                  type="text"
+                  value={filteredStyles["height"]?.replace("px", "")}
+                  onChange={(e) => handleStyleChange("height", e.target.value)}
+                  className="bg-black outline-none px-2 w-12 text-white "
+                />
+                <div>px</div>
+              </div>
+             
               <div onClick={()=>{
                 const currHeight = filteredStyles["height"];
                 const newHeight = parseFloat(currHeight.replace("px", "")) + 1;
                 handleStyleChange("height", newHeight + "px");
               }}
-                className="cursor-pointer text-xl select-none"
-              >+</div>
+                className="flex justify-center items-center cursor-pointer select-none h-8 text-center w-8 text-lg hover:bg-white hover:bg-opacity-10 rounded-md"
+              ><img src="/plus.png" alt="+" className="w-4"/></div>
               </div>
             }
 
@@ -356,22 +362,25 @@ const CustomizePage = () => {
                 const newHeight = parseFloat(currHeight.replace("px", "")) - 1;
                 handleStyleChange("width", newHeight + "px");
               }}
-                className="cursor-pointer text-xl select-none"
-              >-</div>
-              <input
-                type="text"
-                value={filteredStyles["width"]?.replace("px", "")}
-                onChange={(e) => handleStyleChange("width", e.target.value)}
-                className="bg-white border-gray-700  outline-none px-2 bg-opacity-20 text-white w-20"
-              />
-              <div>px</div>
+              className="flex justify-center items-center cursor-pointer select-none h-8 text-center w-8 text-lg hover:bg-white hover:bg-opacity-10 rounded-md"
+              ><img src="/minus.png" alt="-" className="w-4"/></div>
+              <div className="flex gap-1 bg-white bg-opacity-10 justify-center items-center p-1 pr-2 rounded-md">
+                <input
+                  type="text"
+                  value={filteredStyles["width"]?.replace("px", "")}
+                  onChange={(e) => handleStyleChange("width", e.target.value)}
+                  className="bg-black outline-none px-2 w-12 text-white "
+                />
+                <div>px</div>
+              </div>
+              
               <div onClick={()=>{
                 const currHeight = filteredStyles["width"];
                 const newHeight = parseFloat(currHeight.replace("px", "")) + 1;
                 handleStyleChange("width", newHeight + "px");
               }}
-                className="cursor-pointer text-xl select-none"
-              >+</div>
+              className="flex justify-center items-center cursor-pointer select-none h-8 text-center w-8 text-lg hover:bg-white hover:bg-opacity-10 rounded-md"
+              ><img src="/plus.png" alt="+" className="w-4"/></div>
               </div>
             }
 
@@ -380,9 +389,9 @@ const CustomizePage = () => {
               <div className="font-bold whitespace-nowrap">Margin :</div>
                 <div className="flex flex-col gap-1 items-center text-white">
                   <div className="font-bold">Top</div>
-                  <div className="flex gap-2 items-center">
+                  <div className="flex gap-1 bg-white bg-opacity-10 justify-center items-center p-1 pr-2 rounded-md">
                     <input type="text" name="margin-top" value={filteredStyles["margin-top"].replace("px", "")} 
-                      className="bg-white border-gray-700  outline-none px-2 bg-opacity-20 text-white w-16"
+                      className="bg-black outline-none px-2 w-12 text-white "
                       onChange={(e) => handleStyleChange("margin-top", e.target.value + "px")}
                     />
                     <div>px</div>
@@ -390,9 +399,9 @@ const CustomizePage = () => {
                 </div>
                 <div className="flex flex-col gap-1 items-center text-white">
                   <div className="font-bold">Right</div>
-                  <div className="flex gap-2 items-center">
+                  <div className="flex gap-1 bg-white bg-opacity-10 justify-center items-center p-1 pr-2 rounded-md">
                     <input type="text" name="margin-right" value={filteredStyles["margin-right"].replace("px", "")} 
-                      className="bg-white border-gray-700  outline-none px-2 bg-opacity-20 text-white w-16"
+                      className="bg-black outline-none px-2 w-12 text-white "
                       onChange={(e) => handleStyleChange("margin-right", e.target.value + "px")}
                     />
                     <div>px</div>
@@ -400,9 +409,9 @@ const CustomizePage = () => {
                 </div>
                 <div className="flex flex-col gap-1 items-center text-white">
                   <div className="font-bold">Bottom</div>
-                  <div className="flex gap-2 items-center">
+                  <div className="flex gap-1 bg-white bg-opacity-10 justify-center items-center p-1 pr-2 rounded-md">
                     <input type="text" name="margin-bottom" value={filteredStyles["margin-bottom"].replace("px", "")} 
-                      className="bg-white border-gray-700  outline-none px-2 bg-opacity-20 text-white w-16"
+                      className="bg-black outline-none px-2 w-12 text-white "
                       onChange={(e) => handleStyleChange("margin-bottom", e.target.value + "px")}
                     />
                     <div>px</div>
@@ -410,9 +419,9 @@ const CustomizePage = () => {
                 </div>
                 <div className="flex flex-col gap-1 items-center text-white">
                   <div className="font-bold">Left</div>
-                  <div className="flex gap-2 items-center">
+                  <div className="flex gap-1 bg-white bg-opacity-10 justify-center items-center p-1 pr-2 rounded-md">
                     <input type="text" name="margin-left" value={filteredStyles["margin-left"].replace("px", "")} 
-                      className="bg-white border-gray-700  outline-none px-2 bg-opacity-20 text-white w-16"
+                      className="bg-black outline-none px-2 w-12 text-white "
                       onChange={(e) => handleStyleChange("margin-left", e.target.value + "px")}
                     />
                     <div>px</div>
@@ -421,15 +430,14 @@ const CustomizePage = () => {
               </div>
               }
 
-
               {/*Padding */}
               {selectedElement && <div className="flex gap-3 pb-4 items-center">
               <div className="font-bold whitespace-nowrap">Padding :</div>
                 <div className="flex flex-col gap-1 items-center text-white">
                   <div className="font-bold">Top</div>
-                  <div className="flex gap-2 items-center">
+                  <div className="flex gap-1 bg-white bg-opacity-10 justify-center items-center p-1 pr-2 rounded-md">
                     <input type="text" name="padding-top" value={filteredStyles["padding-top"].replace("px", "")} 
-                      className="bg-white border-gray-700  outline-none px-2 bg-opacity-20 text-white w-16"
+                      className="bg-black outline-none px-2 w-12 text-white "
                       onChange={(e) => handleStyleChange("padding-top", e.target.value + "px")}
                     />
                     <div>px</div>
@@ -437,9 +445,9 @@ const CustomizePage = () => {
                 </div>
                 <div className="flex flex-col gap-1 items-center text-white">
                   <div className="font-bold">Right</div>
-                  <div className="flex gap-2 items-center">
+                  <div className="flex gap-1 bg-white bg-opacity-10 justify-center items-center p-1 pr-2 rounded-md">
                     <input type="text" name="padding-right" value={filteredStyles["padding-right"].replace("px", "")} 
-                      className="bg-white border-gray-700  outline-none px-2 bg-opacity-20 text-white w-16"
+                      className="bg-black outline-none px-2 w-12 text-white "
                       onChange={(e) => handleStyleChange("padding-right", e.target.value + "px")}
                     />
                     <div>px</div>
@@ -447,9 +455,9 @@ const CustomizePage = () => {
                 </div>
                 <div className="flex flex-col gap-1 items-center text-white">
                   <div className="font-bold">Bottom</div>
-                  <div className="flex gap-2 items-center">
+                  <div className="flex gap-1 bg-white bg-opacity-10 justify-center items-center p-1 pr-2 rounded-md">
                     <input type="text" name="padding-bottom" value={filteredStyles["padding-bottom"].replace("px", "")} 
-                      className="bg-white border-gray-700  outline-none px-2 bg-opacity-20 text-white w-16"
+                      className="bg-black outline-none px-2 w-12 text-white "
                       onChange={(e) => handleStyleChange("padding-bottom", e.target.value + "px")}
                     />
                     <div>px</div>
@@ -457,9 +465,9 @@ const CustomizePage = () => {
                 </div>
                 <div className="flex flex-col gap-1 items-center text-white">
                   <div className="font-bold">Left</div>
-                  <div className="flex gap-2 items-center">
+                  <div className="flex gap-1 bg-white bg-opacity-10 justify-center items-center p-1 pr-2 rounded-md">
                     <input type="text" name="padding-left" value={filteredStyles["padding-left"].replace("px", "")} 
-                      className="bg-white border-gray-700  outline-none px-2 bg-opacity-20 text-white w-16"
+                      className="bg-black outline-none px-2 w-12 text-white "
                       onChange={(e) => handleStyleChange("padding-left", e.target.value + "px")}
                     />
                     <div>px</div>
@@ -468,79 +476,78 @@ const CustomizePage = () => {
               </div>
               }
 
-              {/*Border */}
-              {selectedElement && <div className="flex gap-3 pb-4 items-center">
-              <div className="font-bold whitespace-nowrap">Border-width :</div>
-                <div className="flex flex-col gap-1 items-center text-white">
-                  <div className="font-bold">Top</div>
-                  <div className="flex gap-2 items-center">
-                    <input type="text" name="border-top-width" value={filteredStyles["border-top-width"].replace("px", "")} 
-                      className="bg-white border-gray-700  outline-none px-2 bg-opacity-20 text-white w-16"
-                      onChange={(e) => handleStyleChange("border-top-width", e.target.value + "px")}
-                    />
-                    <div>px</div>
-                  </div>
-                </div>
-                <div className="flex flex-col gap-1 items-center text-white">
-                  <div className="font-bold">Right</div>
-                  <div className="flex gap-2 items-center">
-                    <input type="text" name="border-right-width" value={filteredStyles["border-right-width"].replace("px", "")} 
-                      className="bg-white border-gray-700  outline-none px-2 bg-opacity-20 text-white w-16"
-                      onChange={(e) => handleStyleChange("border-right-width", e.target.value + "px")}
-                    />
-                    <div>px</div>
-                  </div>
-                </div>
-                <div className="flex flex-col gap-1 items-center text-white">
-                  <div className="font-bold">Bottom</div>
-                  <div className="flex gap-2 items-center">
-                    <input type="text" name="border-bottom-width" value={filteredStyles["border-bottom-width"].replace("px", "")} 
-                      className="bg-white border-gray-700  outline-none px-2 bg-opacity-20 text-white w-16"
-                      onChange={(e) => handleStyleChange("border-bottom-width", e.target.value + "px")}
-                    />
-                    <div>px</div>
-                  </div>
-                </div>
-                <div className="flex flex-col gap-1 items-center text-white">
-                  <div className="font-bold">Left</div>
-                  <div className="flex gap-2 items-center">
-                    <input type="text" name="border-left-width" value={filteredStyles["border-left-width"].replace("px", "")} 
-                      className="bg-white border-gray-700  outline-none px-2 bg-opacity-20 text-white w-16"
-                      onChange={(e) => handleStyleChange("border-left-width", e.target.value + "px")}
-                    />
-                    <div>px</div>
-                  </div>
-                </div>
-              </div>
-              }
-
-              {/*Border-radius */}
-              {selectedElement && <div className="flex gap-3 pb-4 items-center">
-                <div className="font-bold">Border Radius:</div>
-                  <div onClick={()=>{
-                    const currHeight = filteredStyles["border-radius"];
-                    const newHeight = parseFloat(currHeight.replace("px", "")) - 1;
-                    handleStyleChange("border-radius", newHeight + "px");
-                  }}
-                    className="cursor-pointer text-xl select-none"
-                  >-</div>
-                  <input
-                    type="text"
-                    value={filteredStyles["border-radius"]?.replace("px", "")}
-                    onChange={(e) => handleStyleChange("border-radius", e.target.value)}
-                    className="bg-white border-gray-700  outline-none px-2 bg-opacity-20 text-white w-20"
-                  />
-                  <div>px</div>
-                  <div onClick={()=>{
-                    const currHeight = filteredStyles["border-radius"];
-                    const newHeight = parseFloat(currHeight.replace("px", "")) + 1;
-                    handleStyleChange("border-radius", newHeight + "px");
-                  }}
-                    className="cursor-pointer text-xl select-none"
-                  >+</div>
-                </div>}
-
-                {/* Border Color */}
+              {/* Border */}
+                      {selectedElement && <div className="flex gap-3 pb-4 items-center">
+                      <div className="font-bold whitespace-nowrap">Border-width :</div>
+                        <div className="flex flex-col gap-1 items-center text-white">
+                        <div className="font-bold">Top</div>
+                        <div className="flex gap-1 bg-white bg-opacity-10 justify-center items-center p-1 pr-2 rounded-md">
+                          <input type="text" name="border-top-width" value={filteredStyles["border-top-width"].replace("px", "")} 
+                          className="bg-black outline-none px-2 w-12 text-white "
+                          onChange={(e) => handleStyleChange("border-top-width", e.target.value + "px")}
+                          />
+                          <div>px</div>
+                        </div>
+                        </div>
+                        <div className="flex flex-col gap-1 items-center text-white">
+                        <div className="font-bold">Right</div>
+                        <div className="flex gap-1 bg-white bg-opacity-10 justify-center items-center p-1 pr-2 rounded-md">
+                          <input type="text" name="border-right-width" value={filteredStyles["border-right-width"].replace("px", "")} 
+                          className="bg-black outline-none px-2 w-12 text-white "
+                          onChange={(e) => handleStyleChange("border-right-width", e.target.value + "px")}
+                          />
+                          <div>px</div>
+                        </div>
+                        </div>
+                        <div className="flex flex-col gap-1 items-center text-white">
+                        <div className="font-bold">Bottom</div>
+                        <div className="flex gap-1 bg-white bg-opacity-10 justify-center items-center p-1 pr-2 rounded-md">
+                          <input type="text" name="border-bottom-width" value={filteredStyles["border-bottom-width"].replace("px", "")} 
+                          className="bg-black outline-none px-2 w-12 text-white "
+                          onChange={(e) => handleStyleChange("border-bottom-width", e.target.value + "px")}
+                          />
+                          <div>px</div>
+                        </div>
+                        </div>
+                        <div className="flex flex-col gap-1 items-center text-white">
+                        <div className="font-bold">Left</div>
+                        <div className="flex gap-1 bg-white bg-opacity-10 justify-center items-center p-1 pr-2 rounded-md">
+                          <input type="text" name="border-left-width" value={filteredStyles["border-left-width"].replace("px", "")} 
+                          className="bg-black outline-none px-2 w-12 text-white "
+                          onChange={(e) => handleStyleChange("border-left-width", e.target.value + "px")}
+                          />
+                          <div>px</div>
+                        </div>
+                        </div>
+                      </div>
+                      }
+                      
+                      {selectedElement && <div className="flex gap-3 pb-4 items-center">
+                      <div className="font-bold">Border Radius:</div>
+                        <div onClick={()=>{
+                        const currHeight = filteredStyles["border-radius"];
+                        const newHeight = parseFloat(currHeight.replace("px", "")) - 1;
+                        handleStyleChange("border-radius", newHeight + "px");
+                        }}
+                        className="flex justify-center items-center cursor-pointer select-none h-8 text-center w-8 text-lg hover:bg-white hover:bg-opacity-10 rounded-md"
+                        ><img src="/minus.png" alt="-" className="w-4"/></div>
+                        <div className="flex gap-1 bg-white bg-opacity-10 justify-center items-center p-1 pr-2 rounded-md">
+                        <input
+                          type="text"
+                          value={filteredStyles["border-radius"]?.replace("px", "")}
+                          onChange={(e) => handleStyleChange("border-radius", e.target.value)}
+                          className="bg-black outline-none px-2 w-12 text-white "
+                        />
+                        <div>px</div>
+                        </div>
+                        <div onClick={()=>{
+                        const currHeight = filteredStyles["border-radius"];
+                        const newHeight = parseFloat(currHeight.replace("px", "")) + 1;
+                        handleStyleChange("border-radius", newHeight + "px");
+                        }}
+                        className="flex justify-center items-center cursor-pointer select-none h-8 text-center w-8 text-lg hover:bg-white hover:bg-opacity-10 rounded-md"
+                        ><img src="/plus.png" alt="+" className="w-4"/></div>
+                      </div>}
                 {selectedElement && <div className="flex gap-2 pb-4">
                   <div className="font-bold">Border Color :</div>
                   <input
