@@ -16,6 +16,7 @@ const Home = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [showBottomSheet, setShowBottomSheet] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
+  
   useEffect(() => {
   const setShowBottom = () => {
     setShowBottomSheet(true);

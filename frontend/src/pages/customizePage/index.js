@@ -3,7 +3,7 @@ import uploadImage from "../../utils/ImageUpload.js"
 import { sampleHtml } from "../../constants.js";
 import { updateElementStyles, getElementDetails } from "../../utils/HTMLCustomization.js";
 
-getElementDetails(sampleHtml);
+//redirect to customization page from chat page with html code
 
 const CustomizePage = () => {
   const [html, setHtml] = useState(sampleHtml);
