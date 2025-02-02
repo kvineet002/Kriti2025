@@ -89,9 +89,6 @@ const handleCustomize = () => {
   navigate(`/customize/${id}`, { state: { htmlCode }});
 };
 
-  const handleCustomize = () => {
-    navigate(`/customize/${id}`, { state: { htmlCode } });
-  };
   const [copySuccess, setCopySuccess] = useState("Copy code");
   const handleCopy = () => {
     navigator.clipboard.writeText(htmlCode);
