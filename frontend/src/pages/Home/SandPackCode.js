@@ -1,6 +1,5 @@
 import {
   SandpackCodeEditor,
-  SandpackFileExplorer,
   SandpackLayout,
   SandpackPreview,
   SandpackProvider,
@@ -9,7 +8,7 @@ import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {useParams} from 'react-router-dom';
-import Loader from "../../components/Home/loading";
+
 
 function SandPackCode({
   htmlCode,
@@ -78,6 +77,7 @@ const handleDeploy = async () => {
 };
 
 const handleCustomize = () => {
+  localStorage.removeItem("customizedHtml");
   navigate(`/customize/${id}`, { state: { htmlCode }});
 };
 
