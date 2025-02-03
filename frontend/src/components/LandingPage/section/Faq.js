@@ -5,30 +5,30 @@ import Heading from '../subcomp/Heading';
 const questions = [{
     id: 1,
     question: "What types of tasks can be automated with this app?",
-    answer: "Our app can automate a wide range of tasks, including scheduling, data entry, file management, notifications, and complex workflows across various business processes. Whether you need to automate repetitive tasks or streamline multi-step processes, our app offers the flexibility to meet your needs."
+    answer: "Our Text-to-Website Generator automates layout design, content formatting, and responsiveness testing, making the entire process of website development hassle-free."	
 },
     {
         id: 2,
-        question: "How secure is my data in the app?",
-        answer: "We take data security very seriously. Our app uses state-of-the-art encryption and security protocols to protect your data. We also adhere to strict data privacy regulations to ensure that your information is safe and secure at all times."
+        question: "Can I customize the generated website?",
+        answer: "Yes, the generator allows you to tweak and refine designs post-generation to align perfectly with your vision."
     },
 
     {
         id: 3,
-        question: "Can I integrate this app with other tools I use?",
-        answer: "Yes, our app is designed to integrate seamlessly with a wide range of tools and platforms. Whether you use CRM software, project management tools, or communication platforms, our app can be easily integrated to streamline your workflows and improve productivity."
+        question: "Do I need coding knowledge to use this tool?",
+        answer: "Absolutely not! Our solution is built for users with little to no coding experience, making professional website creation accessible to everyone."
     },
 
     {
         id: 4,
-        question: "How easy is it to set up and use the app?",
-        answer: "Our app is designed to be user-friendly and intuitive. You don't need any technical expertise to set up and use the app. We provide detailed documentation and tutorials to help you get started quickly and easily. If you have any questions or need assistance, our support team is always available to help."
+        question: "Is the generated website responsive?",
+        answer: "Yes, every website generated is fully responsive and optimized for all devices."
     },
 
     {
         id: 5,
-        question: "What kind of support is available if I need help?",
-        answer: "We offer a range of support options to help you get the most out of our app. Our support team is available 24/7 to answer any questions you may have and provide assistance with any issues you encounter. We also offer online documentation, tutorials, and training resources to help you learn how to use the app effectively."
+        question: "Can I integrate third-party tools or APIs into the generated website?",
+        answer: "Our platform supports integration with popular tools and APIs for enhanced functionality and scalability."
 
     }
 
