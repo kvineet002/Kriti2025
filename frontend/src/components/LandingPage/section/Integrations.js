@@ -33,9 +33,9 @@ const Integrations = () => {
       >
         <Heading heading={"Integrations"} img={"/integrations.svg"} />
         <Desc
-          tag1={"Connect Effortlessly"}
+          tag1={"Effortless Integration, Limitless Possibilities"}
           tag2={
-            "Our AI solutions are designed to integrate smoothly with your current technology stack."
+            "Our platform seamlessly integrates with a variety of tools to enhance your website-building experience."
           }
         />
 
