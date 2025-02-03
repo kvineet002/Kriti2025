@@ -1,4 +1,12 @@
 import { useState } from 'react';
+import layout1 from './layout1.png';
+import layout2 from './layout2.png';
+import layout3 from './layout3.png';
+import layout4 from './layout4.png';
+import layout5 from './layout5.png';
+import layout6 from './layout6.png';
+import layout7 from './layout7.png';
+import layout8 from './layout8.png';
 
 const colorPalette = [
     {
@@ -74,27 +82,35 @@ const colorPalette = [
 const layouts = [
     {
         name: "Layout 1",
-        img: "/layout1.png"
+        img: layout1
     },
     {
         name: "Layout 2",
-        img: "/layout2.png"
+        img: layout2
     },
     {
         name: "Layout 3",
-        img: "/layout3.png"
+        img: layout3
     },
     {
         name: "Layout 4",
-        img: "/layout4.png"
+        img: layout4
     },
     {
         name: "Layout 5",
-        img: "/layout5.png"
+        img: layout5
     },
     {
         name: "Layout 6",
-        img: "/layout6.png"
+        img: layout6
+    },
+    {
+        name: "Layout 7",
+        img: layout7
+    },
+    {
+        name: "Layout 8",
+        img: layout8
     },
 ];
 
@@ -154,8 +170,8 @@ const Layout = ({ setSelectLayout, setSelectedColorPalette, setSelectedTheme }) 
                             onClick={() => handleLayoutSelection(layout)}
                         >
                             <div className='text-sm md:text-base p-2'>{layout.name}</div>
-                            <div className='h-40 bg-gray-700 flex items-center justify-center overflow-auto no-scrollbar flex-1'>
-                                <img src={layout.img} alt={layout.name} className="w-full h-full object-cover" />
+                            <div className='h-40 bg-gray-700 flex items-center justify-center overflow-y-scroll no-scrollbar flex-1'>
+                                <img src={layout.img} alt={layout.name} className="w-full mt-auto" />
                             </div>
                         </div>
                     ))}

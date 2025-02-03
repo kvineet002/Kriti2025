@@ -70,7 +70,7 @@ function SandPackCode({
     try {
       setLoading(true);
       const response = await axios.post(
-        `http://localhost:3005/deploy`,
+        `${process.env.REACT_APP_DEPLOY_URL}/deploy`,
         {
           html: htmlCode,
         }

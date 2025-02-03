@@ -1,4 +1,5 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import { layoutPrompts } from "../constants";
 
 const API_KEY =
   process.env.REACT_APP_GOOGLE_API_KEY ||

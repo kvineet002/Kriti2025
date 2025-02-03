@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import Sidebar from "../../components/Home/Sidebar";
 import FirstChatSection from "../../components/Home/firstChat";
 import { useState } from "react";
-import Layout from "../../components/Layout";
+import Layout from "../../components/layouts/Layout.js";
 import { motion } from "framer-motion";
 const FirstChat = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
