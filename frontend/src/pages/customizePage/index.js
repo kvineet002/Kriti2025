@@ -164,7 +164,7 @@ const CustomizePage = () => {
     try {
       setLoading(true);
       const response = await axios.post(
-        `https://deploy-test-production-1630.up.railway.app/deploy`,
+       `${process.env.REACT_APP_DEPLOY_URL}/deploy`,
         {
           html: html,
         }
@@ -188,6 +188,15 @@ const CustomizePage = () => {
       localStorage.setItem("customizedHtml", previousHtml);
     }
   };
+  
+    const [copySuccess, setCopySuccess] = useState("Copy code");
+    const handleCopy = () => {
+      navigator.clipboard.writeText(htmlCode);
+      setCopySuccess("Copied!");
+      setTimeout(() => {
+        setCopySuccess("Copy code");
+      }, 4000);
+    };
   return (
     <div className="flex flex-col md:flex-row justify-between items-stretch text-white text-opacity-70 w-full h-screen md:gap-4">
       {/* Iframe Preview */}
@@ -243,11 +252,21 @@ const CustomizePage = () => {
           /></div>
         )}
         {selectSection === "code" && (
+          <div div className=" flex w-full h-full flex-col">
+             <div
+             onClick={handleCopy}
+             className="text-white bg-black  w-full flex items-center gap-1 w-fit text-opacity-70 text-sm px-4 py-4 cursor-pointer hover:bg-white hover:bg-opacity-10 "
+           >
+               <img className=" w-4" src="/copy-white.png" />
+             {copySuccess}
+           </div>
+
           <textarea
             value={html}
             onChange={(e) => setHtml(e.target.value)}
-            className="w-full h-full bg-black bg-opacity-10 no-scrollbar text-white p-4 resize-none outline-none focus:outline-none focus:ring-0"
+            className="w-full h-full  bg-white bg-opacity-5  no-scrollbar text-white p-4 resize-none outline-none focus:outline-none focus:ring-0"
           />
+</div>
         )}
       </div>
 

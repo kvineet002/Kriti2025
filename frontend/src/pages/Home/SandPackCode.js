@@ -70,7 +70,7 @@ function SandPackCode({
     try {
       setLoading(true);
       const response = await axios.post(
-        `https://kriti2025-production.up.railway.app/deploy`,
+        `${process.env.REACT_APP_DEPLOY_URL}/deploy`,
         {
           html: htmlCode,
         }

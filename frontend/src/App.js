@@ -39,7 +39,7 @@ function App() {
     if (isAuthenticated && window.location.pathname === '/') {
       navigate('/chat');
     }
-  }, [isAuthenticated, navigate]);
+  }, [isAuthenticated]);
   return (
     <>
       <Routes>
@@ -50,9 +50,7 @@ function App() {
           <Route path='/chat' element={<FirstChat/>}/>
           <Route path='/chat/:id' element={<Home/>}/>
           <Route path='/customize/:id' element={<CustomizePage/>}/>
-          <Route path="*" element={<Navigate to="/chat" />} />
         </Route>
-        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </>
   );

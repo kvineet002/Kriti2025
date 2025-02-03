@@ -97,9 +97,8 @@ function Sidebar({ closeSidebar }) {
       {/* Header section */}
       <div className="flex  flex-col  gap-3 items-center justify-center p-4 py-7 border-b-white border-b-2 border-opacity-10">
         <div className=" bg-black bg-gradient-to- from-white via-black to-white rounded-md w-full items-center justify-center flex">
-          <div className=" text-white text-opacity-70  overflow-hidden  font-bold text-xl from-[#4E3262] to-[#875C3B] text-transparent bg-clip-text">
-            ogaTa.ai
-          </div>
+      <img className=" w-32" src="/agota.png"/>
+         
         </div>
         <div className="flex md:gap-6 gap-3 w-[90%] md:flex-col flex-row justify-center items-center">
           <Link
