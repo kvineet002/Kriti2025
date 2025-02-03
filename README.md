@@ -86,7 +86,6 @@ GITHUB_CALLBACK_URL=http://localhost:3003/auth/github/callback
 ## frontend env
 ``` 
 REACT_APP_API_URL=http://localhost:3003
-# REACT_APP_API_URL=https://api-kriti2025.vercel.app
 REACT_APP_SUPABASE_URL = https://loscqunwjczxithcfshm.supabase.co
 REACT_APP_SUPABASE_ANON_KEY = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxvc2NxdW53amN6eGl0aGNmc2htIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzgyNTU5MzQsImV4cCI6MjA1MzgzMTkzNH0.Y8rWSpboBLx-de3QMKWY9KwpRSMSGC9xhRNa87FRv_g
 REACT_APP_DEPLOY_URL=https://deploy-test-production-1630.up.railway.app
