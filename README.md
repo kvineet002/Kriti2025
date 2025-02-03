@@ -1,8 +1,8 @@
-# 🚀 Welcome to ogaTa.ai  
+#  Welcome to ogaTa.ai  
 
 An AI-powered platform that generates websites from user prompts using **Gemini AI**. Users can select pre-existing layouts and color palettes, preview the generated code and website, customize styles, and deploy their websites—all within a seamless interface.  
 
-## ✨ Features  
+##  Features  
 
 ### 🔹 **Website Generation with AI**  
 - Users provide a prompt to generate a website using **Gemini AI**.  
@@ -56,9 +56,4 @@ An AI-powered platform that generates websites from user prompts using **Gemini 
 
 ---
 
-## 🔧 Setup & Installation  
 
-### 1️⃣ **Clone the Repository**  
-```sh
-git clone https://github.com/your-repo/ai-website-generator.git
-cd ai-website-generator
