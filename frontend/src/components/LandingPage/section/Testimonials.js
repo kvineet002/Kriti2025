@@ -31,7 +31,7 @@ const Testimonials = () => {
             <Name name={"Testimonials"}/>
             <div className='flex flex-col lg:-mt-48 gap-2 lg:w-[full] sm:-mt-12'>
                 <Heading heading={"Testimonials"} img={'/test.png'}/>             
-                <Desc tag1={"Our AI Capabilities"} tag2={"Discover the cutting-edge capabilities of our AI solutions designed to transform your business operations."}/>
+                <Desc tag1={"Hear from our users"} tag2={"Explore how AI can simplify website creation and streamline tasks.See what early users have to say and be part of the innovation."}/>
 
                 <div className= 'overflow-hidden h-[500px] flex gap-4 rounded-xl relative items-center'>
                     <div className="absolute z-10 grad w-full h-full"/>
