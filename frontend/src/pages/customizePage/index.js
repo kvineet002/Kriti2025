@@ -4,11 +4,13 @@ import uploadImage from "../../utils/ImageUpload.js";
 import axios from "axios";
 import { updateElementStyles, colorToHex } from "../../utils/HTMLFunctions.js";
 
+
 const sampleHtml = `
-  <h1> Preview is Loading... </h1>
+  <h1 style="color: white;">Preview is loading</h1>
 `;
 
 const CustomizePage = () => {
+  var changeStack = [];
   const [selectedElement, setSelectedElement] = useState(null);
   const [selectedElementId, setSelectedElementId] = useState(null);
   const [filteredStyles, setFilteredStyles] = useState({});
@@ -19,12 +21,20 @@ const CustomizePage = () => {
   const location = useLocation();
   const htmlCode = location.state?.htmlCode || sampleHtml;
 
+  const changeStackRef = useRef([]);
+  const [stackSize, setStackSize] = useState(1);
+
   const [html, setHtml] = useState(() => {
-    const storedHtml = localStorage.getItem("customizedHtml");
-    return storedHtml || htmlCode || sampleHtml;
-  });
+    const storedHtml = localStorage.getItem("customizedHtml") || htmlCode || sampleHtml;
+    changeStackRef.current = [storedHtml]; // Initialize stack
+    return storedHtml;
+  }); 
 
   useEffect(() => {
+    if (changeStackRef.current[changeStackRef.current.length - 1] !== html) {
+      changeStackRef.current.push(html);
+      setStackSize(changeStackRef.current.length); // Force re-render when stack changes
+    }
     localStorage.setItem("customizedHtml", html);
   }, [html]);
 
@@ -170,6 +180,15 @@ const CustomizePage = () => {
     }
   };
 
+  const handleUndo = () => {
+    if (changeStackRef.current.length > 1) {
+      changeStackRef.current.pop(); // Remove current state
+      const previousHtml = changeStackRef.current[changeStackRef.current.length - 1];
+      setHtml(previousHtml);
+      setStackSize(changeStackRef.current.length); // Update state to force re-render
+      localStorage.setItem("customizedHtml", previousHtml);
+    }
+  };
   return (
     <div className="flex flex-col md:flex-row justify-between items-stretch text-white text-opacity-70 w-full h-screen md:gap-4">
       {/* Iframe Preview */}
@@ -198,6 +217,13 @@ const CustomizePage = () => {
               <img className="w-[12px] h-[12px]" src="/preview.png" />
               Preview
             </div>
+            {stackSize>1 && <div
+              onClick={handleUndo}
+              className={`hover:bg-white hover:bg-opacity-10 cursor-pointer flex gap-1 rounded-lg px-3 py-1 items-center transition-all justify-center opacity-80`}
+            >
+              <img className="w-[12px] h-[12px] invert opacity-80" src="/undo.svg" />
+              Undo
+            </div>}
           </div>
           <div
             onClick={handleDeploy}
