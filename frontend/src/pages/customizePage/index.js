@@ -164,7 +164,7 @@ const CustomizePage = () => {
     try {
       setLoading(true);
       const response = await axios.post(
-        `https://deploy-test-production-1630.up.railway.app/deploy`,
+       `${process.env.REACT_APP_DEPLOY_URL}/deploy`,
         {
           html: html,
         }
