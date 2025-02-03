@@ -34,25 +34,26 @@ An AI-powered platform that generates websites from user prompts using **Gemini 
 ## 🛠️ Tech Stack  
 
 ### **Frontend:**  
-- React.js  
-- Tailwind CSS  
-- Sandpack (for live code & website preview)  
+- **React.js** – For building the interactive user interface.  
+- **Tailwind CSS** – For styling and responsive design.  
+- **Sandpack** – For live preview of the generated website and code editor.  
 
 ### **Backend:**  
-- Express.js  
-- Gemini AI  
+- **Express.js** – A Node.js framework used to handle API requests and server-side logic.  
+- **Gemini AI** – The AI model used for generating websites from user prompts.  
 
 ### **Authentication & Authorization:**  
-- Passport.js (Google OAuth, GitHub OAuth)  
-- JWT  
+- **Passport.js** – Handles user authentication using **Google OAuth** and **GitHub OAuth**.  
+- **JWT (JSON Web Token)** – Provides secure authorization and session management.  
 
 ### **Storage & Image Management:**  
-- Supabase (for storing uploaded images)  
-- Pexels API (for adding images to generated websites)  
+- **Supabase Storage** – Used to store user-uploaded images for generated websites.  
+- **Pexels API** – Fetches high-quality images to enhance AI-generated websites.  
 
 ### **Deployment:**  
-- **Platform:** Vercel (main website)  
-- **Generated Websites:** Railway Server  
+- **Vercel** – Deploys the main **ogaTa.ai** website.  
+- **Railway Server** – Deploys the user-generated websites.  
+
 
 ---
 
