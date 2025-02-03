@@ -255,20 +255,20 @@ export const sampleHtml = `
  </html>
  `;
 
-export const tweets = [
-  {name: 'John Doe', tweet: 'This is a tweet about how great this company is. I am so happy with the service I received.', position: 'Founder & CEO', profileLink: 'https://twitter.com/johndoe'},
-  {name: 'Jane Doe', tweet: 'This is a tweet about how great this company is. I am so happy with the service I received.', position: 'Founder & CEO', profileLink: 'https://twitter.com/janedoe'},
-  {name: 'Alice Smith', tweet: 'Amazing experience! Highly recommend this company.', position: 'Marketing Manager', profileLink: 'https://twitter.com/alicesmith'},
-  {name: 'Bob Johnson', tweet: 'The service was exceptional and the team was very professional.', position: 'Product Manager', profileLink: 'https://twitter.com/bobjohnson'},
-  {name: 'Charlie Brown', tweet: 'I am extremely satisfied with the results. Great job!', position: 'Sales Director', profileLink: 'https://twitter.com/charliebrown'},
-  {name: 'Diana Prince', tweet: 'Fantastic service and support. Will use again.', position: 'Customer Support', profileLink: 'https://twitter.com/dianaprince'},
-  {name: 'Eve Adams', tweet: 'The team went above and beyond to meet our needs.', position: 'Operations Manager', profileLink: 'https://twitter.com/eveadams'},
-  {name: 'Frank Castle', tweet: 'Top-notch service from start to finish.', position: 'Project Manager', profileLink: 'https://twitter.com/frankcastle'},
-  {name: 'Grace Hopper', tweet: 'Highly professional and reliable. Great experience.', position: 'Software Engineer', profileLink: 'https://twitter.com/gracehopper'},
-  {name: 'Hank Pym', tweet: 'The best company I have ever worked with.', position: 'Research Scientist', profileLink: 'https://twitter.com/hankpym'},
-  {name: 'Ivy League', tweet: 'Outstanding service and attention to detail.', position: 'HR Manager', profileLink: 'https://twitter.com/ivyleague'},
-  {name: 'Jack Sparrow', tweet: 'I am very impressed with the quality of service.', position: 'Creative Director', profileLink: 'https://twitter.com/jacksparrow'},
-  {name: 'Karen Page', tweet: 'Exceptional service and great results.', position: 'Legal Advisor', profileLink: 'https://twitter.com/karenpage'},
-  {name: 'Leo Messi', tweet: 'The team was very professional and efficient.', position: 'Athlete', profileLink: 'https://twitter.com/leomessi'},
-  {name: 'Mia Wallace', tweet: 'I highly recommend this company for their excellent service.', position: 'Film Producer', profileLink: 'https://twitter.com/miawallace'}
+ export const tweets = [
+  {name: 'Mayank Jain', tweet: 'This text-to-website generator is a game-changer! Instantly turned my idea into a fully functional website.', position: 'Student at IIT Guwahati'},
+  {name: 'Utkarsh Narayan Pandey', tweet: 'I never imagined creating a website could be this easy. This tool saved me hours of work!', position: 'Student at IIT Guwahati'},
+  {name: 'Vicky Raj', tweet: 'An amazing tool! I wrote a few lines, and it generated a beautiful website for me.', position: 'Student at IIT Guwahati'},
+  {name: 'Chandan Jyoti Das', tweet: 'The text-to-website generator is incredibly intuitive and produces stunning results.', position: 'Student at IIT Guwahati'},
+  {name: 'Gaurav Choudhary', tweet: 'This AI-powered website builder is a must-try for anyone looking to create a website effortlessly!', position: 'Student at IIT Guwahati'},
+  {name: 'Prakhar Ashthana', tweet: 'From text to a professional-looking website in minutes. Absolutely mind-blowing!', position: 'Student at IIT Guwahati'},
+  {name: 'Maulik Paliwal', tweet: 'No coding required! Just type your content, and this tool does the rest. Incredible innovation!', position: 'Student at IIT Guwahati'},
+  {name: 'Kartik Maheswari', tweet: 'Creating a website has never been easier. This AI tool is perfect for startups and individuals.', position: 'Student at IIT Guwahati'},
+  {name: 'Aditya Shukla', tweet: 'Highly recommend this for anyone who wants a professional website without technical knowledge.', position: 'Student at IIT Guwahati'},
+  {name: 'Ishaan Bahl', tweet: 'I turned my simple text into a fully responsive website. The future of web development is here!', position: 'Student at IIT Guwahati'},
+  {name: 'Girish Bajantri', tweet: 'The AI understands exactly what I want and builds a website instantly. Super efficient!', position: 'Student at IIT Guwahati'},
+  {name: 'Naveen Kumawat', tweet: 'From idea to execution in minutes! This text-to-website generator is revolutionary.', position: 'Student at IIT Guwahati'},
+  {name: 'Sagnik Debnath', tweet: 'Exceptional results with zero coding! Just type and publish. Highly impressed!', position: 'Student at IIT Guwahati'},
+  {name: 'Vaibhav Singh', tweet: 'A powerful tool for creators and entrepreneurs. My website was ready in no time!', position: 'Student at IIT Guwahati'},
+  {name: 'Shivaseesh', tweet: 'I wrote a description for my website, and this tool built my website instantly. Amazing!', position: 'Student at IIT Guwahati'}
 ];
