@@ -22,9 +22,37 @@ const googleCallback = async (req, res) => {
   const redirect_url = process.env.REDIRECT_URL;
   const token = createAccessToken(email, name, avatar);
   res.redirect(
+    `${redirect_url}/?token=${token}`
+  );
+  
+};
+const githubCallback = async (req, res) => {
+ 
+  const name = req.user._json.login;
+  const email = req.user._json.login+"@github.com";
+  const avatar = req.user._json.avatar_url;
+  console.log(name,email,avatar);
+  try {
+    const existingUser = await User.findOne({ email: email });
+    if (!existingUser) {
+      const user = new User({
+        name: name,
+        email: email,
+        avatar: avatar,
+      });
+      await user.save();
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error creating user!");
+  }
+  const redirect_url = process.env.REDIRECT_URL;
+  const token = createAccessToken(email, name, avatar);
+  res.redirect(
     `${redirect_url}/?token=${token}&email=${email}&name=${name}&avatar=${avatar}`
   );
   
 };
 
-module.exports = { googleCallback };
+
+module.exports = { googleCallback , githubCallback};

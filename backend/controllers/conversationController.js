@@ -140,9 +140,11 @@ const deleteChat = async (req, res) => {
     res.status(500).send("Error deleting chat!");
   }
 };
+
 const shareChat = async (req, res) => {
   const { email } = req.body;
   const { id } = req.params;
+  const { isPublic } = req.body;
 
   try {
     const chat = await Chat.findOne({ _id: id,email:email });
@@ -150,7 +152,7 @@ const shareChat = async (req, res) => {
       res.status(404).send("Chat not found!");
     }
 
-    chat.isPublic =!chat.isPublic;
+    chat.isPublic =isPublic;
     await chat.save();
     console.log("Chat status changed to", chat.isPublic);
     res.status(200).send("Chat shared successfully!");
@@ -175,6 +177,66 @@ const checkPublic=  async (req, res) => {
   }
 }
 
+const toggleFavourites = async (req, res) => {
+  const { email } = req.body; // User's email
+  const { chatId } = req.params; // Chat ID to be toggled
+
+  try {
+      // Find the user and update the chat's `isFavorite` field
+      const userChats = await UserChat.findOne({ email });
+
+      if (!userChats) {
+          return res.status(404).json({ message: "User not found!" });
+      }
+
+      // Find the chat within the user's chats
+      const chatIndex = userChats.chats.findIndex(chat => chat._id.toString() === chatId);
+
+      if (chatIndex === -1) {
+          return res.status(404).json({ message: "Chat not found!" });
+      }
+
+      // Toggle the `isFavorite` field
+      userChats.chats[chatIndex].isFavorite = !userChats.chats[chatIndex].isFavorite;
+
+      await userChats.save(); // Save changes
+
+      return res.status(200).send(userChats.chats[chatIndex].isFavorite);
+  } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: "Error toggling chat in favourites!" });
+  }
+};
+const checkFavourite = async (req, res) => {
+  const { email } = req.body; // User's email
+  const { chatId } = req.params; // Chat ID to check
+
+  try {
+      // Find the user
+      const userChats = await UserChat.findOne({ email });
+
+      if (!userChats) {
+          return res.status(404).json({ message: "User not found!" });
+      }
+
+      // Find the chat within the user's chats
+      const chat = userChats.chats.find(chat => chat._id.toString() === chatId);
+
+      if (!chat) {
+          return res.status(404).json({ message: "Chat not found!" });
+      }
+
+      // Return the favourite status
+      return res.status(200).send( chat.isFavorite );
+  } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: "Error checking favourite status!" });
+  }
+};
 
 
-module.exports = { newChat, getChatsHistory, getChat, updateChat, deleteChat, shareChat ,checkPublic };
+
+
+
+
+module.exports = { newChat, getChatsHistory, getChat, updateChat, deleteChat, shareChat ,checkPublic,toggleFavourites,checkFavourite};

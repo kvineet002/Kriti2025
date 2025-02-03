@@ -19,6 +19,8 @@ const systemPrompt = `You are a website generator AI. When given a prompt, gener
 // us in user theme- The website should have a footer with a copyright notice. 
 // also note that the website should be responsive. add animations and transitions.
 `;
+
+
 const model = genAI.getGenerativeModel({
   model: "gemini-2.0-flash-exp",
   systemInstruction: systemPrompt,

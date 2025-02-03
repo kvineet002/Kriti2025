@@ -26,37 +26,49 @@ function ShareConfirmation({ onClose, onShare }) {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [menuRef]);
-  useEffect(()=>{
+  const [isOpen, setIsOpen] = useState(false);
+  useEffect(() => {
     const checkShared = async () => {
-        try {
-          const response = await axios.get(
-            `${process.env.REACT_APP_API_URL}/api/chats//check-share/${chatId}`,
-          );
-          console.log("Shared code:", response.data);
-        
-          if(response.data){
-            setVisibility("public");
-          }
-          else{
-            setVisibility("private");
-          }
-        } catch (error) {
-          console.error("Error fetching shared code:", error);
-        }
-    
-      }
-      checkShared();
-  },[])
+      try {
+        const response = await axios.get(
+          `${process.env.REACT_APP_API_URL}/api/chats/check-share/${chatId}`
+        );
+        console.log("Shared code:", response.data);
 
-  const updateVisiblity = async () => {
+        if (response.data) {
+          setVisibility("public");
+        } else {
+          setVisibility("private");
+        }
+
+      } catch (error) {
+        console.error("Error fetching shared code:", error);
+      }
+    };
+    checkShared();
+  }, [isOpen]);
+
+         const options = [
+          { value: "private", label: "Private" },
+          { value: "public", label: "Public" },
+        ];
+  const updateVisiblity = async (value) => {
     setIsLoading(true);
     try {
       const response = await axios.put(
         `${process.env.REACT_APP_API_URL}/api/chats/share/${chatId}`,
-         { email: email }
-        
+        { email: email ,
+          isPublic: value === "public" ? true : false
+        }
       );
-      console.log("Chat updated:", response.data);
+      if (response.data) {
+        setVisibility("public");
+      }
+      else{
+        setVisibility("private");
+      }
+      setIsOpen(false);
+      
     } catch (error) {
       console.error("Error updating chat:", error);
       setIsLoading(false);
@@ -98,25 +110,40 @@ function ShareConfirmation({ onClose, onShare }) {
             visible to them.
           </div>{" "}
         </div>{" "}
-        <div className=" w-full">
-          <div className=" w-full">
-            <select
-              className="mt-1 block w-full p-2 border-gray-300 outline-none bg-black rounded-md bg-opacity-20 transition-all   myborder text-white"
-              value={visibility}
-              onChange={(e) => {
-                setVisibility(e.target.value);
-                updateVisiblity();
+        <div className="relative w-full">
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-full p-2 px-4 border-gray-300 bg-white rounded-md bg-opacity-10 text-white flex justify-between items-center"
+      >
+        {visibility}
+        <img
+          className="w-4 opacity-70"
+          src={ "/down.png"}
+          
+        />
+
+      </button>
+      {isOpen && (
+        <motion.ul
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -10 }}
+          className="absolute w-full bg-black bg-opacity-90 rounded-md mt-1 px-3 z-10"
+        >
+          {options.map((option) => (
+            <li
+              key={option.value}
+              onClick={() => {
+                updateVisiblity(option.value);
               }}
+              className="p-2  bg-black rounded-md my-2 hover:bg-opacity-20 hover:bg-white cursor-pointer text-white"
             >
-              <option className=" bg-black  py-3" value="private">
-                Private
-              </option>
-              <option className="bg-black  py-3" value="public">
-                Public
-              </option>
-            </select>
-          </div>
-        </div>
+              {option.label}
+            </li>
+          ))}
+        </motion.ul>
+      )}
+    </div>
         {visibility === "public" && (
           <div className=" text-xs bg-white  bg-opacity-5 text-white rounded-md py-3 transition-all ease-in-out duration-1000 text-opacity-80 px-3 ">
             {`kriti2025-pi.vercel.app/chat/s/${chatId}`}
@@ -124,7 +151,6 @@ function ShareConfirmation({ onClose, onShare }) {
         )}
         <div className=" ">
           <div className=" flex items-center justify-end gap-2">
-           
             <button
               disabled={visibility === "private"}
               onClick={handleCopy}

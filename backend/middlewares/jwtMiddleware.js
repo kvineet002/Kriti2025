@@ -1,12 +1,6 @@
 const jwt = require('jsonwebtoken');
 const Chat = require('../models/chat');
 exports.checkAuth = async (req, res, next) => {
-    if(req.params.id){
-    const chat = await Chat.findOne({ _id: req.params.id });
-    if(chat&&chat.isPublic) {
-        console.log("Public Chat",chat);
-        return next();
-    }}
     const authorization = req.headers['authorization'];
     if(!authorization) {
         return next(('Access Token is not passed.'));

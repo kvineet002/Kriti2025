@@ -253,7 +253,7 @@ const CustomizePage = () => {
 
       {/* Customization Tab */}
       <div className=" w-full h-1/2 md:h-full md:w-[30%] flex flex-col gap-3 md:p-4 p-2  md:py-8 shadow-lg">
-      { false? ( <div className=" h-full w-full flex items-center bg-white bg-opacity-5  px-3 text-center rounded-md justify-center text-white text-opacity-70">
+      { !selectedElement? ( <div className=" h-full w-full flex items-center bg-white bg-opacity-5  px-3 text-center rounded-md justify-center text-white text-opacity-70">
           Select any element on the left to customize it.
         </div>):
       (  <div className=" text-black w-full rounded-lg shadow-inner  overflow-scroll no-scrollbar">

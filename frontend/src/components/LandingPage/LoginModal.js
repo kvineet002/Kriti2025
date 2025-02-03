@@ -39,7 +39,7 @@ function LoginModal({ onClose }) {
             <div className=" text-sm sm:text-base">Sign in with Google</div>
           </a>
           <a
-            href={`${SERVER_URL}/auth/google`}
+            href={`${SERVER_URL}/auth/github`}
             className=" px-3 py-2 flex items-center gap-2 bg-white text-black rounded-lg outline-none"
           >
             <img src="/github2.svg" alt="Github" className=" w-5" />

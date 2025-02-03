@@ -27,7 +27,7 @@ const Home = () => {
     const checkShared = async () => {
       try {
         const response = await axios.get(
-          `${process.env.REACT_APP_API_URL}/api/chats//check-share/${chatId}`
+          `${process.env.REACT_APP_API_URL}/api/chats/check-share/${chatId}`
         );
         console.log("Shared code:", response.data);
         setIsPublic(response.data);
@@ -36,7 +36,7 @@ const Home = () => {
       }
     };
     checkShared();
-  }, [moreOptions]);
+  }, [moreOptions,showBottomSheet,showShareConfirmation,showdeleteConfirmation]);
 
   useEffect(() => {
     const setShowBottom = () => {
