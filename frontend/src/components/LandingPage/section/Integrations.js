@@ -10,8 +10,8 @@ const tools = [
     text: "Generates website content based on user prompts, making site creation effortless.",
   },
   {
-    name: "Pexels",
-    src: "https://cdn.creazilla.com/icons/3270419/pexels-icon-lg.png",
+    name: "PixaBay",
+    src: "/pixabay.png",
     text: "Provides high-quality stock images to enhance the visual appeal of generated websites.",
   },
   {
@@ -45,7 +45,7 @@ const Integrations = () => {
             className="w-[75%] mx-auto md:p-0 scale-[2.9] md:scale-100 "
           />
         </div>
-        <div className="flex flex-col px-6 lg:flex-row justify-around items-center gap-4 lg:gap-3 z-10 w-full">
+        <div className="flex flex-col lg:flex-row justify-around items-center gap-4 lg:gap-3 z-10 w-full">
           {tools.map((item, index) => (
             <div
               className="border myborder p-3 lg:h-60 rounded-xl "
@@ -53,7 +53,7 @@ const Integrations = () => {
             >
               <div className="border border-[#222222] h-full rounded-lg bg-gradient-to-br from-[#181818] via-[#080808] to-[#181818] flex flex-col justify-around items-start gap-3 py-3">
                 <div className="flex justify-between px-6 w-full items-center gap-4">
-                  <img src={item.src} className="h-12 w-12 rounded-lg myborder bg-white"/>
+                  <img src={item.src} className="h-12 w-12 p-2 rounded-lg myborder bg-black"/>
                 </div>
                 <div className="px-6 text-white md:text-lg font-bold">
                   {item.name}

@@ -1,39 +1,40 @@
-import {useState} from 'react'
-import {motion} from 'framer-motion'
+import { useState } from "react";
+import { motion } from "framer-motion";
+import LoginModal from "../LoginModal";
 const Navbar = () => {
-    const [isHovered, setIsHovered] = useState(false);
-return (
-    <div className='bg-black bg-opacity-50 flex gap-10 items-center justify-start px-8 py-6 w-full z-50'>
+  const [isHovered, setIsHovered] = useState(false);
+  const [showLoginModal, setShowLoginModal] = useState(false);
+  return (
+    <div className=" flex  items-center  justify-between px-5 md:px-12 py-6  w-full z-50 absolute ">
+      <div className="text-white text-lg md:text-xl font-bold">Ogata.ai</div>
 
-            <div className='text-white text-3xl font-bold px-16'>Engine</div>
+    {
+      showLoginModal && (
+        <LoginModal onClose={() => setShowLoginModal(false)} />
+      ) 
+    }
 
-            <div className='gap-14 justify-center items-center hidden md:flex'>
-                    {[{name: 'Home', link: '/home'}, {name: 'About', link: '/about'}, {name: 'Contact', link: '/contact'}].map((item, index) => (
-                            <div className='font-thin opacity-60 hover:opacity-100 cursor-pointer text-lg' key={index}>
-                                    {item.name}
-                            </div>
-                    ))}
-            </div>
-
-            <motion.div
-        className="ml-auto  h-10 text-lg flex px-6 items-center justify-center rounded-[48px] cursor-pointer myborder   gap-2"
+      <motion.div
+        onClick={() => setShowLoginModal(true)}
+        className="ml-auto py-1 md:text-base flex md:px-5  px-3 text-sm  items-center bg-white bg-opacity-95 rounded-xl justify-center  cursor-pointer myborder   gap-2"
         onHoverStart={() => setIsHovered(true)}
         onHoverEnd={() => setIsHovered(false)}
         whileHover={{ opacity: 0.8 }}
       >
-        <div className=' text-white'>Get Started</div>
+        <div className=" text-black">Get Started</div>
         <motion.img
-          src="right-arrow.svg"
+          src="right-arrow.png"
           initial={{ x: 0 }}
           animate={isHovered ? { x: 8 } : { x: 0 }}
           transition={{
             duration: 0.4,
-            ease: 'easeInOut',
+            ease: "easeInOut",
           }}
+          className="w-4"
         />
       </motion.div>
     </div>
-)
-}
+  );
+};
 
-export default Navbar
+export default Navbar;

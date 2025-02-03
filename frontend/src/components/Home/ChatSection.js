@@ -4,6 +4,7 @@ import { redirect, useLocation } from "react-router-dom";
 import axios from "axios";
 import Loader from "./loading.js";
 import { jwtDecode } from "jwt-decode";
+import { motion } from "framer-motion";
 
 function ChatSection({ setHtmlCode, htmlCode, sandPackWidth }) {
   const containerRef = useRef(null);
@@ -292,14 +293,17 @@ console.log(path.split('/'));
                    (
 
                     (code === htmlCode && !loading)
-                    ?<div>
-                      Previewing
+                    ?<div className=" flex gap-2 items-center">
+                      Viewing<img src="/eye.png" className=" w-3 h-3"/>
                       </div>: <div 
                       onClick={() => {  
                         setHtmlCode(code);
                       }}
-                    className=" underline cursor-pointer">
-                    View website
+                    className=" underline cursor-pointer flex items-center gap-1">
+                    View website  <motion.img
+          src="/redirect.png"
+          className="w-3"
+        />
                     </div>)
                   )}
                 </div>
@@ -321,7 +325,7 @@ console.log(path.split('/'));
   return (
     <div
       ref={containerRef}
-      className=" h-full select-none flex no-scrollbar rounded-3xl"
+      className=" h-full  flex no-scrollbar rounded-3xl"
     >
       <div className="flex-1 flex flex-col overflow-hidden">
         <div className="flex-1 p-4 md:px-[10%] transition-all overflow-y-auto no-scrollbar rounded-lg">

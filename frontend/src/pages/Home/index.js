@@ -21,7 +21,7 @@ const Home = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [showBottomSheet, setShowBottomSheet] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
-  const [isPublic, setIsPublic] = useState(true);
+  const [isPublic, setIsPublic] = useState(false);
   const chatId = window.location.pathname.split("/").pop();
   useEffect(() => {
     const checkShared = async () => {

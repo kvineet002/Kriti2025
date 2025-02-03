@@ -63,9 +63,10 @@ const FirstChat = () => {
         </div>
         <div
           onClick={() => setSelectLayout(true)}
-          className=" text-white cursor-pointer bg-white bg-opacity-10 rounded-md p-2"
+          className=" text-purple-300 cursor-pointer bg-purple-400 flex gap-3 items-center justify-center  border-green-400 bg-opacity-10  rounded-lg p-2 px-5 text-sm"
         >
-          Click Here to Select a Layout
+          <img src="/layout.png" alt="Plus" className="w-3 h-3 " />
+          Pick a Design & Style
         </div>
 
         <div className="flex flex-col md:w-[70%] w-[90%] mt-6">

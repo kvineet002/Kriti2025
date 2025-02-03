@@ -189,8 +189,9 @@ const handleCustomize = () => {
             >
               <div
                 onClick={handleCopy}
-                className="text-white w-fit ml-1 text-opacity-70 text-sm px-4 py-2 cursor-pointer hover:bg-white hover:bg-opacity-10 rounded-md"
+                className="text-white flex items-center gap-1 w-fit ml-1 text-opacity-70 text-sm px-4 py-2 cursor-pointer hover:bg-white hover:bg-opacity-10 rounded-md"
               >
+                  <img className=" w-4" src="/copy-white.png" />
                 {copySuccess}
               </div>
 

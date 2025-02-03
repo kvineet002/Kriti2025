@@ -4,32 +4,41 @@ import LandingPage from "./pages/LandingPage/index.js";
 import Home from "./pages/Home/index.js"
 import FirstChat from './pages/Home/firstChat.js';
 import CustomizePage from './pages/customizePage/index.js';
-import Cookies from 'js-cookie';
 import OAuthRedirectHandler from './redirect/Redirect.js';
 import SharedPage from './pages/sharedPage/SharedPage.js';
-const getCookie = (name) => {
-  const cookies = document.cookie.split("; ");
-  for (let i = 0; i < cookies.length; i++) {
-    const [cookieName, cookieValue] = cookies[i].split("=");
-    if (cookieName === name) {
-      return decodeURIComponent(cookieValue);
-    }
-  }
-  return null;
+
+const ProtectedRoutes = () => {
+  const navigate = useNavigate();
+  const [isAuthenticated, setIsAuthenticated] = useState(
+    !!localStorage.getItem('token') // Convert to boolean
+  );
+
+  useEffect(() => {
+    const handleStorageChange = () => {
+      setIsAuthenticated(!!localStorage.getItem('token'));
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+    return () => window.removeEventListener("storage", handleStorageChange);
+  }, []);
+
+  return isAuthenticated ? <Outlet /> : <Navigate to="/" />;
 };
 
-const ProtectedRoutes = () =>{
-  const [isAuthenticated, setIsAuthenticated] = useState(() => {
-    return localStorage.getItem('token')||true;
-  });
-  console.log(isAuthenticated);
-  return isAuthenticated ? <Outlet/> : <Navigate to='/'/>;
-}
 
 
 
 
 function App() {
+  const navigate = useNavigate();
+  const [isAuthenticated, setIsAuthenticated] = useState(
+    !!window.localStorage.getItem('token') // Convert to boolean
+  );
+
+  useEffect(()=>{
+    if(isAuthenticated)
+    navigate('/redirect')}
+    ,[])
   return (
     <>
       <Routes>

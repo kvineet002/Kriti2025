@@ -10,10 +10,10 @@ import Footer from '../../components/LandingPage/section/Footer.js';
 function LandingPage() {
   return (
     <div className="flex flex-col gap-6 w-full">
-      {/* <Navbar/> */}
+      <Navbar/>
       <HeroComponent/>
       <div className='flex flex-col w-full gap-16 mt-12'>
-        <Features/>
+        {/* <Features/> */}
         <Integrations/>
         <Testimonials/>
         <Faq/>
