@@ -2,28 +2,72 @@ import { useState } from 'react';
 
 const colorPalette = [
     {
-        name: "Vibrant Colors",
-        colors: ['bg-red-500', 'bg-blue-500', 'bg-green-500', 'bg-yellow-500', 'bg-purple-500']
+        name: "Cool Greens",
+        colors: ['bg-[#B5FFE1]', 'bg-[#93E5AB]', 'bg-[#65B891]', 'bg-[#4E878C]', 'bg-[#00241B]']
     },
     {
-        name: "Pastel Colors",
-        colors: ['bg-pink-500', 'bg-gray-500', 'bg-indigo-500', 'bg-orange-500', 'bg-teal-500']
+        name: "Elegant Purples",
+        colors: ['bg-[#C4BBB8]', 'bg-[#F5B0CB]', 'bg-[#DC6ACF]', 'bg-[#745C97]', 'bg-[#39375B]']
     },
     {
-        name: "Warm Colors",
-        colors: ['bg-red-500', 'bg-blue-500', 'bg-green-500', 'bg-yellow-500', 'bg-purple-500']
+        name: "Sophisticated Tones",
+        colors: ['bg-[#223127]', 'bg-[#900D38]', 'bg-[#CE5374]', 'bg-[#DBBBF5]', 'bg-[#DDF0FF]']
     },
     {
-        name: "Cool Colors",
-        colors: ['bg-pink-500', 'bg-gray-500', 'bg-indigo-500', 'bg-orange-500', 'bg-teal-500']
+        name: "Soft Neutrals",
+        colors: ['bg-[#FEFFFE]', 'bg-[#E9EBF8]', 'bg-[#B4B8C5]', 'bg-[#A5A299]', 'bg-[#8D818C]']
     },
     {
-        name: "Bold Colors",
-        colors: ['bg-red-500', 'bg-blue-500', 'bg-green-500', 'bg-yellow-500', 'bg-purple-500']
+        name: "Earthy Contrast",
+        colors: ['bg-[#07020D]', 'bg-[#5DB7DE]', 'bg-[#F1E9DB]', 'bg-[#A39B8B]', 'bg-[#716A5C]']
     },
     {
-        name: "Muted Colors",
-        colors: ['bg-pink-500', 'bg-gray-500', 'bg-indigo-500', 'bg-orange-500', 'bg-teal-500']
+        name: "Pastel Harmony",
+        colors: ['bg-[#79ADDC]', 'bg-[#FFC09F]', 'bg-[#FFEE93]', 'bg-[#FCF5C7]', 'bg-[#ADF7B6]']
+    },
+    {
+        name: "Golden Earth",
+        colors: ['bg-[#D5B942]', 'bg-[#D9D375]', 'bg-[#E3DE8F]', 'bg-[#EDFBC1]', 'bg-[#BFCBC2]']
+    },
+    {
+        name: "Vibrant Fusion",
+        colors: ['bg-[#D68FD6]', 'bg-[#DEFFF2]', 'bg-[#464F51]', 'bg-[#000009]', 'bg-[#0FF4C6]']
+    },
+    {
+        name: "Bold Contrast",
+        colors: ['bg-[#373F51]', 'bg-[#008DD5]', 'bg-[#DFBBB1]', 'bg-[#F56476]', 'bg-[#E43F6F]']
+    },
+    {
+        name: "Warm Elegance",
+        colors: ['bg-[#8B1E3F]', 'bg-[#3C153B]', 'bg-[#89BD9E]', 'bg-[#F0C987]', 'bg-[#DB4C40]']
+    },
+    {
+        name: "Nature's Essence",
+        colors: ['bg-[#065143]', 'bg-[#129490]', 'bg-[#70B77E]', 'bg-[#E0A890]', 'bg-[#CE1483]']
+    },
+    {
+        name: "Warm Tones",
+        colors: ['bg-[#FFB997]', 'bg-[#F67E7D]', 'bg-[#843B62]', 'bg-[#0B032D]', 'bg-[#74546A]']
+    },
+    {
+        name: "Cool Serenity",
+        colors: ['bg-[#4BC6B9]', 'bg-[#73C1C6]', 'bg-[#96C3CE]', 'bg-[#A79AB2]', 'bg-[#B57BA6]']
+    },
+    {
+        name: "Mystic Sunset",
+        colors: ['bg-[#7F7EFF]', 'bg-[#A390E4]', 'bg-[#C69DD2]', 'bg-[#CC8B8C]', 'bg-[#C68866]']
+    },
+    {
+        name: "Muted Elegance",
+        colors: ['bg-[#FAC8CD]', 'bg-[#D7BCC8]', 'bg-[#98B6B1]', 'bg-[#629677]', 'bg-[#495D63]']
+    },
+    {
+        name: "Earthy Pastels",
+        colors: ['bg-[#C1B098]', 'bg-[#E9D2F4]', 'bg-[#9B9B93]', 'bg-[#39393A]', 'bg-[#63B0CD]']
+    },
+    {
+        name: "Deep Warmth",
+        colors: ['bg-[#3A2E39]', 'bg-[#1E555C]', 'bg-[#F4D8CD]', 'bg-[#EDB183]', 'bg-[#F15152]']
     }
 ];
 
