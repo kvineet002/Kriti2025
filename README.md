@@ -1,57 +1,64 @@
-# Welcome to ogaTa.ai 🚀  
+# 🚀 Welcome to ogaTa.ai  
 
-**ogaTa.ai** is your ultimate AI-powered web development assistant! Whether you're a seasoned developer or a beginner, ogaTa.ai simplifies website creation by generating stunning, functional websites in minutes. Just describe your vision, select from our pre-designed layouts and color palettes, and let our AI generate the code for you—no hassle, no guesswork, just pure creativity and efficiency.  
-
----
+An AI-powered platform that generates websites from user prompts using **Gemini AI**. Users can select pre-existing layouts and color palettes, preview the generated code and website, customize styles, and deploy their websites—all within a seamless interface.  
 
 ## ✨ Features  
 
-- **AI-Powered Code Generation:** Describe your website idea in plain English, and ogaTa.ai will generate clean, functional code instantly.  
-- **Predefined Layouts & Color Palettes:** Choose from a variety of professionally designed layouts and color palettes to kickstart your project.  
-- **Favorites Section:** Save your generated code to your favorites and access them anytime.  
-- **Chat History & Sharing:** Retrieve last week's prompts and generated code instantly, with an option to share them.  
-- **Real-Time Customization:** Modify and adjust your design in real-time before deploying.  
+### 🔹 **Website Generation with AI**  
+- Users provide a prompt to generate a website using **Gemini AI**.  
+- Websites are enriched with images from **Pexels API**.  
+- Users can **reprompt** in the same chat to generate different versions and access all versions.  
 
----
+### 🔹 **Authentication & User Management**  
+- **Google & GitHub OAuth** authentication via **Passport.js**.  
+- **JWT Authorization** for secure access.  
 
-## 🛠️ How It Works  
+### 🔹 **Layouts & Customization**  
+- Users can **select layouts & color palettes** before prompting AI.  
+- After generation, users can **preview the code & website** before deployment.  
+- A **customization page** allows users to:  
+  - Modify styles dynamically (DOM updates instantly).  
+  - Upload images (stored in **Supabase Storage** with a generated URL).  
+  - Undo styling changes (persistent across refresh).  
 
-### User Types:  
+### 🔹 **Chat History & Sharing**  
+- Users can delete or store generated websites in their **chat history**.  
+- Users can **mark chats as favorites** for quick access.  
+- Chats can be **shared publicly** via a link, allowing non-logged-in users to view.  
 
-- **Non-Authenticated Users:**  
-  - Cannot input a prompt or access features.  
-  - Must **click "Get Started"** and log in via **Google** or **GitHub** to proceed.  
-
-- **Authenticated Users:**  
-  - Gain full access to all features after logging in.  
-
-### Steps to Create & Customize Your Website:  
-
-1. **Log In (Required to Proceed):** Click **"Get Started"** and sign in with Google or GitHub.  
-2. **Enter a Prompt:** Describe your website idea in the prompt box.  
-3. **Select a Design & Style:**  
-   - Choose from predefined **layouts** and **color palettes**.  
-4. **Preview & Edit:**  
-   - View the generated design  
-   - Switch between **Preview** and **Code** mode  
-5. **Additional Options (Three-Dot Menu):**  
-   - **Share** (Public or Private)  
-   - **Add to Favorites**  
-   - **Delete Chat**  
-6. **Customize & Deploy:**  
-   - Modify the generated design  
-   - Deploy your website instantly  
-
----
+### 🔹 **Deployment Options**  
+- Users can **deploy the website** and get a shareable link.  
+- Websites are deployed on **Railway Server**.  
+- Customization changes can be **saved and deployed** directly from the customization page.  
 
 ## 🛠️ Tech Stack  
 
-- **Frontend:** ReactJS, Tailwind CSS  
-- **Backend:** Node.js, Express.js  
-- **Database:** MongoDB, Firebase Storage  
-- **Authentication:** Google & GitHub OAuth  
+### **Frontend:**  
+- React.js  
+- Tailwind CSS  
+- Sandpack (for live code & website preview)  
+
+### **Backend:**  
+- Express.js  
+- Gemini AI  
+
+### **Authentication & Authorization:**  
+- Passport.js (Google OAuth, GitHub OAuth)  
+- JWT  
+
+### **Storage & Image Management:**  
+- Supabase (for storing uploaded images)  
+- Pexels API (for adding images to generated websites)  
+
+### **Deployment:**  
+- **Platform:** Vercel (main website)  
+- **Generated Websites:** Railway Server  
 
 ---
 
-### Made with ❤️ by the ogaTa.ai team.  
-© 2025 ogaTa.ai. All rights reserved.  
+## 🔧 Setup & Installation  
+
+### 1️⃣ **Clone the Repository**  
+```sh
+git clone https://github.com/your-repo/ai-website-generator.git
+cd ai-website-generator
