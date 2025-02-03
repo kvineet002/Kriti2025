@@ -12,6 +12,8 @@ function ChatSection({ setHtmlCode, htmlCode, sandPackWidth }) {
   const [inputText, setInputText] = useState("");
   const [loading, setLoading] = useState(false);
   const path = useLocation().pathname;
+  const {flag} = useLocation().state;
+  console.log(flag);
 
   const chatId = path.split("/").pop();
     const token = localStorage.getItem("token");
@@ -126,7 +128,11 @@ console.log(path.split('/'));
 
         // Only generate response if we have exactly 1 message and component is mounted
         if (fetchedChats.length === 1 && isMounted) {
-          const text = fetchedChats[0].parts[0].text;
+          var colorPrompt ="";
+          if(!flag[0])colorPrompt="Note: Use this color"+ flag[0]?.colors;
+          var layoutPrompt ="";
+          if(!flag[1])layoutPrompt="Note: Use this layout"+  flag[0]?.layout;
+          const text = fetchedChats[0].parts[0].text+ colorPrompt+layoutPrompt;
           const chatInstance = model.startChat({
             history: fetchedChats.map(({ role, parts }) => ({
               role,

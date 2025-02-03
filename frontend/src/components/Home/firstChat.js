@@ -5,15 +5,15 @@ import { useNavigate } from "react-router-dom";
 import { promptList } from "../../constants/promptList";
 import Loader from "./loading";
 import { jwtDecode } from "jwt-decode";
+
 function FirstChatSection({flag}) {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [isLoading1, setisLoading1] = useState(false);
   const navigate = useNavigate();
-   const token = localStorage.getItem("token");
-    const decodedToken = token ? jwtDecode(token) : {};
-    const email =decodedToken&& decodedToken.email;
-  console.log("flag",flag);
+  const token = localStorage.getItem("token");
+  const decodedToken = token ? jwtDecode(token) : {};
+  const email =decodedToken&& decodedToken.email;
  function generatePrompt() {
      const singlePrompt =
        promptList[Math.floor(Math.random() * promptList.length)];
@@ -57,7 +57,9 @@ function FirstChatSection({flag}) {
 
       setMessage("");
       const id = response.data;
-      navigate(`/chat/${id}`);
+      navigate(`/chat/${id}`, {
+        state: {flag}
+      });
     } catch (error) {
       console.error("Error sending message:", error);
       setLoading(false);

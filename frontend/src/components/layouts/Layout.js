@@ -81,39 +81,152 @@ const colorPalette = [
 
 const layouts = [
     {
-        name: "Layout 1",
-        img: layout1
-    },
-    {
-        name: "Layout 2",
-        img: layout2
-    },
-    {
-        name: "Layout 3",
-        img: layout3
-    },
-    {
-        name: "Layout 4",
-        img: layout4
-    },
-    {
-        name: "Layout 5",
-        img: layout5
-    },
-    {
-        name: "Layout 6",
-        img: layout6
-    },
-    {
-        name: "Layout 7",
-        img: layout7
-    },
-    {
-        name: "Layout 8",
-        img: layout8
-    },
-];
+      name: "Layout 1",
+      img: layout1,
+      prompt: `
+Navigation Bar at the top .
+Hero section spanning the full width (large area, prominent background image or color, and a headline).
+A section with a Title followed by two columns, each containing an image (or placeholder) with accompanying text.
+A wider text block beneath these columns.
+A section with smaller text items on the left and a larger image on the right. Additional text items appear beneath.
+Another section of three images side by side, each serving as a picture or placeholder.
+A broader text block below this row of images.
+A Footer at the bottom of the page.
 
+`
+    },
+    {
+      name: "Layout 2",
+        img: layout2,
+      prompt: `
+Header (Navigation Bar) – A full-width section at the top.
+Hero Section – A large full-width section with a prominent heading.
+Title Section – A centered heading introducing the next section.
+Two-Column Section:
+Left: Picture + Text
+Right: Picture + Text
+Full-Width Text Section – A single block of text.
+Two-Column Section:
+Left: Multiple small text blocks.
+Right: A picture.
+Three-Column Image Section:
+Three side-by-side pictures.
+Full-Width Text Section – Another single text block.
+Footer
+
+`
+    },
+    {
+      name: "Layout 3",
+        img: layout3,
+      prompt: `
+Header (Navigation Bar)
+Hero Section – A full-width section containing a heading.
+Title Section – A centered heading.
+Single Large Content Block – A full-width section with a picture and text.
+Two-Column Section:
+Left: Picture + Text
+Right: Text Block
+Four-Column Image Section:
+Four side-by-side images with text placeholders.
+Full-Width Content Block – Another large picture + text section.
+Footer
+`
+    },
+    {
+      name: "Layout 4",
+        img: layout4,
+      prompt: `
+Header (Navigation Bar) 
+Layered Background Sections:
+A background section spanning full width.
+A hero section overlaid on top of the background.
+Another background section following below.
+Three-Column Section:
+Three side-by-side blocks containing pictures with text.
+Full-Width Picture/Text Section – A single large image with text.
+Two-Column Section:
+Two side-by-side blocks with pictures and text.
+Three-Column Section:
+Three blocks aligned side by side, each containing pictures with text.
+Full-Width Picture/Text Section – Another large image with text.
+Final Picture/Text Section – A standalone image with text,
+Footer
+`
+    },
+    {
+      name: "Layout 5",
+        img: layout5,
+      prompt: `
+Header (Navigation Bar)
+Hero Section – A full-width section with a heading.
+Title Section – A centered heading.
+Full-Width Background Section:
+Contains a title and a text area.
+White Background Text Section – A text block in a lighter background.
+Another Full-Width Background Section:
+Contains a title and a text area.
+Three-Column Section:
+Three side-by-side blocks containing pictures with text in varying background shades.
+Footer
+`
+    },
+    {
+      name: "Layout 6",
+        img: layout6,
+      prompt: `
+Header (Navigation Bar)
+Hero Section:
+A large background section with a hero heading.
+A floating image positioned in the upper-right corner.
+Two-Column Section:
+Left: A large picture with text.
+Right: Another large picture with text.
+Standalone Picture/Text Block – A smaller image with text centered below.
+Three Horizontal Text Blocks – Aligned in a row.
+Full-Width Picture/Text Section – A large image with text.
+Final Picture/Text Block – A standalone image with text in a lighter background.
+Footer 
+`
+    },
+    {
+      name: "Layout 7",
+        img: layout7,
+      prompt: `
+Header (Navigation Bar)
+Hero Section:
+A large background section with a hero heading.
+Three small feature boxes aligned horizontally.
+Carousel Section:
+A title followed by a horizontal scrolling carousel with multiple items.
+Bento Grid Section:
+A title above a structured bento-style grid with two smaller blocks on top and two larger blocks below.
+Title + Subtitle Section:
+A heading with a subtitle in the center.
+Full-Width Text Section – A single large text block.
+Full-Width Picture/Text Section – A large image with text.
+Final Picture/Text Blocks – A smaller image/text block.
+Footer`
+    },
+    {
+      name: "Layout 8",
+        img: layout8,
+      prompt:`
+Header (Navigation Bar)
+Hero Section:
+A large background section with a heading.
+Two-Column Section:
+Left: A dark-colored picture/text block.
+Right: A lighter picture/text block.
+Bento Grid Section:
+A structured grid layout with multiple blocks.
+Full-Width Picture/Text Section – A large image with text.
+Stacked Picture/Text Sections:
+Multiple full-width image/text sections with varying background shades.
+Footer 
+`
+    },
+]
 const Layout = ({ setSelectLayout, setSelectedColorPalette, setSelectedTheme }) => {
     const [selectedPalette, setSelectedPalette] = useState(null);
     const [selectedLayout, setSelectedLayout] = useState(null);
