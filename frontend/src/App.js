@@ -35,10 +35,10 @@ function App() {
     !!window.localStorage.getItem('token') // Convert to boolean
   );
 
-  useEffect(()=>{
-    if(isAuthenticated)
-    navigate('/chat')}
-    ,[])
+  // useEffect(()=>{
+  //   if(isAuthenticated)
+  //   navigate('/chat')}
+  //   ,[navigate])
   return (
     <>
       <Routes>
