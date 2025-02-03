@@ -59,19 +59,15 @@ An AI-powered platform that generates websites from user prompts using **Gemini 
 
 Follow these steps to set up and run **ogaTa.ai** on your local machine.  
 
----
-clone the repository
-cd repo_name
-cd frontend
-npm install
-cd backend 
-npm install
-cd surge 
-npm install
+```sh
+git clone https://github.com/your-repo/ai-website-generator.git
+cd ai-website-generator
+cd frontend && npm install
+cd ../backend && npm install
 
-make env file in both backend and frontend
+make .env file in both backend and frontend
 
-## backend env
+## backend .env
 ``` 
 MONGODB_URI=mongodb+srv://auth-admin:t2YuYPDKGPIztKib@cluster0.s875rof.mongodb.net/Kriti2025(Dihing)-test
 ACCESS_TOKEN_SECRET=secret
@@ -83,7 +79,7 @@ REDIRECT_URL=http://localhost:3000/redirect
 CALLBACK_URL=http://localhost:3003/auth/google/callback
 GITHUB_CALLBACK_URL=http://localhost:3003/auth/github/callback
 ```
-## frontend env
+## frontend .env
 ``` 
 REACT_APP_API_URL=http://localhost:3003
 REACT_APP_SUPABASE_URL = https://loscqunwjczxithcfshm.supabase.co
