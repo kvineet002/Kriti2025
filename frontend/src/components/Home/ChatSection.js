@@ -11,8 +11,9 @@ function ChatSection({ setHtmlCode, htmlCode, sandPackWidth }) {
   const [chats, setChats] = useState([]);
   const [inputText, setInputText] = useState("");
   const [loading, setLoading] = useState(false);
-  const path = useLocation().pathname;
-  const {flag} = useLocation().state;
+  const location = useLocation();
+    const path = location.pathname;
+  const flag = location.state?.flag;
   console.log(flag);
 
   const chatId = path.split("/").pop();
@@ -128,17 +129,20 @@ console.log(path.split('/'));
 
         // Only generate response if we have exactly 1 message and component is mounted
         if (fetchedChats.length === 1 && isMounted) {
-          var colorPrompt ="";
-          if(!flag[0])colorPrompt="Note: Use this color"+ flag[0]?.colors;
-          var layoutPrompt ="";
-          if(!flag[1])layoutPrompt="Note: Use this layout"+  flag[0]?.layout;
-          const text = fetchedChats[0].parts[0].text+ colorPrompt+layoutPrompt;
-          const chatInstance = model.startChat({
+          // var colorPrompt ="";
+          // if(flag[0])colorPrompt="Note: Use this color"+ flag[0].colors;
+          // var layoutPrompt ="";
+          // if(flag&&!flag[1])layoutPrompt="Note: Use this layout"+  flag[1].prompt;
+          // console.log("COlour",colorPrompt);
+          // console.log("Layout",layoutPrompt);
+          const text = fetchedChats[0]?.parts?.[0]?.text + (flag?.[0]?.colors ?? "") + (flag?.[1]?.prompt ?? "");
+
+            const chatInstance = model.startChat({
             history: fetchedChats.map(({ role, parts }) => ({
               role,
               parts: parts.map((part) => ({ text: part.text })),
             })),
-          });
+            });
 
           const result = await chatInstance.sendMessageStream([text]);
           let accumulatedText = "";

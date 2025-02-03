@@ -57,6 +57,7 @@ function FirstChatSection({flag}) {
 
       setMessage("");
       const id = response.data;
+      
       navigate(`/chat/${id}`, {
         state: {flag}
       });
@@ -66,6 +67,7 @@ function FirstChatSection({flag}) {
     }
   };
 
+  console.log(flag)
   return (
     <form
       onSubmit={message.length === 0 ? (e) => e.preventDefault() : handleSend}
