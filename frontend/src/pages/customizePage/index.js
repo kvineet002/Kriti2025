@@ -10,7 +10,6 @@ const sampleHtml = `
 `;
 
 const CustomizePage = () => {
-  var changeStack = [];
   const [selectedElement, setSelectedElement] = useState(null);
   const [selectedElementId, setSelectedElementId] = useState(null);
   const [filteredStyles, setFilteredStyles] = useState({});
