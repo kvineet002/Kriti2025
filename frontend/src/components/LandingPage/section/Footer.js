@@ -90,18 +90,16 @@ const Footer = () => {
         className="w-[1.5px] -translate-x-[218px] right-0 top-0 hidden md:flex translate-y-36 absolute   "
       />
       <div className=" flex flex-col justify-between  md:px-24 px-5 h-[200px] translate-y-32 ">
-        <div className=" flex flex-col gap-2">
+        <div className=" flex flex-col">
           <div className="flex">
-          <div className="bg-gradient-to-r   font-bold text-xl from-[#4E3262] to-[#875C3B] text-transparent bg-clip-text">
-            ogaTa.ai
-          </div></div>
+          <img className=" w-36" src="/agota.png"/>
+          </div>
           <div className=" text-sm  font-extralight text-opacity-20 md:w-[30%]">
-            Proxima is an AI solution that boosts your product's SEO ranking and
-            visibility.
+            Ogata.ai is a solutions provider for all your web development needs.
           </div>
         </div>
         <div className="text-sm  font-extralight md:w-[30%]">
-          All copyrights are reserved @2024
+          All copyrights are reserved @Ogata.ai
         </div>{" "}
       </div>
       {/* <div className='text-sm'>This is the footer</div> */}

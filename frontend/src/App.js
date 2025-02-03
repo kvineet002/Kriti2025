@@ -52,7 +52,6 @@ function App() {
           <Route path='/customize/:id' element={<CustomizePage/>}/>
           <Route path="*" element={<Navigate to="/chat" />} />
         </Route>
-        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </>
   );

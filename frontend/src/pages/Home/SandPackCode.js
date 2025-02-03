@@ -70,7 +70,7 @@ function SandPackCode({
     try {
       setLoading(true);
       const response = await axios.post(
-        `https://deploy-test-production-1630.up.railway.app/deploy`,
+        `http://localhost:3005/deploy`,
         {
           html: htmlCode,
         }

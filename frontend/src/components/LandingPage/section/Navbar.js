@@ -6,7 +6,7 @@ const Navbar = () => {
   const [showLoginModal, setShowLoginModal] = useState(false);
   return (
     <div className=" flex  items-center  justify-between px-5 md:px-12 py-6  w-full z-50 absolute ">
-      <div className="text-white text-lg md:text-xl font-bold">Ogata.ai</div>
+      <img className=" w-36" src="/agota.png"/>
 
     {
       showLoginModal && (
@@ -16,7 +16,7 @@ const Navbar = () => {
 
       <motion.div
         onClick={() => setShowLoginModal(true)}
-        className="ml-auto py-1 md:text-base flex md:px-5  px-3 text-sm  items-center bg-white bg-opacity-95 rounded-xl justify-center  cursor-pointer myborder   gap-2"
+        className="ml-auto py-1 md:text-base flex md:px-5  px-3 text-sm  items-center bg-white bg-opacity-95 rounded-md justify-center  cursor-pointer myborder   gap-2"
         onHoverStart={() => setIsHovered(true)}
         onHoverEnd={() => setIsHovered(false)}
         whileHover={{ opacity: 0.8 }}
