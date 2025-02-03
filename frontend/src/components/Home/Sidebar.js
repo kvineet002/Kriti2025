@@ -43,8 +43,8 @@ function Sidebar({closeSidebar}) {
   const handleClick = (e, link) => {
     e.preventDefault(); // Prevent immediate navigation
     setHovered(true); // Trigger hover effect
-    window.innerWidth <768&&closeSidebar();
-      navigate(link); 
+    navigate(link); 
+    // window.innerWidth <768&&closeSidebar();
   };
   const groupChatsByTime = (chats) => {
     const groups = {

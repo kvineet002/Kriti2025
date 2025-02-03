@@ -37,7 +37,7 @@ function App() {
 
   useEffect(()=>{
     if(isAuthenticated)
-    navigate('/redirect')}
+    navigate('/chat')}
     ,[])
   return (
     <>
