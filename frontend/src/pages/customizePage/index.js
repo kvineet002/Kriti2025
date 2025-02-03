@@ -228,11 +228,10 @@ const CustomizePage = () => {
 
       {/* Customization Tab */}
       <div className=" w-full h-1/2 md:h-full md:w-[30%] flex flex-col gap-3 md:p-4 p-2  md:py-8 shadow-lg">
-        {/* <h1 className="text-xl font-semibold font">Customization Tab</h1> */}
-        {/* { selectedElementId&& <div className=" h-full w-full flex items-center justify-center text-white text-opacity-70">
+      { false? ( <div className=" h-full w-full flex items-center bg-white bg-opacity-5  px-3 text-center rounded-md justify-center text-white text-opacity-70">
           Select any element on the left to customize it.
-        </div>} */}
-        <div className=" text-black w-full rounded-lg shadow-inner  overflow-scroll no-scrollbar">
+        </div>):
+      (  <div className=" text-black w-full rounded-lg shadow-inner  overflow-scroll no-scrollbar">
           <div className="overflow-scroll flex flex-col bg-white bg-opacity-5  text-white text-opacity-70 rounded-lg p-3 no-scrollbar">
             {selectedElement === "IMG" && (
               <div className="flex gap-2 overflow-hidden py-3 w-full items-center">
@@ -649,7 +648,7 @@ const CustomizePage = () => {
             <div className=" h-[1px] w-full  border-white border-opacity-10 my-1 border-dashed border-b-[1px]"></div>
             {/*Border Color*/}
             {selectedElement && (
-              <div className="flex gap-2 py-4">
+              <div className="flex gap-2 py-4 items-center">
                 <div className="font-light text-sm">Border Color </div>
                 <input
                   type="color"
@@ -773,7 +772,7 @@ const CustomizePage = () => {
 
            
           </div>
-        </div>
+        </div>)}
       </div>
     </div>
   );
