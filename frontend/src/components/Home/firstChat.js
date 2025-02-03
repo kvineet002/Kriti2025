@@ -68,7 +68,7 @@ function FirstChatSection({flag}) {
     <form
       onSubmit={message.length === 0 ? (e) => e.preventDefault() : handleSend}
       disabled={loading}
-      className={`h-32 border flex  flex-col items-end justify-between p-2 text-white myborder  px-4 rounded-xl bg-[#0F0F0F]  pointer-events-auto ${flag[0]||flag[1]? "rounded-tl-none":""}`}
+      className={`h-36 md:h-32 border flex  flex-col items-end justify-between p-4 text-white myborder  px-4 rounded-xl bg-[#0F0F0F]  pointer-events-auto ${flag[0]||flag[1]? "rounded-tl-none":""}`}
     >
       <textarea
         value={message}
