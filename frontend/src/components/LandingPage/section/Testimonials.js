@@ -17,7 +17,6 @@ const tweetSlider = () => {
                 <div className="font-bold">{tweet.name}</div>
                 <div>{tweet.position}</div>
                 </div>
-                <div className="w-12 h-12 bg-gradient-to-b from-[#474747] to-[#1d1d1d] rounded-lg" />
             </div>
             </div>
         ))
