@@ -79,7 +79,7 @@ const FirstChat = () => {
                       {selectedColorPalette.colors.map((color, ind) => (
                         <div
                           key={ind}
-                          className={`${color} h-2 w-6 md:h-3 md:w-8 flex-shrink-0`}
+                          className={`bg-[${color}] h-2 w-6 md:h-3 md:w-8 flex-shrink-0`}
                         />
                       ))}
                     </div>

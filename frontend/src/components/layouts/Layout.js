@@ -11,71 +11,71 @@ import layout8 from './layout8.png';
 const colorPalette = [
     {
         name: "Cool Greens",
-        colors: ['bg-[#B5FFE1]', 'bg-[#93E5AB]', 'bg-[#65B891]', 'bg-[#4E878C]', 'bg-[#00241B]']
+        colors: ['#B5FFE1', '#93E5AB', '#65B891', '#4E878C', '#00241B']
     },
     {
         name: "Elegant Purples",
-        colors: ['bg-[#C4BBB8]', 'bg-[#F5B0CB]', 'bg-[#DC6ACF]', 'bg-[#745C97]', 'bg-[#39375B]']
+        colors: ['#C4BBB8', '#F5B0CB', '#DC6ACF', '#745C97', '#39375B']
     },
     {
         name: "Sophisticated Tones",
-        colors: ['bg-[#223127]', 'bg-[#900D38]', 'bg-[#CE5374]', 'bg-[#DBBBF5]', 'bg-[#DDF0FF]']
+        colors: ['#223127', '#900D38', '#CE5374', '#DBBBF5', '#DDF0FF']
     },
     {
         name: "Soft Neutrals",
-        colors: ['bg-[#FEFFFE]', 'bg-[#E9EBF8]', 'bg-[#B4B8C5]', 'bg-[#A5A299]', 'bg-[#8D818C]']
+        colors: ['#FEFFFE', '#E9EBF8', '#B4B8C5', '#A5A299', '#8D818C']
     },
     {
         name: "Earthy Contrast",
-        colors: ['bg-[#07020D]', 'bg-[#5DB7DE]', 'bg-[#F1E9DB]', 'bg-[#A39B8B]', 'bg-[#716A5C]']
+        colors: ['#07020D', '#5DB7DE', '#F1E9DB', '#A39B8B', '#716A5C']
     },
     {
         name: "Pastel Harmony",
-        colors: ['bg-[#79ADDC]', 'bg-[#FFC09F]', 'bg-[#FFEE93]', 'bg-[#FCF5C7]', 'bg-[#ADF7B6]']
+        colors: ['#79ADDC', '#FFC09F', '#FFEE93', '#FCF5C7', '#ADF7B6']
     },
     {
         name: "Golden Earth",
-        colors: ['bg-[#D5B942]', 'bg-[#D9D375]', 'bg-[#E3DE8F]', 'bg-[#EDFBC1]', 'bg-[#BFCBC2]']
+        colors: ['#D5B942', '#D9D375', '#E3DE8F', '#EDFBC1', '#BFCBC2']
     },
     {
         name: "Vibrant Fusion",
-        colors: ['bg-[#D68FD6]', 'bg-[#DEFFF2]', 'bg-[#464F51]', 'bg-[#000009]', 'bg-[#0FF4C6]']
+        colors: ['#D68FD6', '#DEFFF2', '#464F51', '#000009', '#0FF4C6']
     },
     {
         name: "Bold Contrast",
-        colors: ['bg-[#373F51]', 'bg-[#008DD5]', 'bg-[#DFBBB1]', 'bg-[#F56476]', 'bg-[#E43F6F]']
+        colors: ['#373F51', '#008DD5', '#DFBBB1', '#F56476', '#E43F6F']
     },
     {
         name: "Warm Elegance",
-        colors: ['bg-[#8B1E3F]', 'bg-[#3C153B]', 'bg-[#89BD9E]', 'bg-[#F0C987]', 'bg-[#DB4C40]']
+        colors: ['#8B1E3F', '#3C153B', '#89BD9E', '#F0C987', '#DB4C40']
     },
     {
         name: "Nature's Essence",
-        colors: ['bg-[#065143]', 'bg-[#129490]', 'bg-[#70B77E]', 'bg-[#E0A890]', 'bg-[#CE1483]']
+        colors: ['#065143', '#129490', '#70B77E', '#E0A890', '#CE1483']
     },
     {
         name: "Warm Tones",
-        colors: ['bg-[#FFB997]', 'bg-[#F67E7D]', 'bg-[#843B62]', 'bg-[#0B032D]', 'bg-[#74546A]']
+        colors: ['#FFB997', '#F67E7D', '#843B62', '#0B032D', '#74546A']
     },
     {
         name: "Cool Serenity",
-        colors: ['bg-[#4BC6B9]', 'bg-[#73C1C6]', 'bg-[#96C3CE]', 'bg-[#A79AB2]', 'bg-[#B57BA6]']
+        colors: ['#4BC6B9', '#73C1C6', '#96C3CE', '#A79AB2', '#B57BA6']
     },
     {
         name: "Mystic Sunset",
-        colors: ['bg-[#7F7EFF]', 'bg-[#A390E4]', 'bg-[#C69DD2]', 'bg-[#CC8B8C]', 'bg-[#C68866]']
+        colors: ['#7F7EFF', '#A390E4', '#C69DD2', '#CC8B8C', '#C68866']
     },
     {
         name: "Muted Elegance",
-        colors: ['bg-[#FAC8CD]', 'bg-[#D7BCC8]', 'bg-[#98B6B1]', 'bg-[#629677]', 'bg-[#495D63]']
+        colors: ['#FAC8CD', '#D7BCC8', '#98B6B1', '#629677', '#495D63']
     },
     {
         name: "Earthy Pastels",
-        colors: ['bg-[#C1B098]', 'bg-[#E9D2F4]', 'bg-[#9B9B93]', 'bg-[#39393A]', 'bg-[#63B0CD]']
+        colors: ['#C1B098', '#E9D2F4', '#9B9B93', '#39393A', '#63B0CD']
     },
     {
         name: "Deep Warmth",
-        colors: ['bg-[#3A2E39]', 'bg-[#1E555C]', 'bg-[#F4D8CD]', 'bg-[#EDB183]', 'bg-[#F15152]']
+        colors: ['#3A2E39', '#1E555C', '#F4D8CD', '#EDB183', '#F15152']
     }
 ];
 
@@ -259,7 +259,7 @@ const Layout = ({ setSelectLayout, setSelectedColorPalette, setSelectedTheme }) 
                             <div className='overflow-x-auto no-scrollbar'>
                                 <div className='flex gap-4 w-max'>
                                     {palette.colors.map((color, ind) => (
-                                        <div key={ind} className={`${color} h-6 w-10 flex-shrink-0`} />
+                                        <div key={ind} className={`bg-[${color}] h-6 w-10 flex-shrink-0`} />
                                     ))}
                                 </div>
                             </div>
