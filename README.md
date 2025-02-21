@@ -52,8 +52,24 @@ An AI-powered platform that generates websites from user prompts using **Gemini 
 
 ### **Deployment:**  
 - **Vercel** – Deploys the main **ogaTa.ai** website.  
-- **Railway Server** – Deploys the user-generated websites.  
+- **Railway Server** – Deploys the user-generated websites.
 
+-  
+## 🚀 How to Run This Website  
+
+Follow these steps to set up and run **ogaTa.ai** on your local machine.  
+
+```sh
+git clone https://github.com/your-repo/ai-website-generator.git
+cd ai-website-generator
+cd frontend && npm install
+cd ../backend && npm install
+
+make .env file in both backend and frontend
+```
+
+## Preview the website here
+ogaTa.ai [Link](https://kriti2025-pi.vercel.app/)
 
 ---
 

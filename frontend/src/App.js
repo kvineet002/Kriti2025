@@ -28,7 +28,6 @@ const ProtectedRoutes = () => {
 
 
 
-
 function App() {
   const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = useState(
