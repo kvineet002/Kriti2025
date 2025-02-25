@@ -6,7 +6,7 @@ import FirstChat from './pages/Home/firstChat.js';
 import CustomizePage from './pages/customizePage/index.js';
 import OAuthRedirectHandler from './redirect/Redirect.js';
 import SharedPage from './pages/sharedPage/SharedPage.js';
-
+import { SpeedInsights } from '@vercel/speed-insights/react';
 const ProtectedRoutes = () => {
   const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = useState(
@@ -51,6 +51,7 @@ function App() {
           <Route path='/customize/:id' element={<CustomizePage/>}/>
         </Route>
       </Routes>
+      <SpeedInsights />
     </>
   );
 }
