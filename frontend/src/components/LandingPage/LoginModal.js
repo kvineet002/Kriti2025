@@ -27,11 +27,12 @@ function LoginModal({ onClose }) {
         ref={menuRef}
       > 
         <div className="w-full  bg-cover flex items-center object-cover justify-center">
-          <img
-            src="/login.png"
-            className="  h-[270px] md:h-full object-cover w-full"
-            alt="Login"
-          />
+        <img
+  src="/login.png"
+  className="h-[270px] md:h-full object-cover w-full"
+  alt="Login"
+  loading="lazy"
+/>
         </div>
         <div className=" flex flex-col px-4 md:px-12 justify-center items-center text-white text-opacity-85 w-full pt-4 md:py-36">
           <div className="font-extrabold text-lg leading-9 sm:text-3xl md:text-[44px] text-center">Welcome to ogaTa.ai</div>
