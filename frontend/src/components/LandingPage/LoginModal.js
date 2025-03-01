@@ -23,7 +23,7 @@ function LoginModal({ onClose }) {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm h-screen flex justify-center items-center z-50">
       <div
-        className="w-[95%] md:w-[80vw] h-[80%]  justify-between items-center  bg-[#0F0F0F]  md:flex flex-col md:flex-row rounded-xl overflow-hidden no-scrollbar z-50"
+        className="w-[95%] md:w-[80vw]  justify-between items-center  bg-[#0F0F0F]  md:flex flex-col md:flex-row rounded-xl overflow-hidden no-scrollbar z-50"
         ref={menuRef}
       > 
         <div className="w-full  bg-cover flex items-center object-cover justify-center">
