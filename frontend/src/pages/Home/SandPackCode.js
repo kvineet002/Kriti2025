@@ -144,19 +144,23 @@ const handleCustomize = () => {
           </div>
         </div>
         <div className=" flex gap-2 items-center">
-        <div
+        <button
+          disabled={isUpdating}
               className={`hover:bg-white hover:bg-opacity-10 text-xs md:text-sm myborder cursor-pointer flex gap-1 rounded-lg px-3 py-1 items-center transition-all justify-center opacity-80`}
               onClick={handleCustomize}
             >
               <img className="w-[12px] h-[12px] invert" src="/customize.svg" />
               Customize
-            </div>
-        <div
+            </button>
+        <button
+          disabled={isUpdating}
           onClick={() => setShowDeployModal(true)}
-          className="flex pb-[3px] px-[10px] py-[4px] font-medium text-xs md:text-sm bg-white text-black cursor-pointer hover:bg-white hover:bg-opacity-80 rounded-md"
+          className={`
+            ${isUpdating ? "bg-opacity-50 cursor-not-allowed" : "bg-opacity-100"}
+            flex pb-[3px] px-[10px] py-[4px] font-medium text-xs md:text-sm bg-white text-black cursor-pointer hover:bg-white hover:bg-opacity-80 rounded-md`}
         >
           { "Deploy"}
-        </div>
+        </button>
         </div>
       </div>
 

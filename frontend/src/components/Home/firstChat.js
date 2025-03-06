@@ -8,37 +8,26 @@ import { jwtDecode } from "jwt-decode";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 function FirstChatSection({flag}) {
-  const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [isLoading1, setisLoading1] = useState(false);
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const decodedToken = token ? jwtDecode(token) : {};
   const email =decodedToken&& decodedToken.email;
- async function generatePrompt() {
-  setisLoading1(true);
-  const API_KEY =
-  process.env.REACT_APP_GOOGLE_API_KEY ||
-  "AIzaSyD6_5dM2ze7f-_mnlm26xeC3LJCMNFWcIg";
-
-const genAI = new GoogleGenerativeAI(API_KEY);
-const systemPrompt = `You are a prompt generator who can create give prompt with diverse genre. When given a prompt, provide a prompt to create a website Note:keep it brief and clear within 15-20 words also start with either Create a website or anything you find relavant.`;
-const model = genAI.getGenerativeModel({
-  model: "gemini-1.5-flash",
-  systemInstruction: systemPrompt,
-});
-  const result = await model.generateContent("generate a random prompt");
-  const response =  result.response;
-  const generatedPrompt = response.text();
-  const singlePrompt=generatedPrompt.split(" ").join(" ");
+  const [initialQuestion, setInitialQuestion] = useState("");
+  function generatePrompt() {
+     const singlePrompt =
+       promptList[Math.floor(Math.random() * promptList.length)];
+     setisLoading1(true);
+   
      // Clear the existing question
-     
+     setInitialQuestion("");
+   
      // Display the prompt letter by letter
-     setMessage(singlePrompt[0]);
-     let index = 0;
+     let index = -1;
      const typingInterval = setInterval(() => {
        if (index <singlePrompt.length-1) {
-         setMessage((prev) => prev + singlePrompt[index]);
+         setInitialQuestion((prev) => prev + singlePrompt[index]);
          index++;
        } else {
          clearInterval(typingInterval);
@@ -48,7 +37,7 @@ const model = genAI.getGenerativeModel({
    }
   const handleSend = async (e) => {
     e.preventDefault();
-    if (!message.trim()) return;
+    if (!initialQuestion.trim()) return;
 
     try {
       setLoading(true);
@@ -56,7 +45,7 @@ const model = genAI.getGenerativeModel({
         `${process.env.REACT_APP_API_URL}/api/chats`,
         {
           email: email,
-          text: message,
+          text: initialQuestion,
         },
         {
           headers: {
@@ -65,16 +54,16 @@ const model = genAI.getGenerativeModel({
         }
       );
 
-      console.log("Message sent:", response.data);
+      console.log("initialQuestion sent:", response.data);
 
-      setMessage("");
+      setInitialQuestion("");
       const id = response.data;
       
       navigate(`/chat/${id}`, {
         state: {flag}
       });
     } catch (error) {
-      console.error("Error sending message:", error);
+      console.error("Error sending initialQuestion:", error);
       setLoading(false);
     }
   };
@@ -84,17 +73,17 @@ const model = genAI.getGenerativeModel({
 
   return (
     <form
-      onSubmit={message.length === 0 ? (e) => e.preventDefault() : handleSend}
+      onSubmit={initialQuestion.length === 0 ? (e) => e.preventDefault() : handleSend}
       disabled={loading}
       className={`h-28 md:h-28 border flex  flex-col p-4 select-none text-white myborder rounded-xl bg-[#0F0F0F]  pointer-events-auto ${flag[0]||flag[1]? "rounded-tl-none":""}`}
     >
       <textarea
-        value={message}
-        onChange={(e) => setMessage(e.target.value)}
+        value={initialQuestion}
+        onChange={(e) => setInitialQuestion(e.target.value)}
         onKeyDown={(e) => {
           if (e.ctrlKey && e.shiftKey && e.key === "Enter") {
             e.preventDefault();
-            setMessage((prev) => prev + "\n"); // Add a new line
+            setInitialQuestion((prev) => prev + "\n"); // Add a new line
           } else if (e.key === "Enter" && !e.shiftKey && !e.ctrlKey) {
             e.preventDefault();
             handleSend(e); // Submit the form on Enter
@@ -122,9 +111,9 @@ const model = genAI.getGenerativeModel({
           Generate a Prompt</div>
         </button>
         <button
-          disabled={message.length === 0 || loading}
+          disabled={initialQuestion.length === 0 || loading}
           className={`text-black text-sm bg-white p-[6px] md:px-4 px-3 rounded-md ${
-            message.length === 0||loading
+            initialQuestion.length === 0||loading
               ? "cursor-not-allowed opacity-50"
               : "cursor-pointer"
           }`}
