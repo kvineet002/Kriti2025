@@ -8,6 +8,7 @@ const port = 3003;
 const chatRoutes = require("./routes/chatRoutes");
 const userRoutes = require("./routes/userRouter");
 const authRoutes = require("./routes/authRouter");
+const deployRoutes = require("./routes/deployRouter");
 connect(
   process.env.MONGODB_URI
 ).then(()=>{
@@ -23,6 +24,7 @@ app.get("/", (req, res) => {
 );
 app.use("/api/chats", chatRoutes);
 app.use("/api/user", userRoutes);
+app.use("/api/deploys", deployRoutes);
 app.use("/auth", authRoutes);
 
 app.listen(port, () => {

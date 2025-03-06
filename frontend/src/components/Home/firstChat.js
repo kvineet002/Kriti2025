@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { promptList } from "../../constants/promptList";
 import Loader from "./loading";
 import { jwtDecode } from "jwt-decode";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
 function FirstChatSection({flag}) {
   const [message, setMessage] = useState("");
@@ -14,16 +15,27 @@ function FirstChatSection({flag}) {
   const token = localStorage.getItem("token");
   const decodedToken = token ? jwtDecode(token) : {};
   const email =decodedToken&& decodedToken.email;
- function generatePrompt() {
-     const singlePrompt =
-       promptList[Math.floor(Math.random() * promptList.length)];
-     setisLoading1(true);
-   
+ async function generatePrompt() {
+  setisLoading1(true);
+  const API_KEY =
+  process.env.REACT_APP_GOOGLE_API_KEY ||
+  "AIzaSyD6_5dM2ze7f-_mnlm26xeC3LJCMNFWcIg";
+
+const genAI = new GoogleGenerativeAI(API_KEY);
+const systemPrompt = `You are a prompt generator who can create give prompt with diverse genre. When given a prompt, provide a prompt to create a website Note:keep it brief and clear within 15-20 words also start with either Create a website or anything you find relavant.`;
+const model = genAI.getGenerativeModel({
+  model: "gemini-1.5-flash",
+  systemInstruction: systemPrompt,
+});
+  const result = await model.generateContent("generate a random prompt");
+  const response =  result.response;
+  const generatedPrompt = response.text();
+  const singlePrompt=generatedPrompt.split(" ").join(" ");
      // Clear the existing question
-     setMessage("");
-   
+     
      // Display the prompt letter by letter
-     let index = -1;
+     setMessage(singlePrompt[0]);
+     let index = 0;
      const typingInterval = setInterval(() => {
        if (index <singlePrompt.length-1) {
          setMessage((prev) => prev + singlePrompt[index]);
@@ -66,13 +78,15 @@ function FirstChatSection({flag}) {
       setLoading(false);
     }
   };
+  const handleAttachment = () => {
+    console.log("Attachment");
+  }
 
-  console.log(flag)
   return (
     <form
       onSubmit={message.length === 0 ? (e) => e.preventDefault() : handleSend}
       disabled={loading}
-      className={`h-36 md:h-32 border flex  flex-col items-end justify-between p-4 text-white myborder  px-4 rounded-xl bg-[#0F0F0F]  pointer-events-auto ${flag[0]||flag[1]? "rounded-tl-none":""}`}
+      className={`h-28 md:h-28 border flex  flex-col p-4 select-none text-white myborder rounded-xl bg-[#0F0F0F]  pointer-events-auto ${flag[0]||flag[1]? "rounded-tl-none":""}`}
     >
       <textarea
         value={message}
@@ -86,33 +100,40 @@ function FirstChatSection({flag}) {
             handleSend(e); // Submit the form on Enter
           }
         }}
-        className="w-full p-4 px-0 bg-transparent pb-8 opacity-50 outline-none resize-none no-scrollbar"
+        className="w-full px-0 bg-transparent pb-8 opacity-50 outline-none resize-none no-scrollbar"
         placeholder="Ask engine a question...."
       />
+      <div className=" flex justify-between items-center">
 
 
-      <div className=" flex items-center justify-center gap-2 ">
-      <div
+        <img 
+        onClick={handleAttachment}
+        title="Attach files" src="/attach.png" alt="Sparkle" className=" select-none cursor-pointer w-4 h-4" />
+      <div className=" flex items-center justify-around gap-2 ">
+      <button
+          disabled={isLoading1}
           onClick={!isLoading1 ? generatePrompt : null}
-          className={`select-none border-2 myborder rounded-xl p-[7px] px-4 ${
-            isLoading1 ? "border-animated" : "hover:bg-opacity-5"
-          } cursor-pointer font-light items-center justify-center myborder border-dashed text-sm flex gap-2 bg-white bg-opacity-10`}
+          className={`select-none border-2 myborder rounded-md p-[6px] md:px-4 px-3 ${
+            isLoading1 ? " cursor-not-allowed " : "hover:bg-opacity-5"
+          }  font-light items-center justify-center myborder border-dashed  text-sm flex gap-2 bg-white bg-opacity-10`}
         >
-          <img src="/sparkle.svg" alt="Sparkle" />
-          Generate a Prompt
-        </div>
+          <img src="/sparkle.png" alt="Sparkle" className=" w-4" />
+          <div className=" opacity-70 text-sm">
+          Generate a Prompt</div>
+        </button>
         <button
           disabled={message.length === 0 || loading}
-          className={`text-black bg-white p-[7px] px-4 rounded-md ${
+          className={`text-black text-sm bg-white p-[6px] md:px-4 px-3 rounded-md ${
             message.length === 0||loading
               ? "cursor-not-allowed opacity-50"
               : "cursor-pointer"
           }`}
         >
-          {!loading?"Send":(<div className="px-1  py-[2px]">
-            <Loader w={22} h={22}/>
+          {!loading?"Send":(<div className="">
+            <Loader w={20} h={20}/>
           </div>)}
         </button>
+      </div>
       </div>
     </form>
   );

@@ -23,20 +23,31 @@ const Home = () => {
   const [isUpdating, setIsUpdating] = useState(false);
   const [isPublic, setIsPublic] = useState(false);
   const chatId = window.location.pathname.split("/").pop();
+  const [checkpublicloading, setCheckPublicloading] = useState(true);
   useEffect(() => {
     const checkShared = async () => {
       try {
+        setCheckPublicloading(true);
         const response = await axios.get(
           `${process.env.REACT_APP_API_URL}/api/chats/check-share/${chatId}`
         );
         console.log("Shared code:", response.data);
         setIsPublic(response.data);
+        setCheckPublicloading(false);
       } catch (error) {
         console.error("Error fetching shared code:", error);
+      } finally {
+        setCheckPublicloading(false);
       }
     };
     checkShared();
-  }, [moreOptions,showBottomSheet,showShareConfirmation,showdeleteConfirmation]);
+  }, [
+    moreOptions,
+    showBottomSheet,
+    showShareConfirmation,
+    showdeleteConfirmation,
+    chatId
+  ]);
 
   useEffect(() => {
     const setShowBottom = () => {
@@ -110,23 +121,29 @@ const Home = () => {
   return (
     <div className="flex flex-col md:flex-row md:h-screen w-full relative">
       {/* Hamburger Menu */}
-      <div className="text-white flex md:hidden justify-between items-center px-5 py-4"><div className=" flex gap-4 items-center justify-center">
-        <img
-          onClick={handleSidebar}
-          src="/burger.png"
-          className="w-5 h-4 cursor-pointer"
-          alt="menu"
-        />
-  {isPublic ? (
-                <div className="   text-xs px-5 py-1 rounded-full bg-green-400 bg-opacity-10 font-semibold items-center justify-center  text-green-400">
-                  Public
-                </div>
-              ) : (
-                <div className="myborder  flex gap-2 text-xs px-4 py-1 rounded-full items-center justify-center">
-                  <img className="w-3 h-3" src="/private.png" />
-                  Private
-                </div>
-              )}</div>
+      <div className="text-white flex md:hidden justify-between items-center px-5 py-4">
+        <div className=" flex gap-4 items-center justify-center">
+          <img
+            onClick={handleSidebar}
+            src="/burger.png"
+            className="w-5 h-4 cursor-pointer"
+            alt="menu"
+          />
+       {  (
+    checkpublicloading ? (
+      <div className="h-5 w-20 bg-white bg-opacity-10  animate-pulse rounded-full"></div>
+    ) : isPublic ? (
+      <div className="text-xs px-5 py-1 rounded-full bg-green-400 bg-opacity-10 font-semibold flex items-center justify-center text-green-400">
+        Public
+      </div>
+    ) : (
+      <div className="myborder flex gap-2 text-xs px-4 py-1 rounded-full items-center justify-center">
+        <img className="w-3 h-3" src="/private.png" alt="Private" />
+        Private
+      </div>
+    )
+  )}
+        </div>
         {/* Chhote Screen ke liye */}
         <div className="flex items-center justify-center gap-4">
           <div className="text-white flex justify-center items-center bg-black">
@@ -196,41 +213,45 @@ const Home = () => {
           >
             <div className="items-center select-none py-[10.5px] hidden md:flex md:gap-2 border-b-[1px]  border-opacity-10 border-b-white justify-between px-5 text-white bg-black relative">
               {/* Bade Screen ke liye */}
-              {isPublic ? (
-                <div className="   text-xs px-4 py-1 flex items-center gap-1 rounded-full bg-green-400 bg-opacity-10 items-center justify-center  text-green-400">
-              <div className=" w-[5px] h-[5px] bg-green-400 rounded-full"></div>    Public
-                </div>
-              ) : (
-                <div className="myborder  flex gap-2 text-xs px-4 py-1 rounded-full items-center justify-center">
-                  <img className="w-3 h-3" src="/private.png" />
-                  Private
-                </div>
-              )}
+              {  (
+    checkpublicloading ? (
+      <div className="h-6 w-20 bg-white bg-opacity-10  animate-pulse rounded-full"></div>
+    ) : isPublic ? (
+      <div className="text-xs px-5 py-1 rounded-full bg-green-400 bg-opacity-10 font-semibold flex items-center justify-center text-green-400">
+        Public
+      </div>
+    ) : (
+      <div className="myborder flex gap-2 text-xs px-4 py-1 rounded-full items-center justify-center">
+        <img className="w-3 h-3" src="/private.png" alt="Private" />
+        Private
+      </div>
+    )
+  )}
 
               <div className=" flex gap-2 items-center">
-              <div
-                onClick={() => {
-                  setMoreOptions(!moreOptions);
-                }}
-                className="flex font-extralight pb-[3px] opacity-80 px-[6px] py-[1px] cursor-pointer hover:bg-white hover:bg-opacity-10 rounded-md"
-              >
-                •••
-              </div>
-              {moreOptions && !isMobile && (
-                <MoreOptions
-                  onClose={handleRightClick}
-                  onDelete={handleDeleteConfirmation}
-                  onShare={handleShareConfirmation}
-                />
-              )}
-              <div
-                onClick={() => setSandpackWidth(50)}
-                className={` p-2 hover:bg-white hover:bg-opacity-10 ${
-                  sandpackWidth < 80 ? "hidden" : "flex"
-                } rounded-md cursor-pointer`}
-              >
-                <img className=" opacity-80  w-[10px]" src="/left.png" />
-              </div>
+                <div
+                  onClick={() => {
+                    setMoreOptions(!moreOptions);
+                  }}
+                  className="flex font-extralight pb-[3px] opacity-80 px-[6px] py-[1px] cursor-pointer hover:bg-white hover:bg-opacity-10 rounded-md"
+                >
+                  •••
+                </div>
+                {moreOptions && !isMobile && (
+                  <MoreOptions
+                    onClose={handleRightClick}
+                    onDelete={handleDeleteConfirmation}
+                    onShare={handleShareConfirmation}
+                  />
+                )}
+                <div
+                  onClick={() => setSandpackWidth(50)}
+                  className={` p-2 hover:bg-white hover:bg-opacity-10 ${
+                    sandpackWidth < 80 ? "hidden" : "flex"
+                  } rounded-md cursor-pointer`}
+                >
+                  <img className=" opacity-80  w-[10px]" src="/left.png" />
+                </div>
               </div>
             </div>
 

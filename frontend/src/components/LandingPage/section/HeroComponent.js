@@ -142,28 +142,29 @@ const HeroComponent = () => {
           ? (e) => e.preventDefault()
           : handleSend
       }
-      className="h-32 border flex flex-col items-end text-white myborder p-2 px-4 w-[90%] md:w-[50%] rounded-xl bg-[#0F0F0F] mt-6 pointer-events-auto"
+      className="h-28 border justify-between flex flex-col items-end text-white myborder p-4 px-4 w-[90%] md:w-[55%] rounded-xl bg-[#0F0F0F] mt-6 pointer-events-auto"
     >
       <input
         type="text"
         value={initialQuestion}
         onChange={(e) => setInitialQuestion(e.target.value)}
-        className="w-full p-4 px-0 bg-transparent opacity-50 outline-none"
+        className="w-full px-0 bg-transparent opacity-50 outline-none"
         placeholder="Ask engine a question...."
       />
       <div className="flex items-center justify-center gap-2">
-        <div
+      <div
           onClick={!isLoading ? generatePrompt : null}
-          className={`select-none border-2 myborder rounded-xl p-[7px] px-4 ${
-            isLoading ? "border-animated" : "hover:bg-opacity-5"
-          } cursor-pointer font-light items-center justify-center myborder border-dashed text-sm flex gap-2 bg-white bg-opacity-10`}
+          className={`select-none border-2 myborder rounded-md p-[6px] md:px-4 px-3 ${
+            isLoading ? "border-" : "hover:bg-opacity-5"
+          } cursor-pointer font-light items-center justify-center myborder border-dashed  text-sm flex gap-2 bg-white bg-opacity-10`}
         >
-          <img src="/sparkle.svg" alt="Sparkle" />
-          Generate a Prompt
+          <img src="/sparkle.png" alt="Sparkle" className=" w-4" />
+          <div className=" opacity-70 text-sm">
+          Generate a Prompt</div>
         </div>
         <div
           onClick={initialQuestion.length === 0 ? null : handleSend}
-          className={`text-black bg-white p-[7px] px-4 rounded-md ${
+          className={`text-black bg-white p-[6px] px-4 text-sm rounded-md ${
             initialQuestion.length === 0
               ? "cursor-not-allowed opacity-50"
               : "cursor-pointer"

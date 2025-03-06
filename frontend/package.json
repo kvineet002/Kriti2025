@@ -12,6 +12,7 @@
     "@testing-library/user-event": "^13.5.0",
     "@vercel/speed-insights": "^1.2.0",
     "axios": "^1.7.9",
+    "canvas-confetti": "^1.9.3",
     "dotenv": "^16.4.7",
     "firebase": "^11.2.0",
     "framer-motion": "^12.0.0",

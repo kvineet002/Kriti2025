@@ -5,9 +5,11 @@ import {
   SandpackProvider,
 } from "@codesandbox/sandpack-react";
 import axios from "axios";
+import { jwtDecode } from "jwt-decode";
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {useParams} from 'react-router-dom';
+import Deploy from "../../components/Home/Deploy";
 
 
 function SandPackCode({
@@ -23,8 +25,11 @@ function SandPackCode({
   const [isUpdating, setIsUpdating] = useState(true);
   const updateTimeout = useRef(null);
   const [loading, setLoading] = useState(false);
+  const [showDeployModal, setShowDeployModal] = useState(false);
   const id = useParams().id;
-
+  const token = localStorage.getItem("token");
+      const decodedToken = token ? jwtDecode(token) : {};
+      const email =decodedToken&& decodedToken.email;
   // Handle code updates and switching logic
   useEffect(() => {
     if (htmlCode === "") {
@@ -66,23 +71,7 @@ function SandPackCode({
 
   const navigate = useNavigate();
 
-  const handleDeploy = async () => {
-    try {
-      setLoading(true);
-      const response = await axios.post(
-        `${process.env.REACT_APP_DEPLOY_URL}/deploy`,
-        {
-          html: htmlCode,
-        }
-      );
-      console.log(response);
-      window.location.href = response.data.url;
-    } catch (err) {
-      console.log(err);
-    } finally {
-      setLoading(false);
-    }
-  };
+
 
 const handleCustomize = () => {
   localStorage.removeItem("customizedHtml");
@@ -97,8 +86,13 @@ const handleCustomize = () => {
       setCopySuccess("Copy code");
     }, 4000);
   };
+
+
   return (
     <div className="h-full w-full overflow-hidden no-tap">
+      {
+        showDeployModal &&<Deploy htmlCode={htmlCode} onClose={()=>setShowDeployModal(false)} />
+      }
       <div className="items-center select-none rounded-t-md border-t-[1px] border-opacity-20 py-2 flex md:border-b-[1px] md:border-opacity-10 border-white justify-between md:px-5 px-3 text-white bg-black">
         <div className="flex gap- items-center">
           {window.innerWidth >= 768 ? (
@@ -158,10 +152,10 @@ const handleCustomize = () => {
               Customize
             </div>
         <div
-          onClick={handleDeploy}
+          onClick={() => setShowDeployModal(true)}
           className="flex pb-[3px] px-[10px] py-[4px] font-medium text-xs md:text-sm bg-white text-black cursor-pointer hover:bg-white hover:bg-opacity-80 rounded-md"
         >
-          {loading ? "Deploying..." : "Deploy"}
+          { "Deploy"}
         </div>
         </div>
       </div>

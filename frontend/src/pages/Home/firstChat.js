@@ -4,6 +4,7 @@ import FirstChatSection from "../../components/Home/firstChat";
 import { useState } from "react";
 import Layout from "../../components/layouts/Layout.js";
 import { motion } from "framer-motion";
+import YourWebsite from "../../components/Home/YourWebsite.js";
 const FirstChat = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [selectLayout, setSelectLayout] = useState(false);
@@ -57,8 +58,9 @@ const FirstChat = () => {
       )}
 
       {/* Content Section */}
-      <div className="w-full md:w-[80%] flex flex-col items-center justify-center h-[80vh] md:h-full gap-5 relative">
-        <div className="text-white text-3xl font-bold text-center">
+      <div className="w-full md:w-[80%] flex flex-col items-center justify-center h-full gap-5 relative overflow-scroll no-scrollbar">
+        <div className="w-full h-full  flex flex-col items-center  mt-[250px] md:mt-[300px] justify-center">
+        <div className="text-white text-3xl font-bold text-center my-5">
           What do you want to create today?
         </div>
         <div
@@ -114,7 +116,8 @@ const FirstChat = () => {
           )}
           <FirstChatSection flag={[selectedColorPalette, selectedTheme]} />
         </div>
-
+        </div><div className="md:w-[90%] w-[90%]">
+<YourWebsite  /></div>
         {selectLayout && (
           <div className="absolute inset-0 flex items-center justify-center w-full z-50">
             <Layout
@@ -124,7 +127,9 @@ const FirstChat = () => {
             />
           </div>
         )}
+         
       </div>
+
     </div>
   );
 };
