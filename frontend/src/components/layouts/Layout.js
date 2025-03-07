@@ -259,7 +259,8 @@ const Layout = ({ setSelectLayout, setSelectedColorPalette, setSelectedTheme }) 
                             <div className='overflow-x-auto no-scrollbar'>
                                 <div className='flex gap-4 w-max'>
                                     {palette.colors.map((color, ind) => (
-                                        <div key={ind} className={`bg-[${color}] h-6 w-10 flex-shrink-0`} />
+                                      <div key={ind} style={{ backgroundColor: color }} className="h-6 w-10 flex-shrink-0" />
+
                                     ))}
                                 </div>
                             </div>
