@@ -94,13 +94,11 @@ function Deploy({ onClose, htmlCode }) {
           websiteName: websiteName + "-" + randString,
         }
       );
-      console.log(response.data);
-
       setUrl(response.data.url);
       try {
         const response2 = await axios.get(
           `https://api.microlink.io/?url=${encodeURIComponent(
-            url
+            response.data.url
           )}&meta=false&screenshot=true
 `
         );
