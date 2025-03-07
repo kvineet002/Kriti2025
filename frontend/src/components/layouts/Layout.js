@@ -242,7 +242,7 @@ const Layout = ({ setSelectLayout, setSelectedColorPalette, setSelectedTheme }) 
     };
 
     return (
-        <div className="myborder bg-[#141415] text-opacity-80 text-white rounded-lg w-[95%] h-full md:h-[70%] flex flex-col md:flex-row items-center justify-center">
+        <div className="myborder bg-[#141415] text-opacity-80 text-white rounded-lg w-[85%] h-[90%] md:h-[70%] flex flex-col md:flex-row items-center justify-center">
             {/* Color Palettes Section */}
             <div className='w-full md:w-[45%] h-[40%] md:h-full p-6 md:p-10 flex flex-col'>
                 <h1 className="text-base md:text-lg font-bold pb-6">Choose Color Palettes</h1>

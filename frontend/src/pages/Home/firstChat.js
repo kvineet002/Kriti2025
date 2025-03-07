@@ -59,6 +59,15 @@ const FirstChat = () => {
 
       {/* Content Section */}
       <div className="w-full md:w-[80%] flex flex-col h-full items-center pt-[15%] gap-5 overflow-scroll no-scrollbar">
+      {selectLayout && (
+          <div className="absolute inset-0 w-full flex items-center  md:px-[10%]   justify-center md:justify-end z-50">
+            <Layout
+              setSelectLayout={setSelectLayout}
+              setSelectedColorPalette={setSelectedColorPalette}
+              setSelectedTheme={setSelectedTheme}
+            />
+          </div>
+        )}
         <div className=" w-full items-center flex flex-col  ">
           <div className="text-white text-3xl font-bold text-center my-5">
             What do you want to create today?
@@ -119,15 +128,7 @@ const FirstChat = () => {
         <div className="md:w-[90%] w-[90%]">
           <YourWebsite />
         </div>
-        {selectLayout && (
-          <div className="absolute inset-0 flex items-center justify-center w-full z-50">
-            <Layout
-              setSelectLayout={setSelectLayout}
-              setSelectedColorPalette={setSelectedColorPalette}
-              setSelectedTheme={setSelectedTheme}
-            />
-          </div>
-        )}
+       
       </div>
     </div>
   );
