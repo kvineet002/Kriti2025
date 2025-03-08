@@ -3,9 +3,11 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios, { AxiosHeaders } from "axios";
 import Loader from "./loading";
 import { jwtDecode } from "jwt-decode";
+import SettingModal from "./Setting";
 function Sidebar({ closeSidebar }) {
   const [hovered, setHovered] = useState(null); // State for hover effect
   const [loading, setLoading] = useState(false);
+  const [settingModal, setSettingModal] = useState(false);
   const [chatHistory, setChatHistory] = useState([]);
   const [isOpen, setIsOpen] = useState(false); // Track if sidebar is open
   const token = localStorage.getItem("token");
@@ -97,8 +99,7 @@ function Sidebar({ closeSidebar }) {
       {/* Header section */}
       <div className="flex  flex-col  gap-3 items-center justify-center p-4 py-7 border-b-white border-b-2 border-opacity-10">
         <div className=" bg-black bg-gradient-to- from-white via-black to-white rounded-md w-full items-center justify-center flex">
-      <img className=" w-32" src="/agota.png"/>
-         
+          <img className=" w-32" src="/agota.png" />
         </div>
         <div className="flex md:gap-6 gap-3 w-[90%] md:flex-col flex-row justify-center items-center">
           <Link
@@ -109,7 +110,12 @@ function Sidebar({ closeSidebar }) {
           </Link>
         </div>
       </div>
-
+{/* Setting Modal */}
+      {settingModal && (
+        <SettingModal
+          onClose={() => setSettingModal(false)}
+         />
+      )}
       {/* Chat History Section */}
       {loading ? (
         <div className="h-full flex items-center justify-center">
@@ -123,7 +129,7 @@ function Sidebar({ closeSidebar }) {
         <div
           className={`flex flex-col gap-2 p-2 px-4 overflow-y-auto no-scrollbar h-full`}
         >
-              {favoriteChats.length > 0 && (
+          {favoriteChats.length > 0 && (
             <div className=" -mb-2">
               <div className="text-xs font-medium text-white text-opacity-80 px-4 py-2 pt-3 mb-2 rounded-md uppercase tracking-wide">
                 Favorites
@@ -132,7 +138,9 @@ function Sidebar({ closeSidebar }) {
                 <div
                   key={chat._id}
                   className={`cursor-pointer flex mb-2 items-center text-white ${
-                    location === chat._id ? "text-opacity-100 bg-white bg-opacity-10" : "text-opacity-40 hover:bg-opacity-5 hover:bg-white transition-all"
+                    location === chat._id
+                      ? "text-opacity-100 bg-white bg-opacity-10"
+                      : "text-opacity-40 hover:bg-opacity-5 hover:bg-white transition-all"
                   } p-2 px-4 rounded-lg`}
                   onClick={(e) => handleClick(e, `/chat/${chat._id}`)}
                   onMouseEnter={() => setHovered(chat.title)}
@@ -141,14 +149,14 @@ function Sidebar({ closeSidebar }) {
                   <div className="text-sm font-light">{chat.title}</div>
                 </div>
               ))}
-            </div>)}
+            </div>
+          )}
           {Object.entries(groupChatsByTime(chatHistory)).map(
             ([section, chats]) => {
               if (chats.length === 0) return null;
 
               return (
                 <div key={section} className="mb-4">
-                
                   <div className="text-xs font-medium text-white text-opacity-80 px-4  py-2 pt-3 mb-2 rounded-md uppercase tracking-wide">
                     {section}
                   </div>
@@ -182,15 +190,18 @@ function Sidebar({ closeSidebar }) {
 
       {/* Footer Section */}
       <div className="flex flex-col gap-4 items-center p-4 py-6 border-t-white  border-opacity-10">
-        <div className="flex justify-center items-center gap-3">
-          <img
-            src={`${decodedToken.avatar}`}
-            className="w-8 h-8 rounded-full bg-gray-300"
-            alt="User"
-          />
-          <span className="text-white  overflow-hidden text-sm">
-            {decodedToken && decodedToken.name}
-          </span>
+        <div className=" flex items-center w-full justify-between">
+          <div className="flex items-center gap-3">
+            <img
+              src={`${decodedToken.avatar}`}
+              className="w-8 h-8 rounded-full bg-gray-300"
+              alt="User"
+            />
+            <span className="text-white  overflow-hidden text-sm">
+              {decodedToken && decodedToken.name}
+            </span>
+          </div>
+          <img onClick={()=>setSettingModal(true)} className=" w-5 h-5 overflow-hidden flex hover:rotate-12 opacity-90 transition-all cursor-pointer" src="/setting.png" />
         </div>
         <div
           onClick={handleLogout}

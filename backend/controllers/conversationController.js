@@ -234,9 +234,56 @@ const checkFavourite = async (req, res) => {
   }
 };
 
+const getContibutions= async (req, res) => {
+  try {
+    const { email } = req.params;
+    if (!email) {
+      return res.status(400).json({ error: "Email is required" });
+    }
+
+    // Fetch chat history for the user
+    const chats = await Chat.find({ email });
+
+    // Create a date-wise message count map
+    let activityMap = {};
+
+    chats.forEach((chat) => {
+      chat.history.forEach((message) => {
+        const date = new Date(chat.createdAt).toISOString().split("T")[0]; // Format: YYYY-MM-DD
+        activityMap[date] = (activityMap[date] || 0) + 1;
+      });
+    });
+
+    // Generate the structured grid data
+    let today = new Date();
+    let grid = Array(53)
+      .fill(null)
+      .map(() => Array(7).fill(null));
+
+    let currentDate = today;
+    for (let col = 52; col >= 0; col--) {
+      for (let row = 6; row >= 0; row--) {
+        let dateStr = currentDate.toISOString().split("T")[0];
+        let messageCount = activityMap[dateStr] || 0;
+
+        grid[col][row] = {
+          date: dateStr,
+          day: currentDate.getDate(),
+          level: Math.min(15, messageCount), // Cap levels at 5
+          messageCount: messageCount
+        };
+        currentDate.setDate(currentDate.getDate() - 1);
+      }
+    }
+
+    res.json(grid);
+  } catch (error) {
+    console.error("Error fetching contributions:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+}
 
 
 
 
-
-module.exports = { newChat, getChatsHistory, getChat, updateChat, deleteChat, shareChat ,checkPublic,toggleFavourites,checkFavourite};
+module.exports = { newChat, getChatsHistory, getChat, updateChat, deleteChat, shareChat ,checkPublic,toggleFavourites,checkFavourite,getContibutions};

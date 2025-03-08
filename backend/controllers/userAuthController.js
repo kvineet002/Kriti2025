@@ -2,7 +2,7 @@ const { createAccessToken } = require("../handlers/jwtHandler");
 const User = require("../models/user");
 
 const googleCallback = async (req, res) => {
-  const name = req.user._json.given_name + " " + req.user._json.family_name;
+  const name = req.user._json.given_name + " " + (req.user._json.family_name || "");
   const email = req.user._json.email;
   const avatar = req.user._json.picture;
   try {

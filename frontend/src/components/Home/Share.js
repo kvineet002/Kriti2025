@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import axios from "axios";
 import { redirect, useLocation, useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
+import Loader from "./loading";
 
 function ShareConfirmation({ onClose, onShare }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -27,9 +28,11 @@ function ShareConfirmation({ onClose, onShare }) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [menuRef]);
   const [isOpen, setIsOpen] = useState(false);
+  const [loadingVisiblity, setIsLoadingVisiblity] = useState(true);
   useEffect(() => {
     const checkShared = async () => {
       try {
+        setIsLoadingVisiblity(true);
         const response = await axios.get(
           `${process.env.REACT_APP_API_URL}/api/chats/check-share/${chatId}`
         );
@@ -40,9 +43,13 @@ function ShareConfirmation({ onClose, onShare }) {
         } else {
           setVisibility("private");
         }
+        setIsLoadingVisiblity(false);
 
       } catch (error) {
         console.error("Error fetching shared code:", error);
+      }
+      finally{
+        setIsLoadingVisiblity(false);
       }
     };
     checkShared();
@@ -94,6 +101,11 @@ function ShareConfirmation({ onClose, onShare }) {
       className="flex  items-center justify-center h-screen   w-full   transition-all ease-in-out  bg-opacity-80 bg-black z-[51] absolute"
       // onClick={onClose}
     >
+      {loadingVisiblity ? (
+        <div className="inset-0 bg-[#0f0f0f]   items-center justify-center h-72 border-[1.5px] border-[#272728] rounded-[10px] md:w-[46%] w-[94%] gap-4  text-sm md:p-6 p-6 md:py-6   flex flex-col">
+          <Loader w={35} h={35} />
+        </div>)
+        :(
       <div
         ref={menuRef}
         initial={{ opacity: 0, scale: 0.8, y: -10, x: 10 }} // Starts small & slightly above
@@ -168,6 +180,8 @@ function ShareConfirmation({ onClose, onShare }) {
           </div>
         </div>
       </div>
+      )
+      }
     </motion.div>
   );
 }

@@ -56,7 +56,7 @@ function YourWebsite() {
                   />
                 )}
                 <div className="text-white bg-white bg-opacity-5 px-4 py-3 flex justify-between text-opacity-75 items-center">
-                  {website.websiteName}
+                  {(website.websiteName).length>20?(website.websiteName).substring(0, 20)+' . . .':(website.websiteName).substring(0, 20)}
                   <img
                     src="/right-arrow.svg"
                     className="w-3 h-3 opacity-60"

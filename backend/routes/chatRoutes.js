@@ -1,5 +1,5 @@
 const express = require("express");
-const { newChat, getChatsHistory, updateChat, getChat, deleteChat, shareChat, checkPublic, toggleFavourites, checkFavourite } = require("../controllers/conversationController");
+const { newChat, getChatsHistory, updateChat, getChat, deleteChat, shareChat, checkPublic, toggleFavourites, checkFavourite, getContibutions } = require("../controllers/conversationController");
 const { checkAuth } = require("../middlewares/jwtMiddleware");
 const router = express.Router();
 
@@ -13,5 +13,6 @@ router.put("/share/:id",shareChat);
 router.get("/check-share/:id",checkPublic);
 router.post ("/toggle-favourites/:chatId",toggleFavourites);
 router.post ("/check-favourites/:chatId",checkFavourite);
+router.get("/contributions/:email",getContibutions);
 
 module.exports = router;

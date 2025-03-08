@@ -92,12 +92,12 @@ function FirstChatSection({flag}) {
         className="w-full px-0 bg-transparent pb-8 opacity-50 outline-none resize-none no-scrollbar"
         placeholder="Ask engine a question...."
       />
-      <div className=" flex justify-between items-center">
+      <div className=" flex justify-end items-center">
 
 
-        <img 
+        {/* <img 
         onClick={handleAttachment}
-        title="Attach files" src="/attach.png" alt="Sparkle" className=" select-none cursor-pointer w-4 h-4" />
+        title="Attach files" src="/attach.png" alt="Sparkle" className=" select-none cursor-pointer w-4 h-4" /> */}
       <div className=" flex items-center justify-around gap-2 ">
       <button
           disabled={isLoading1}
