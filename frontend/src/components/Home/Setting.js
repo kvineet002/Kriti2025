@@ -109,7 +109,13 @@ function SettingModal({ onClose }) {
         (contribution) =>
           contribution.date === dayjs(hoveredDate).format("YYYY-MM-DD")
       )?.messageCount || 0;
+//scroll containerref to end
+  useEffect(() => {
+    if (containerRef.current) {
+      containerRef.current.scrollLeft = containerRef.current.scrollWidth;
+    }
 
+  }, [contributions]);
   return (
     <motion.div className="flex items-center justify-center h-screen w-screen bg-opacity-90 bg-black z-[51] absolute">
       {false ? (
@@ -123,7 +129,7 @@ function SettingModal({ onClose }) {
           animate={{ opacity: 1, scale: 1, y: 0, x: 0 }}
           exit={{ opacity: 0, scale: 0.8, y: -10, x: 10 }}
           transition={{ duration: 0.2, ease: "easeOut" }}
-          className="inset-0 bg-[#0f0f0f] border-[1.5px] border-[#272728] rounded-[10px] h-[85%] w-[95%] md:w-[80%] gap-4 text-sm md:p-6 p-6 md:py-6 flex flex-col"
+          className="inset-0 bg-[#0f0f0f] border-[1.5px] border-[#272728] rounded-[10px] h-[75%] w-[95%] md:w-[80%] gap-4 text-sm md:p-6 p-6 md:py-6 flex flex-col"
         >
           <div className="flex items-center gap-2 pb-2">
             <img src="/setting.png" className="w-6 h-6" alt="Settings" />{" "}
@@ -162,7 +168,7 @@ function SettingModal({ onClose }) {
             {/* Contribution Grid */}
             <div className="flex flex-col gap-5 justify-center items-center w-full">
               <div className="flex md:w-[80%] w-[95%] flex-col gap-4 text-white">
-                <div>Your Activity</div>
+                <div className=" font-semibold">Your Activity</div>
 
             { loading?<div className="h-[120px] p-2 md:w-[809px] overflow-scroll no-scrollbar border border-[#272728] rounded-lg animate-pulse bg-white bg-opacity-5">
 
@@ -192,13 +198,13 @@ function SettingModal({ onClose }) {
                 </div>}
               </div>
               <div className="flex md:w-[80%] w-[95%]  flex-col gap-4 text-white">
-                <div className="">User Settings</div>
+                <div className=" font-semibold">User Settings</div>
                 <div className="  flex justify-between py-1">
                   <div className="flex flex-col  justify-center ">
-                    <div className="text-white text-xs md:text-sm">
+                    <div className="text-white text-xs md:text-sm ">
                       Profile Picture
                     </div>
-                    <div className=" text-xs md:text-sm">
+                    <div className=" text-xs md:text-sm opacity-70">
                       {" "}
                       This profile picture is associated with your Email
                     </div>
@@ -215,7 +221,7 @@ function SettingModal({ onClose }) {
                     <div className="text-white text-xs md:text-sm">
                       Username
                     </div>
-                    <div className=" text-xs md:text-sm">
+                    <div className=" text-xs md:text-sm opacity-70">
                       This cannot be changed.{" "}
                     </div>
                   </div>
@@ -230,7 +236,7 @@ function SettingModal({ onClose }) {
                     <div className="text-white text-xs md:text-sm ">
                       Your Name
                     </div>
-                    <div className=" text-xs md:text-sm">
+                    <div className=" text-xs md:text-sm opacity-70">
                       This cannot be changed.{" "}
                     </div>
                   </div>
@@ -245,7 +251,7 @@ function SettingModal({ onClose }) {
                     <div className="text-white text-xs md:text-sm ">
                       Your Linked Accounts
                     </div>
-                    <div className=" text-xs md:text-sm">
+                    <div className=" text-xs md:text-sm opacity-70">
                       This is your auth account.{" "}
                     </div>
                   </div>

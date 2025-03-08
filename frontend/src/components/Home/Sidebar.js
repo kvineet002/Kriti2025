@@ -201,7 +201,7 @@ function Sidebar({ closeSidebar }) {
               {decodedToken && decodedToken.name}
             </span>
           </div>
-          <img onClick={()=>setSettingModal(true)} className=" w-5 h-5 overflow-hidden flex hover:rotate-12 opacity-90 transition-all cursor-pointer" src="/setting.png" />
+          <img onClick={()=>setSettingModal(true)} className=" w-5 h-5 overflow-hidden no-tap flex hover:rotate-12 opacity-90 transition-all cursor-pointer" src="/setting.png" />
         </div>
         <div
           onClick={handleLogout}
