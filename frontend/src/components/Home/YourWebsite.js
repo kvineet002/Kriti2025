@@ -30,7 +30,12 @@ function YourWebsite() {
           Your Deployed Websites
           <img src="/right-arrow.svg" width={18} alt="" />
         </div>
-        <div className="flex overflow-x-auto no-scrollbar gap-4">
+        <div className="flex overflow-x-auto custom-scrollbar pb-3 gap-4"
+          style={{
+            "--scrollbar-track": "#000",
+            "--scrollbar-thumb": "#ffffff33",
+            "--scrollbar-thumb-hover": "#e64a19",
+          }}>
           {deployedWebsites &&
             deployedWebsites.map((website, index) => (
               <a
@@ -46,7 +51,7 @@ function YourWebsite() {
                     className="w-full h-[200px] object-cover rounded-t-lg -z-10 "
                     alt=""
                   />
-                  <div className=" absolute font-extrabold text-2xl text-center text-black text-opacity-70 ">{website.websiteName}</div>
+                  <div className=" absolute font-extrabold text-2xl text-center  text-black text-opacity-70 ">{website.websiteName}</div>
                   </div>
                 ) : (
                   <img

@@ -127,7 +127,12 @@ function Sidebar({ closeSidebar }) {
         </div>
       ) : (
         <div
-          className={`flex flex-col gap-2 p-2 px-4 overflow-y-auto no-scrollbar h-full`}
+          className={`flex flex-col gap-2 p-2 px-4 overflow-y-auto custom-scrollbar  h-full`}
+          style={{
+            "--scrollbar-track": "#000",
+            "--scrollbar-thumb": "#ffffff33",
+            "--scrollbar-thumb-hover": "#e64a19",
+          }}
         >
           {favoriteChats.length > 0 && (
             <div className=" -mb-2">
@@ -195,9 +200,9 @@ function Sidebar({ closeSidebar }) {
             <img
               src={`${decodedToken.avatar}`}
               className="w-8 h-8 rounded-full bg-gray-300"
-              alt="User"
+              alt=""
             />
-            <span className="text-white  overflow-hidden text-sm">
+            <span className="text-white  overflow-hidden  text-sm">
               {decodedToken && decodedToken.name}
             </span>
           </div>
@@ -205,7 +210,7 @@ function Sidebar({ closeSidebar }) {
         </div>
         <div
           onClick={handleLogout}
-          className="text-white bg-opacity-[0.09] w-full notapcolor cursor-pointer text-sm bg-white p-2 px-10 justify-center items-center flex rounded-lg"
+          className="text-white bg-opacity-[0.09] w-full no-tap cursor-pointer text-sm bg-white p-2 px-10 justify-center items-center flex rounded-lg"
         >
           <span>Log out</span>
         </div>

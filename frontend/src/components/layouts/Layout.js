@@ -76,7 +76,101 @@ const colorPalette = [
     {
         name: "Deep Warmth",
         colors: ['#3A2E39', '#1E555C', '#F4D8CD', '#EDB183', '#F15152']
-    }
+    },
+    {
+        name: "Cool Breeze",
+        colors: ['#B9D8C2', '#9A9EAB', '#8C7C62', '#F2E1AC', '#F2B880']
+    },
+    {
+        name: "Soothing Tones",
+        colors: ['#D4E157', '#FFD54F', '#FFB74D', '#FF8A65', '#FF7043']
+    },
+    {
+        name: "Ocean Blues",
+        colors: ['#A8D0DA', '#8EAEBD', '#7A9CC6', '#7A8BA3', '#6B7C93']
+    },
+    {
+        name: "Sunset Shades",
+        colors: ['#F7B733', '#FC4A1A', '#D81159', '#8F2D56', '#218380']
+    },
+    {
+        name: "Pastel Dreams",
+        colors: ['#FF9A8B', '#FFD392', '#FFEAAC', '#FFD3B6', '#FFAAA5']
+    },
+    {
+        name: "Cool Contrast",
+        colors: ['#F5E663', '#FFD662', '#FFC769', '#FFB36D', '#FFA86B']
+    },
+    {
+        name: "Warmth & Light",
+        colors: ['#FFD9DA', '#FFC1BA', '#FFA5AB', '#FF8C9A', '#FF7B8A']
+    },
+    {
+        name: "Muted Tones",
+        colors: ['#E8D8B9', '#D9CDB8', '#B9B6CC', '#9D9DC8', '#8A8DB0']
+    },
+    {
+        name: "Earthy Tones",
+        colors: ['#F3E8EE', '#C6A4A4', '#8E6C88', '#4A4A4A', '#2A2A2A']
+    },
+    {
+        name: "Soothing Pastels",
+        colors: ['#FFD3E8', '#FFA5D2', '#FF8FC2', '#FF7EB6', '#FF6FAA']
+    },
+    {
+        name: "Deep Contrast",
+        colors: ['#FFD6BA', '#FFAA8E', '#FF8E7A', '#FF7A6A', '#FF6B5E']
+    },
+    {
+        name: "Warm Neutrals",
+        colors: ['#F5E6CC', '#E9D8B4', '#D9C8A9', '#B9B9A3', '#A3A394']
+    },
+    {
+        name: "Cool Neutrals",
+        colors: ['#D9E8F5', '#B9D8E8', '#A3C8D9', '#93B9C8', '#7C9CA3']
+    },
+    {
+        name: "Soft Contrast",
+        colors: ['#FFD9E2', '#FFB6C1', '#FF9AA6', '#FF7E8B', '#FF6D7A']
+    },
+    {
+        name: "Earthy Greens",
+        colors: ['#A8D8B9', '#8EAEBD', '#7A9CC6', '#7A8BA3', '#6B7C93']
+    },
+    {
+        name: "Muted Contrast",
+        colors: ['#FFD9D9', '#FFB6B6', '#FF9A9A', '#FF7E7E', '#FF6D6D']
+    },
+    {
+        name: "Warm Contrast",
+        colors: ['#FFD9C1', '#FFB69F', '#FF9A8A', '#FF7E75', '#FF6D66']
+    },
+    {
+        name: "Cool Harmony",
+        colors: ['#D9E8F5', '#B9D8E8', '#A3C8D9', '#93B9C8', '#7C9CA3']
+    },
+    {
+        name: "Earthy Harmony",
+        colors: ['#F5E6CC', '#E9D8B4', '#D9C8A9', '#B9B9A3', '#A3A394']
+    },
+    {
+        name: "Warm Harmony",
+        colors: ['#FFD9DA', '#FFC1BA', '#FFA5AB', '#FF8C9A', '#FF7B8A']
+    },
+    {
+        name: "Muted Harmony",
+        colors: ['#E8D8B9', '#D9CDB8', '#B9B6CC', '#9D9DC8', '#8A8DB0']
+    },
+    {
+        name: "Cool Contrast",
+        colors: ['#F5E663', '#FFD662', '#FFC769', '#FFB36D', '#FFA86B']
+    },
+    {
+        name: "Warm Contrast",
+        colors: ['#FFD9DA', '#FFC1BA', '#FFA5AB', '#FF8C9A', '#FF7B8A']
+    },
+   
+
 ];
 
 const layouts = [
@@ -246,7 +340,12 @@ const Layout = ({ setSelectLayout, setSelectedColorPalette, setSelectedTheme }) 
             {/* Color Palettes Section */}
             <div className='w-full md:w-[45%] h-[40%] md:h-full p-6 md:p-10 flex flex-col'>
                 <h1 className="text-base md:text-lg font-bold pb-6">Choose Color Palettes</h1>
-                <div className='flex flex-col overflow-y-auto no-scrollbar gap-2 w-full flex-1'>
+                <div className='flex flex-col overflow-y-auto px-2 custom-scrollbar  gap-2 w-full flex-1'
+                  style={{
+                    "--scrollbar-track": "#ffffff0d",
+                    "--scrollbar-thumb": "#ffffff40",
+                    "--scrollbar-thumb-hover": "#ffffffcc",
+                  }}>
                     {colorPalette.map((palette, index) => (
                     <div className=' flex flex-col gap-2'>   <div
                             key={index}
@@ -256,7 +355,7 @@ const Layout = ({ setSelectLayout, setSelectedColorPalette, setSelectedTheme }) 
                             onClick={() => handlePaletteSelection(palette)}
                         >
                             <div className='text-sm md:text-sm font-light'>{palette.name}</div>
-                            <div className='overflow-x-auto no-scrollbar'>
+                            <div className='overflow-x-auto custom-scrollbar'>
                                 <div className='flex gap-4 w-max'>
                                     {palette.colors.map((color, ind) => (
                                       <div key={ind} style={{ backgroundColor: color }} className="h-6 w-10 flex-shrink-0" />
@@ -272,9 +371,15 @@ const Layout = ({ setSelectLayout, setSelectedColorPalette, setSelectedTheme }) 
             </div>
 
             {/* Choose Layout Section */}
-            <div className='w-full md:w-[55%] h-[60%] md:h-full md:border-l-[2px] p-6 border-t-[2px] md:border-t-0 border-dashed border-opacity-10 border-white md:p-10 flex flex-col'>
-                <h1 className="text-base md:text-lg font-bold pb-6">Choose Layout</h1>
-                <div className='flex overflow-x-auto no-scrollbar gap-4 flex-1 p-4'>
+            <div className='w-full md:w-[55%] h-[60%] md:h-full md:border-l-[2px] p-6  border-t-[2px] md:border-t-0 border-dashed border-opacity-10 border-white md:p-10 md:pb-5 flex flex-col'>
+                <h1 className="text-base md:text-lg font-bold md:pb-6">Choose Layout</h1>
+                <div className='flex overflow-x-auto custom-scrollbar gap-4 flex-1'
+                 style={{
+                    "--scrollbar-track": "#ffffff0d",
+                    "--scrollbar-thumb": "#ffffff40",
+                    "--scrollbar-thumb-hover": "#ffffffcc",
+                  }}
+                >
                     {layouts.map((layout, index) => (
                         <div
                             key={index}
@@ -284,14 +389,19 @@ const Layout = ({ setSelectLayout, setSelectedColorPalette, setSelectedTheme }) 
                             onClick={() => handleLayoutSelection(layout)}
                         >
                             <div className='text-sm md:text-base p-2'>{layout.name}</div>
-                            <div className='h-40 bg-gray-700 flex items-center justify-center overflow-y-scroll no-scrollbar flex-1'>
+                            <div className='h-40 flex items-center justify-center overflow-y-scroll custom-scrollbar flex-1'
+                              style={{
+                                "--scrollbar-track": "#ffffff0d",
+                                "--scrollbar-thumb": "#ffffff40",
+                                "--scrollbar-thumb-hover": "#ffffffcc",
+                              }}>
                                 <img src={layout.img} alt={layout.name} className="w-full mt-auto" />
                             </div>
                         </div>
                     ))}
                 </div>
 
-                <div className='flex ml-auto justify-between items-center gap-4  p-1 font-medium px'>
+                <div className='flex ml-auto mt-3 justify-between items-center gap-4  p-1 font-medium px'>
                     <div
                         onClick={() => {
                             setSelectedColorPalette(null);

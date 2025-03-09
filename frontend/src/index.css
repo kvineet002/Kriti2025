@@ -6,6 +6,28 @@
     margin: 0;
     padding: 0;
 }
+@layer utilities {
+  .custom-scrollbar {
+    &::-webkit-scrollbar {
+      width: var(--scrollbar-width, 3px);
+      height: var(--scrollbar-height, 3px);
+    }
+
+    &::-webkit-scrollbar-track {
+      background: var(--scrollbar-track, #000);
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: var(--scrollbar-thumb, #ffffff26);
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+      background: var(--scrollbar-thumb-hover, #555);
+    }
+  }
+}
+
+
 @layer base {
   input[type="number"]::-webkit-inner-spin-button,
   input[type="number"]::-webkit-outer-spin-button {

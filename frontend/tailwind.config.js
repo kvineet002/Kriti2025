@@ -1,8 +1,9 @@
-/** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./src/**/*.{html,js}"],
+  content: ["./src/**/*.{html,js,jsx,ts,tsx}"],
   plugins: [
-    function ({ addUtilities }) {
+    function ({ addUtilities}) {
+ 
+
       const newUtilities = {
         ".no-scrollbar::-webkit-scrollbar": {
           display: "none",
@@ -13,8 +14,9 @@ module.exports = {
         },
         ".no-tap": {
           "-webkit-tap-highlight-color": "transparent",
-        },
+        }
       };
+
       addUtilities(newUtilities);
     },
   ],
