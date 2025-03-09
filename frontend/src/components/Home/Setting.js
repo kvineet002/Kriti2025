@@ -110,17 +110,17 @@ function SettingModal({ onClose }) {
         (contribution) =>
           contribution.date === dayjs(hoveredDate).format("YYYY-MM-DD")
       )?.messageCount || 0;
-  //scroll containerref to end
-  useEffect(() => {
-    if (containerRef.current) {
-      containerRef.current.scrollLeft = containerRef.current.scrollWidth;
-    }
-  }, [contributions]);
   const [selectedTab, setSelectedTab] = useState("general");
   const tabs = [
     { id: "general", label: "General" },
     { id: "apiKeys", label: "API Keys" },
   ];
+//scroll containerref to end
+  useEffect(() => {
+    if (containerRef.current) {
+      containerRef.current.scrollLeft = containerRef.current.scrollWidth;
+    }
+  }, [contributions,selectedTab]);
   return (
     <motion.div className="flex items-center justify-center h-screen w-screen bg-opacity-90 bg-black z-[51] absolute">
       <div
