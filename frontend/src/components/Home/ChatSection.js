@@ -15,13 +15,19 @@ function ChatSection({ setHtmlCode, htmlCode, sandPackWidth }) {
   const location = useLocation();
     const path = location.pathname;
   const flag = location.state?.flag;
-  console.log(flag);
-
+  const localApiKeys = localStorage.getItem("apiKeys");
+  const apiKeys = localApiKeys ? JSON.parse(localApiKeys) : {};
   
-  const API_KEY =
+  var API_KEY =
     process.env.REACT_APP_GOOGLE_API_KEY ||
     "AIzaSyDikZzq9BC1KVbU3Qo-dOFKvLWo-_Z77wo";
   
+  if (apiKeys.length > 0) {
+    //Select a random API key from the array of keys in local storage
+    API_KEY = apiKeys[Math.floor(Math.random() * apiKeys.length)];
+  }
+  console.log("API_KEY",
+  API_KEY);
   const genAI = new GoogleGenerativeAI(API_KEY);
   const imagePrompt = "";
   const systemPrompt = `You are a website generator AI. When given a prompt, generate a complete, functional website with the HTML

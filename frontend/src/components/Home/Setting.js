@@ -1,9 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import dayjs from "dayjs";
 import { jwtDecode } from "jwt-decode";
 import axios from "axios";
 import Loader from "./loading";
+import ApiKeysTab from "./ApiKeysTab";
 
 const NUM_ROWS = 7; // Days of the week (Sun-Sat)
 const NUM_COLS = 53; // Weeks in a year
@@ -109,70 +110,90 @@ function SettingModal({ onClose }) {
         (contribution) =>
           contribution.date === dayjs(hoveredDate).format("YYYY-MM-DD")
       )?.messageCount || 0;
-//scroll containerref to end
+  //scroll containerref to end
   useEffect(() => {
     if (containerRef.current) {
       containerRef.current.scrollLeft = containerRef.current.scrollWidth;
     }
-
   }, [contributions]);
+  const [selectedTab, setSelectedTab] = useState("general");
+  const tabs = [
+    { id: "general", label: "General" },
+    { id: "apiKeys", label: "API Keys" },
+  ];
   return (
     <motion.div className="flex items-center justify-center h-screen w-screen bg-opacity-90 bg-black z-[51] absolute">
-      {false ? (
-        <div className="inset-0 bg-[#0f0f0f]   items-center justify-center border-[1.5px] border-[#272728] rounded-[10px] h-[85%] w-[95%] md:w-[80%]  gap-4  text-sm md:p-6 p-6 md:py-6   flex flex-col">
-          <Loader w={35} h={35} />
+      <div
+        ref={menuRef}
+        initial={{ opacity: 0, scale: 0.8, y: -10, x: 10 }}
+        animate={{ opacity: 1, scale: 1, y: 0, x: 0 }}
+        exit={{ opacity: 0, scale: 0.8, y: -10, x: 10 }}
+        transition={{ duration: 0.2, ease: "easeOut" }}
+        className="inset-0 bg-[#0f0f0f] border-[1.5px] border-[#272728] rounded-[10px] h-[75%] w-[95%] md:w-[80%] gap-4 text-sm md:p-6 p-6 md:py-6 flex flex-col"
+      >
+        <div className="flex items-center gap-2 pb-2">
+          <img src="/setting.png" className="w-6 h-6" alt="Settings" /> Settings
         </div>
-      ) : (
-        <div
-          ref={menuRef}
-          initial={{ opacity: 0, scale: 0.8, y: -10, x: 10 }}
-          animate={{ opacity: 1, scale: 1, y: 0, x: 0 }}
-          exit={{ opacity: 0, scale: 0.8, y: -10, x: 10 }}
-          transition={{ duration: 0.2, ease: "easeOut" }}
-          className="inset-0 bg-[#0f0f0f] border-[1.5px] border-[#272728] rounded-[10px] h-[75%] w-[95%] md:w-[80%] gap-4 text-sm md:p-6 p-6 md:py-6 flex flex-col"
-        >
-          <div className="flex items-center gap-2 pb-2">
-            <img src="/setting.png" className="w-6 h-6" alt="Settings" />{" "}
-            Settings
-          </div>
 
-          {/* Tabs */}
-          <div className="px-2 border-b-[1px] flex gap-3 text-xs border-white border-opacity-10">
-            <div className="border-b-[2px] pb-2 cursor-pointer border-white text-xs">
-              General
+        {/* Tabs */}
+        <div className="relative px-2 border-b-[1px] flex gap-3 text-xs border-white border-opacity-10">
+          {tabs.map((tab) => (
+            <div
+              key={tab.id}
+              onClick={() => setSelectedTab(tab.id)}
+              className={`relative pb-2 cursor-pointer select-none transition-opacity ${
+                selectedTab === tab.id ? "opacity-100" : "opacity-70"
+              }`}
+            >
+              {tab.label}
+              {selectedTab === tab.id && (
+                <motion.div
+                  layoutId="underline"
+                  className="absolute bottom-0 left-0 w-full h-[2px] bg-white"
+                  transition={{ type: "spring", stiffness: 200, damping: 20 }}
+                />
+              )}
             </div>
-            <div className="text-white text-opacity-70 cursor-pointer">
-              API Keys
-            </div>
-          </div>
-          <div className=" overflow-scroll no-scrollbar">
-            {/* Tooltip */}
-            {hoveredDate && (
-              <motion.div
-                className="absolute px-3 py-2 bg-white   text-xs text-black font-semibold border-[1px] border-white border-opacity-10 rounded-md"
-                style={{
-                  top: tooltipPos.y - 40,
-                  left: tooltipPos.x - 30,
-                  position: "absolute",
-                  transform: "translateX(-50%)",
-                }}
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.15, ease: "easeOut" }}
-              >
-                {messageCount} messages on {hoveredDate}
-              </motion.div>
-            )}
+          ))}
+        </div>
 
-            {/* Contribution Grid */}
-            <div className="flex flex-col gap-5 justify-center items-center w-full">
-              <div className="flex md:w-[80%] w-[95%] flex-col gap-4 text-white">
-                <div className=" font-semibold">Your Activity</div>
+        {/* Content of General Tab */}
+        <AnimatePresence mode="wait">
+     { selectedTab==="general" && <motion.div
+     key="general"
+     initial={{ opacity: 0, x: 0 }}
+     animate={{ opacity: 1, x: 0 }}
+     exit={{ opacity: 0, x: -20 }}
+     transition={{ duration: 0.3 }}
+      className=" overflow-scroll no-scrollbar">
+          {/* Tooltip */}
+          {hoveredDate && (
+            <motion.div
+              className="absolute px-3 py-2 bg-white   text-xs text-black font-semibold border-[1px] border-white border-opacity-10 rounded-md"
+              style={{
+                top: tooltipPos.y - 40,
+                left: tooltipPos.x - 30,
+                position: "absolute",
+                transform: "translateX(-50%)",
+              }}
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.15, ease: "easeOut" }}
+            >
+              {messageCount} messages on {hoveredDate}
+            </motion.div>
+          )}
 
-            { loading?<div className="h-[120px] p-2 md:w-[809px] overflow-scroll no-scrollbar border border-[#272728] rounded-lg animate-pulse bg-white bg-opacity-5">
+          {/* Contribution Grid */}
+          <div className="flex flex-col gap-5 justify-center items-center w-full">
+            <div className="flex md:w-[80%] w-[95%] flex-col gap-4 text-white">
+              <div className=" font-semibold">Your Activity</div>
 
-            </div>:   <div
+              {loading ? (
+                <div className="h-[120px] p-2 md:w-[809px] overflow-scroll no-scrollbar border border-[#272728] rounded-lg animate-pulse bg-white bg-opacity-5"></div>
+              ) : (
+                <div
                   ref={containerRef}
                   className="h-[120px] p-2 md:w-[809px] overflow-scroll no-scrollbar border border-[#272728] rounded-lg bg-[#0f0f0f]"
                 >
@@ -195,75 +216,78 @@ function SettingModal({ onClose }) {
                       </div>
                     ))}
                   </div>
-                </div>}
+                </div>
+              )}
+            </div>
+            <div className="flex md:w-[80%] w-[95%]  flex-col gap-4 text-white">
+              <div className=" font-semibold">User Settings</div>
+              <div className="  flex justify-between py-1">
+                <div className="flex flex-col  justify-center ">
+                  <div className="text-white text-xs md:text-sm ">
+                    Profile Picture
+                  </div>
+                  <div className=" text-xs md:text-sm opacity-70">
+                    {" "}
+                    This profile picture is associated with your Email
+                  </div>
+                </div>
+                <img
+                  src={profileUrl}
+                  className="w-12 h-12 rounded-full border-[1px] myborder"
+                />
               </div>
-              <div className="flex md:w-[80%] w-[95%]  flex-col gap-4 text-white">
-                <div className=" font-semibold">User Settings</div>
-                <div className="  flex justify-between py-1">
-                  <div className="flex flex-col  justify-center ">
-                    <div className="text-white text-xs md:text-sm ">
-                      Profile Picture
-                    </div>
-                    <div className=" text-xs md:text-sm opacity-70">
-                      {" "}
-                      This profile picture is associated with your Email
-                    </div>
-                  </div>
-                  <img
-                    src={profileUrl}
-                    className="w-12 h-12 rounded-full border-[1px] myborder"
-                  />
-                </div>
-                <div className=" border-b-[1px] w-full border-white border-opacity-10"></div>
+              <div className=" border-b-[1px] w-full border-white border-opacity-10"></div>
 
-                <div className="  flex justify-between py-1">
-                  <div className="flex flex-col  justify-center ">
-                    <div className="text-white text-xs md:text-sm">
-                      Username
-                    </div>
-                    <div className=" text-xs md:text-sm opacity-70">
-                      This cannot be changed.{" "}
-                    </div>
-                  </div>
-                  <div className=" rounded-md px-6 bg-white bg-opacity-5  flex items-center justify-center myborder text-xs">
-                    {" "}
-                    {email.split("@")[0]}
+              <div className="  flex justify-between py-1">
+                <div className="flex flex-col  justify-center ">
+                  <div className="text-white text-xs md:text-sm">Username</div>
+                  <div className=" text-xs md:text-sm opacity-70">
+                    This cannot be changed.{" "}
                   </div>
                 </div>
-                <div className=" border-b-[1px] w-full border-white border-opacity-10"></div>
-                <div className="  flex justify-between py-1">
-                  <div className="flex flex-col  justify-center ">
-                    <div className="text-white text-xs md:text-sm ">
-                      Your Name
-                    </div>
-                    <div className=" text-xs md:text-sm opacity-70">
-                      This cannot be changed.{" "}
-                    </div>
+                <div className=" rounded-md px-6 bg-white bg-opacity-5  flex items-center justify-center myborder text-xs">
+                  {" "}
+                  {email.split("@")[0]}
+                </div>
+              </div>
+              <div className=" border-b-[1px] w-full border-white border-opacity-10"></div>
+              <div className="  flex justify-between py-1">
+                <div className="flex flex-col  justify-center ">
+                  <div className="text-white text-xs md:text-sm ">
+                    Your Name
                   </div>
-                  <div className=" rounded-md px-6 bg-white bg-opacity-5 flex items-center justify-center myborder text-xs">
-                    {" "}
-                    {name.split("@")[0]}
+                  <div className=" text-xs md:text-sm opacity-70">
+                    This cannot be changed.{" "}
                   </div>
                 </div>
-                <div className=" border-b-[1px] w-full border-white border-opacity-10"></div>
-                <div className="  flex md:flex-row flex-col justify-between py-1 gap-3">
-                  <div className="flex flex-col  justify-center ">
-                    <div className="text-white text-xs md:text-sm ">
-                      Your Linked Accounts
-                    </div>
-                    <div className=" text-xs md:text-sm opacity-70">
-                      This is your auth account.{" "}
-                    </div>
+                <div className=" rounded-md px-6 bg-white bg-opacity-5 flex items-center justify-center myborder text-xs">
+                  {" "}
+                  {name.split("@")[0]}
+                </div>
+              </div>
+              <div className=" border-b-[1px] w-full border-white border-opacity-10"></div>
+              <div className="  flex md:flex-row flex-col justify-between py-1 gap-3">
+                <div className="flex flex-col  justify-center ">
+                  <div className="text-white text-xs md:text-sm ">
+                    Your Linked Accounts
                   </div>
-                  <div className=" rounded-md px-6 bg-white bg-opacity-5 flex items-center justify-center py-2 gap-2 myborder text-xs">
-                    <img className=" w-4 h-4" src="/google-icon.png" /> {email}
+                  <div className=" text-xs md:text-sm opacity-70">
+                    This is your auth account.{" "}
                   </div>
+                </div>
+                <div className=" rounded-md px-6 bg-white bg-opacity-5 flex items-center justify-center py-2 gap-2 myborder text-xs">
+                  <img className=" w-4 h-4" src="/google-icon.png" /> {email}
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      )}
+        </motion.div>}
+        {/* Content of API Keys Tab */}
+     { selectedTab==="apiKeys" && 
+     <ApiKeysTab email={email}/>}
+        
+      </AnimatePresence>
+      </div>
     </motion.div>
   );
 }
