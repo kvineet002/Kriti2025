@@ -336,7 +336,7 @@ const Layout = ({ setSelectLayout, setSelectedColorPalette, setSelectedTheme }) 
     };
 
     return (
-        <div className="myborder bg-[#141415] text-opacity-80 text-white rounded-lg w-[85%] h-[90%] md:h-[70%] flex flex-col md:flex-row items-center justify-center">
+        <div className="myborder bg-[#141415] text-opacity-80 text-white rounded-lg w-[95%] h-[85%] md:h-[70%] flex flex-col md:flex-row items-center justify-center">
             {/* Color Palettes Section */}
             <div className='w-full md:w-[45%] h-[40%] md:h-full p-6 md:p-10 flex flex-col'>
                 <h1 className="text-base md:text-lg font-bold pb-6">Choose Color Palettes</h1>
@@ -371,9 +371,9 @@ const Layout = ({ setSelectLayout, setSelectedColorPalette, setSelectedTheme }) 
             </div>
 
             {/* Choose Layout Section */}
-            <div className='w-full md:w-[55%] h-[60%] md:h-full md:border-l-[2px] p-6  border-t-[2px] md:border-t-0 border-dashed border-opacity-10 border-white md:p-10 md:pb-5 flex flex-col'>
+            <div className='w-full md:w-[55%] h-[60%] md:h-full md:border-l-[2px] p-6   justify-between   border-t-[2px] md:border-t-0 border-dashed border-opacity-10 border-white md:p-10 md:pb-5 flex flex-col'>
                 <h1 className="text-base md:text-lg font-bold md:pb-6">Choose Layout</h1>
-                <div className='flex overflow-x-auto custom-scrollbar gap-4 flex-1'
+                <div className='flex overflow-x-auto custom-scrollbar gap-4  pb-4'
                  style={{
                     "--scrollbar-track": "#ffffff0d",
                     "--scrollbar-thumb": "#ffffff40",
@@ -389,19 +389,19 @@ const Layout = ({ setSelectLayout, setSelectedColorPalette, setSelectedTheme }) 
                             onClick={() => handleLayoutSelection(layout)}
                         >
                             <div className='text-sm md:text-base p-2'>{layout.name}</div>
-                            <div className='h-40 flex items-center justify-center overflow-y-scroll custom-scrollbar flex-1'
+                            <div className='  h-48 flex items-center justify-center overflow-y-scroll custom-scrollbar '
                               style={{
                                 "--scrollbar-track": "#ffffff0d",
                                 "--scrollbar-thumb": "#ffffff40",
                                 "--scrollbar-thumb-hover": "#ffffffcc",
                               }}>
-                                <img src={layout.img} alt={layout.name} className="w-full mt-auto" />
+                                <img src={layout.img} alt={layout.name} className="w-full  mt-auto" />
                             </div>
                         </div>
                     ))}
                 </div>
 
-                <div className='flex ml-auto mt-3 justify-between items-center gap-4  p-1 font-medium px'>
+                <div className='flex ml-auto mt-6 md:mt-12 justify-between items-center gap-4  p-1 font-medium px'>
                     <div
                         onClick={() => {
                             setSelectedColorPalette(null);
