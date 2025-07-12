@@ -45,7 +45,7 @@ function ChatSection({ setHtmlCode, htmlCode, sandPackWidth }) {
   
   
   const model = genAI.getGenerativeModel({
-    model: "gemini-2.5-pro",
+    model: "gemini-2.0-pro",
     systemInstruction: systemPrompt,
   });
 
