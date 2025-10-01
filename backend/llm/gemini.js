@@ -7,7 +7,7 @@ const API_KEY =
 const genAI = new GoogleGenerativeAI(API_KEY);
 const systemPrompt = `You are a title provider to my prompt. When given a prompt, provide a title that is relevant to the prompt not more 3-4 words.`;
 const model = genAI.getGenerativeModel({
-  model: "gemini-1.5-flash",
+  model: "gemini-2.5-pro",
   systemInstruction: systemPrompt,
 });
 
