@@ -20,10 +20,10 @@ function ChatSection({ setHtmlCode, htmlCode, sandPackWidth }) {
   
   var API_KEY = process.env.REACT_APP_GOOGLE_API_KEY 
   
-  if (apiKeys.length > 0) {
-    //Select a random API key from the array of keys in local storage
-    API_KEY = apiKeys[Math.floor(Math.random() * apiKeys.length)];
-  }
+  // if (apiKeys.length > 0) {
+  //   //Select a random API key from the array of keys in local storage
+  //   API_KEY = apiKeys[Math.floor(Math.random() * apiKeys.length)];
+  // }
   // console.log("API_KEY",
   // API_KEY);
   const genAI = new GoogleGenerativeAI(API_KEY);
