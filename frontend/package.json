@@ -2,6 +2,9 @@
   "name": "Kriti-2025",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "20.x"
+  },
   "dependencies": {
     "@codesandbox/sandpack-react": "^2.19.10",
     "@google/generative-ai": "^0.21.0",
