@@ -17,6 +17,7 @@ const newChat = async (req, res) => {
     // CHECK IF THE USERCHATS EXISTS
     const userChats = await UserChat.findOne({ email: email });
 
+    console.log("Generating time response:");
     const result = await model.generateContent(text);
     const response = await result.response;
     const generateTitle = response.text();
