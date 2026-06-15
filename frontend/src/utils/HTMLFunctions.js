@@ -4,7 +4,7 @@ const disableInteractiveElements = (htmlString) => {
   
     // Disable all links
     doc.querySelectorAll("a").forEach((anchor) => {
-      anchor.href = "javascript:void(0)";
+      anchor.removeAttribute("href");
       anchor.style.pointerEvents = "none";
       anchor.style.opacity = "0.5";
     });
